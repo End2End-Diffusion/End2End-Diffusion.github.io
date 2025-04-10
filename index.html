@@ -1,0 +1,586 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<style type="text/css">
+body {
+    font-family: "Titillium Web", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media screen and (min-width: 980px){
+    body {
+        width: 980px;
+    }
+}
+
+h1 {
+    font-weight:300;
+    line-height: 1.15em;
+}
+
+h2 {
+    font-size: 1.75em;
+}
+a:link,a:visited {
+    color: #0E710E;
+    text-decoration: none;
+}
+a:hover {
+    color: #208799;
+}
+h1 {
+    text-align: center;
+}
+h2,h3 {
+    text-align: left;
+}
+
+h1 {
+    font-size: 40px;
+    font-weight: 500;
+}
+h2 {
+    font-weight: 400;
+    margin: 16px 0px 4px 0px;
+}
+h3 {
+    font-weight: 600;
+    margin: 16px 0px 4px 0px;
+}
+
+.paper-title {
+    padding: 1px 0px 1px 0px;
+}
+section {
+    margin: 32px 0px 32px 0px;
+    text-align: justify;
+    clear: both;
+}
+.col-5 {
+     width: 20%;
+     float: left;
+}
+.col-4 {
+     width: 25%;
+     float: left;
+}
+.col-3 {
+     width: 33%;
+     float: left;
+}
+.col-2 {
+     width: 50%;
+     float: left;
+}
+.col-1 {
+     width: 100%;
+     float: left;
+}
+
+.author-row, .affil-row {
+    font-size: 26px;
+}
+
+.author-row-new {
+    text-align: center;
+}
+
+.author-row-new a {
+    display: inline-block;
+    font-size: 20px;
+    padding: 4px;
+}
+
+.author-row-new sup {
+    color: #313436;
+    font-size: 12px;
+}
+
+.affiliations-new {
+    font-size: 18px;
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.row {
+    margin: 16px 0px 16px 0px;
+}
+.authors {
+    font-size: 26px;
+}
+.affiliatons {
+    font-size: 18px;
+}
+.affil-row {
+    margin-top: 18px;
+}
+.teaser {
+    max-width: 100%;
+}
+.text-center {
+    text-align: center;  
+}
+.screenshot {
+    width: 256px;
+    border: 1px solid #ddd;
+}
+.screenshot-el {
+    margin-bottom: 16px;
+}
+hr {
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ddd;
+    margin: 0;
+}
+.material-icons {
+    vertical-align: -6px;
+}
+p {
+    line-height: 1.25em;
+}
+.caption {
+    font-size: 16px;
+    color: #666;
+    margin-top: 4px;
+    margin-bottom: 10px;
+}
+video {
+    display: block;
+    margin: auto;
+}
+figure {
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#bibtex pre {
+    font-size: 14px;
+    background-color: #eee;
+    padding: 16px;
+}
+.green {
+    color: #0E710E;
+    font-weight: bold;
+}
+.orange {
+    color: #d35400;
+    font-weight: bold;
+}
+.flex-row {
+    display: flex;
+    flex-flow: row wrap;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.coming-soon {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+}
+
+.paper-btn:hover {
+    color: #FF8563;
+    transform: translateY(-2px);
+}
+
+.paper-btn-parent {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0px;
+    gap: 25px;
+    font-size: 20px;
+}
+
+.github-btn:hover {
+    color: #FF8563;
+    transform: translateY(-2px);
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.venue {
+    font-size: 23px;
+}
+
+.topnav {
+    background-color: #EEEEEE;
+    overflow: hidden;
+}
+
+.topnav div {
+    max-width: 1070px;
+    margin: 0 auto;
+}
+
+.topnav a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+    padding: 16px 16px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.topnav img {
+    padding: 2px 0px;
+    width: 100%;
+    margin: 0.2em 0px 0.3em 0px;
+    vertical-align: middle;
+}
+
+pre {
+    font-size: 0.9em;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-radius: 3px;
+    background-color: rgb(235, 235, 235);
+    overflow-x: auto;
+}
+
+.download-thumb {
+    display: flex;
+}
+
+@media only screen and (max-width: 620px) {
+    .download-thumb {
+        display: none;
+    }
+}
+
+.paper-stuff {
+    width: 50%;
+    font-size: 20px;
+}
+
+@media only screen and (max-width: 620px) {
+    .paper-stuff {
+        width: 100%;
+    }
+}
+* {
+  box-sizing: border-box;
+}
+
+.column {
+  text-align: center;
+  float: left;
+  width: 16.666%;
+  padding: 5px;
+}
+.column3 {
+  text-align: center;
+  float: left;
+  width: 33.333%;
+  padding: 5px;
+}
+.border-right {
+    border-right: 1px solid black;
+}
+.border-bottom{
+    border-bottom: 1px solid black;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 10px;
+    width: 100%; 
+}
+
+.image-grid img {
+    width: 100%; 
+}
+
+.image-grid img:first-child {
+    object-fit: contain;
+}
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 500px) {
+  .column {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 500px) {
+  .column3 {
+    width: 100%;
+  }
+}
+
+.figure img {
+    width: 100%; 
+}
+
+.image-grid-three {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.image-grid-three img {
+    width: 100%;
+    max-height: 350px;
+    object-fit: contain;
+}
+
+.image-grid-tab {
+    text-align: center;
+    justify-content: center;
+    display: grid;
+    place-items: center;
+    grid-template-columns: 1fr 1.22fr;
+    gap: 10px;
+    width: 90%;
+    justify-items: center;
+    margin: 0 auto;
+}
+
+.image-grid-tab img {
+    width: 100%; 
+}
+
+blockquote {
+    background-color: rgba(40, 40, 40, 0.2);
+    padding: 0px;
+    margin: 2px 0;
+    border-radius: 10px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+</style>
+
+<script type="text/javascript" src="../js/hidebib.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,600,400italic,600italic,300,300italic' rel='stylesheet' type='text/css'>
+    <head>
+        <title>REPA-E: Unlocking VAE for End-to-End Tuning of Latent Diffusion Transformers</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta property="og:description" content="REPA-E: Unlocking VAE for End-to-End Tuning of Latent Diffusion Transformers"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link href="https://fonts.googleapis.com/css2?family=FontAwesome" rel="stylesheet">
+    </head>
+
+ <body>
+<div class="container">
+    <div class="paper-title">
+    <h1>
+        <b>REPA-E</b>: Unlocking VAE for End-to-End Tuning of Latent Diffusion Transformers
+    </h1>
+    </div>
+
+    <div align="center">
+        <a href="https://scholar.google.com.au/citations?user=GQzvqS4AAAAJ" target="_blank">Xingjian&nbsp;Leng</a><sup>1*</sup> &ensp; <b>&middot;</b> &ensp;
+        <a href="https://1jsingh.github.io/" target="_blank">Jaskirat&nbsp;Singh</a><sup>1*</sup> &ensp; <b>&middot;</b> &ensp;
+        <a href="https://hou-yz.github.io/" target="_blank">Yunzhong&nbsp;Hou</a><sup>1</sup> &ensp;
+        <br>
+        <a href="https://people.csiro.au/X/Z/Zhenchang-Xing/" target="_blank">Zhenchang&nbsp;Xing</a><sup>2</sup>&ensp; <b>&middot;</b> &ensp;
+        <a href="https://www.sainingxie.com/" target="_blank">Saining&nbsp;Xie</a><sup>3&dagger;</sup> &ensp; <b>&middot;</b> &ensp;
+        <a href="https://zheng-lab-anu.github.io/" target="_blank">Liang&nbsp;Zheng</a><sup>1&dagger;</sup> &ensp;
+        <br>
+        <sup>1</sup> Australian National University &emsp; <sup>2</sup>Data61-CSIRO &emsp; <sup>3</sup>New York University &emsp; <br>
+        <sup>*</sup>Project Lead &emsp; <sup>&dagger;</sup>Equal Advising &emsp; <br>
+      </div>
+    </center>
+
+        <div style="clear: both">
+            <div class="paper-btn-parent">
+                <a class="paper-btn" href="https://arxiv.org/abs/coming-soon">
+                    <span class="fas fa-file-alt"></span> 
+                    Paper
+                </a>   
+                <a class="github-btn" href="https://github.com/End2End-Diffusion/REPA-E">
+                    <span class="fab fa-github"></span> 
+                    Code
+                </a>           
+           </div>
+        </div>
+        <center>
+            <div class="figure">
+                <img src="assets/viz-results-v2.webp" alt="REPA-E: Unlocking VAE for End-to-End Tuning of Latent Diffusion Transformers" style="width: 100%;" loading="lazy">
+            </div>    
+        </center>
+    </div>
+    <section id="news">
+        <h2>News</h2>
+        <hr>
+        <div class="row">
+            <div><span class="material-icons"> event </span> [Apr 2025] Our paper, code, and pretrained models are now available on <a href="https://github.com/End2End-Diffusion/REPA-E">GitHub</a> and <a href="https://huggingface.co/REPA-E">HuggingFace</a>.</div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Overview</h2>
+        <hr>
+        <p>
+            We tackle a fundamental question: Can latent diffusion models and their VAE tokenizer be trained end-to-end? 
+            While traditional deep learning wisdom dictates that end-to-end training is preferable, directly backpropagating 
+            diffusion loss to the VAE causes the latent space to collapse. Our method, <b>REPA-E</b>, overcomes this limitation by
+            using representation alignment loss to jointly optimize both components while preventing latent space degradation.
+        </p>
+
+        <center>
+            <div class="figure">
+                <img src="assets/a-overview-v2.webp" alt="REPA-E Overview" style="max-width: 95%; height: auto;" loading="lazy">
+            </div>
+        </center>
+
+        Through extensive evaluations, we demonstrate that our end-to-end training approach offers three key advantages:
+        <p>
+            <b>Significant acceleration of training:</b> REPA-E speeds up diffusion training by over 17x and 45x compared to REPA and vanilla training, respectively. Using SiT-XL, REPA-E reaches an gFID of 4.06 within just 400k steps without classifier-free guidance.
+        </p>
+        
+        <p>
+            <b>Improved VAE latent-space structure:</b> Jointly tuning the VAE and diffusion model automatically enhances the latent space structure across different architectures. For SD-VAE, REPA-E reduces high-frequency noise to learn a smoother representation. For IN-VAE with over-smoothed latents, it adds detail to better support generation performance.
+        </p>
+        
+        <p>
+            <b>Enhanced VAE performance:</b> End-to-end tuned VAEs can be used as drop-in replacements for their original counterparts, offering accelerated generation performance across diverse architectures and training settings. Our system achieves state-of-the-art results with gFID of 1.90 without classifier-free guidance and 1.29 with guidance.
+        </p>
+    </section>
+
+    <section>
+        <h2>Approach</h2>
+        <hr>
+        <h3>1. Motivating End-to-End Training with REPA</h3>
+        <p>
+            Training latent diffusion models typically involves a two-stage process: first training a VAE for dimensionality reduction, 
+            then training a diffusion model in the latent space. While end-to-end training would be ideal, we identify three key insights 
+            that motivate our approach:
+        </p>
+
+        <div class="image-grid-three">
+            <div class="image-container" style="flex: 25;">
+                <img src="assets/motivating-repae-p1-v1.webp" alt="Linear evaluation" style="max-width: 100%; height: auto;" loading="lazy">
+            </div>
+            <div class="image-container" style="flex: 38; margin-top: 15px;">
+                <img src="assets/motivating-repa-p2-v2.webp" alt="Representation alignment" style="max-width: 100%; height: auto;" loading="lazy">
+            </div>
+            <div class="image-container" style="flex: 30; margin-left: -15px; margin-top: 42px;">
+                <img src="assets/figure3_v4.webp" alt="Alignment progression" style="max-width: 100%; height: auto;" loading="lazy">
+            </div>
+        </div>
+
+        <ul>
+            <li><b>Naive End-to-End Tuning is Ineffective:</b> Direct backpropagation of diffusion loss to the VAE degrades performance by over-simplifying the latent space, making denoising easier but reducing generation quality.</li>
+            <li><b>Higher Representation Alignment Improves Generation:</b> Greater alignment between diffusion features and vision foundation models (measured via CKNNA scores) correlates with better generation performance.</li>
+            <li><b>VAE Features Limit Alignment:</b> Representation alignment is bottlenecked by VAE features, with scores saturating around 0.4. Backpropagating alignment loss to the VAE addresses this limitation, improving the CKNNA score by over 27%.</li>
+        </ul>
+
+        <h3>2. REPA-E: Representation Alignment for End-to-End Tuning</h3>
+        <p>
+            Based on these insights, we propose REPA-E for jointly tuning both the VAE and diffusion model using representation alignment loss:
+        </p>
+        
+        <ul>
+            <li><b>Batch-Norm Layer:</b> Enables differentiable normalization between the VAE and diffusion model during training.</li>
+            <li><b>End-to-End Alignment Loss:</b> Aligns diffusion model features with pretrained vision model, and backpropagating the alignment loss through both the diffusion model and the VAE encoder.</li>
+            <li><b>Diffusion Loss with Stop-Gradient:</b> Prevents degradation of latent space structure by limiting diffusion loss to diffusion model parameters.</li>
+            <li><b>VAE Regularization:</b> Maintains reconstruction performance through MSE, LPIPS, and GAN losses.</li>
+        </ul>
+
+    </section>
+
+    <section id="Key Outcomes of REPA-E">
+        <h2>Key Outcomes of REPA-E</h2>
+        <hr>
+
+        <h3>1. Superior Image Generation Quality</h3>
+        <center>
+            <div class="figure">
+                <img src="assets/combined.webp" alt="Combined" style="max-width: 90%; height: auto;" loading="lazy">
+            </div>
+        </center>
+
+        <ul>
+            <li><b>Training efficiency improvement:</b> REPA-E achieves gFID of <b>4.07</b> in just 80 epochs, outperforming MaskDiT (<b>5.69</b> with 1600 epochs) and FasterDiT (<b>7.91</b> with 400 epochs)</li>
+            <li><b>Robust performance gains:</b> Demonstrates consistent improvements regardless of model scales (SiT-B/L/XL) or VAE architectures (SD-VAE, IN-VAE, VA-VAE)</li>
+            <li><b>Enhanced image quality across training:</b> Using identical noise and labels, REPA-E generates structurally superior images compared to REPA baseline at 50K, 100K, and 400K training iterations</li>
+        </ul>
+
+        <center>
+            <div class="figure">
+                <img src="assets/visual-scaling-v1.webp" alt="Qualitative comparison between REPA and REPA-E at different training iterations" style="max-width: 95%; height: auto;" loading="lazy">
+            </div>
+        </center>
+
+        <h3>2. End-to-End Training Improves VAE Latent-Space Structure</h3>
+        <center>
+            <div class="figure">
+                <img src="assets/pca-analysis-v5.webp" alt="PCA Analysis of Latent Space" style="max-width: 90%; height: auto;" loading="lazy">
+            </div>
+        </center>
+        <ul>
+            <li><b>PCA visualization:</b> VAE latent samples are projected to RGB using principal component analysis (PCA)</li>
+            <li><b>Adaptive refinement:</b> REPA-E adapts differently to each VAE's unique latent space characteristics</li>
+            <ul>
+                <li><b>SD-VAE enhancement:</b> Reduces high-frequency noise for smoother latent space</li>
+                <li><b>IN-VAE & VA-VAE enhancement:</b> Add structural details to over-smoothed latent representations</li>
+            </ul>
+        </ul>
+
+        <h3>3. End-to-End Tuning Improves VAE Performance</h3>
+        <center>
+            <div class="figure">
+                <img src="assets/system-level-comp.webp" alt="REPA-E Overview" style="max-width: 90%; height: auto;" loading="lazy">
+            </div>
+        </center>
+        <ul>
+            <li><b>Enhanced drop-in replacement:</b> E2E-VAE can serve as a drop-in replacement for their original counterparts in standard LDM training</li>
+            <li><b>Speed up training:</b> Significantly accelerates generation training, achieving gFID of <b>3.46</b> in just 80 epochs (vs. <b>7.90</b> with SD-VAE)</li>
+            <li><b>State-of-the-art generation quality:</b> Achieves a gFID of <b>1.90</b> (w/o CFG) and <b>1.29</b> (w/ CFG) when training with REPA for 800 epochs</li>
+            <!-- <li><b>Cross-architecture compatibility:</b> Delivers consistent improvement in generation quality across different backbones (e.g., SiT, DiT)</li> -->
+        </ul>
+    </section>
+
+    <section id="bibtex">
+        <h2>Citation</h2>
+        <hr>
+        <pre><code>[coming soon]</code></pre>
+    </section>
+
+    <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #888; text-align: center;">
+        <p>We thank the <a href="https://github.com/sihyun-yu/REPA/tree/gh-pages" target="_blank">REPA project</a> for the website template. Last updated: April 2024.</p>
+    </footer>
+
+</div>
+</body>
+</html>
