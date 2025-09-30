@@ -49,13 +49,30 @@
                     <p>
                         Representation alignment guides diffusion model training by distilling knowledge from pretrained vision encoders.
                         But what truly drives its effectiveness: <em>global semantic information</em> or <em>spatial structure</em>?
-                        Through large-scale analysis across 27 vision encoders, we reveal that
-                        <em><strong>spatial structure, not global information, determines generation performance.</strong></em>
+                        Prevailing wisdom says global information.
+                        Through large-scale empirical analysis we reveal that 
+                        <!-- Prevailing wisdom holds that performance of a target representation for generation is heavily tied to its global information. -->
+                        <!-- We challenge this notion through large-scale empirical analysis across 27 vision encoders and different model scales. -->
+                        <!-- Through large-scale analysis across 27 vision encoders, we reveal that -->
+                        <!-- The results are surprising: -->
+                        <em><strong>spatial structure, not global information, drives generation performance of an external representation.</strong></em>
                     </p>
 
                     <!-- Key Points Icon Container -->
                     <div class="icon-container">
                         <div class="icon-item">
+                            <img src="./static/img/icons/accuracy.svg" alt="Accuracy Icon">
+                            <div><strong>Global Information Matters Less</strong>: Target representations with >60% higher ImageNet-1K accuracy (measure of global information) can underperform for generation.</div>
+                        </div>
+                        <div class="icon-item">
+                            <img src="./static/img/icons/spatial.svg" alt="Spatial Structure Icon">
+                            <div><strong>Spatial Structure Matters More</strong>: Spatial structure shows remarkably high correlation (|r| = 0.852) with generation FID, while ImageNet accuracy shows poor correlation (|r| = 0.26).</div>
+                        </div>
+                        <div class="icon-item">
+                            <img src="./static/img/icons/irepa.svg" alt="iREPA Icon">
+                            <div><strong>Accentuating <em>what</em> Matters</strong>: Accentuating transfer of spatial features from target representation to diffusion features consistently improves convergence across all diverse training settings.</div>
+                        </div>
+                        <!-- <div class="icon-item">
                             <img src="./static/img/icons/accuracy.svg" alt="Accuracy Icon">
                             <div><strong>ImageNet Accuracy ≠ Better Generation</strong>: Encoders with 60% lower ImageNet-1K accuracy can outperform higher-accuracy models. SAM2 (24.1%) beats PE-Core-G (82.8%) in generation quality.</div>
                         </div>
@@ -66,7 +83,7 @@
                         <div class="icon-item">
                             <img src="./static/img/icons/irepa.svg" alt="iREPA Icon">
                             <div><strong>Simple Yet Effective</strong>: iREPA requires &lt;4 lines of code change but consistently improves REPA convergence across all tested encoders, model sizes, and training recipes.</div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="button-container">
@@ -74,7 +91,7 @@
                             <span class="icon is-small">
                                 <i class="ai ai-arxiv"></i>
                             </span>
-                            arXiv (Coming Soon)
+                            arXiv
                         </a>
                         <a href="docs/paper/main-arxiv.pdf" class="button paper-link" target="_blank">
                             <span class="icon is-small">
@@ -86,19 +103,19 @@
                             <span class="icon is-small">
                                 <i class="fab fa-github"></i>
                             </span>
-                            <span>Code (Coming Soon)</span>
+                            <span>Code</span>
                         </a>
                         <a href="https://huggingface.co/collections/irepa" class="button" target="_blank">
                             <span class="icon is-small">
                                 <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face logo" style="height: 1em;">
                             </span>
-                            <span>Models (Coming Soon)</span>
+                            <span>Models</span>
                         </a>
                     </div>
                 </div>
                 <div class="header-image">
                     <!-- Flux-generated hero image -->
-                    <img draggable="false" src="static/img/hero.png" alt="Spatial Structure vs Global Information Visualization" class="teaser-image">
+                    <img draggable="false" src="hero-v5.png" alt="Spatial Structure vs Global Information Visualization" class="teaser-image">
                 </div>
             </div>
         </div>
@@ -134,6 +151,9 @@
         </p>
 
         <!-- REPA Quote Box -->
+        <p class="text">
+            Prevailing wisdom holds that performance of a target representation for generation is heavily tied to its global semantic performance (e.g., ImageNet-1K accuracy).
+        </p>
         <div style="margin: 30px auto; max-width: 85%; background-color: #f0f4f8; border-left: 4px solid #508af6; padding: 20px; border-radius: 5px;">
             <p style="margin-top: 0; color: #666; font-size: 0.95em;">The prevailing understanding suggests:</p>
             <blockquote style="margin: 15px 0; padding: 0 20px; font-style: italic; color: #333; line-height: 1.6;">
@@ -147,12 +167,18 @@
         </div>
 
         <p class="text">
-            <strong>We challenge this view.</strong> Through comprehensive experiments across 27 vision encoders and multiple model scales, we reveal three surprising findings:
+            <strong>We challenge this view.</strong> Through large-scale empirical analysis across 27 vision encoders and multiple model scales, we uncover three surprising findings:
             <ol class="text">
+                <li><strong><a href="#motivation">&sect;Global Semantic Information Matters Less</a></strong>: We show that target representations with more than 60% higher ImageNet-1K accuracy can underperform for generation. Thus better global accuracy ≠ better generation.</li>
+                <li><strong><a href="#spatial-structure">&sect;Spatial Structure Matters More</a></strong>: We consider several straightforward metrics to measure spatial self-similarity; showing that all spatial metrics show much higher correlation with generation FID than ImageNet-1K accuracy.</li>
+                <li><strong><a href="#method">&sect;Accentuating what Matters</a></strong>: To further study this, we introduce two straightforward modifications, which specifically accentuate the transfer of spatial information from target representation to di
+                    ffusion features. Our simple method, termed iREPA, consistently improves convergence speed with REPA across diverse settings.</li>
+            </ol>
+            <!-- <ol class="text">
                 <li><strong><a href="#motivation">&sect;Higher Accuracy ≠ Better Generation</a></strong>: Vision encoders with lower ImageNet accuracy can outperform those with higher accuracy for representation alignment.</li>
                 <li><strong><a href="#spatial-structure">&sect;Spatial Structure Drives Performance</a></strong>: Our Spatial Structure Metric (SSM) shows 3× higher correlation with generation FID compared to linear probing accuracy.</li>
                 <li><strong><a href="#method">&sect;iREPA Method</a></strong>: Simple modifications (&lt;4 lines) to accentuate spatial information consistently improve convergence across encoders and model sizes.</li>
-            </ol>
+            </ol> -->
         </p>
 
         <!-- Teaser Figure - Main Highlight -->
@@ -173,15 +199,16 @@
         <div class="icon-row">
             <a href="#motivation" class="icon-link">
                 <img src="./static/img/icons/accuracy-blue.svg" alt="Motivation" class="icon">
-                Higher Accuracy ≠<br>Better Generation
+                <!-- Higher Accuracy ≠<br>Better Generation -->
+                Global Information<br>Matters Less
             </a>
             <a href="#spatial-structure" class="icon-link">
                 <img src="./static/img/icons/spatial-blue.svg" alt="Spatial Structure" class="icon">
-                Spatial Structure<br>Drives Performance
+                Spatial Structure<br>Matters More
             </a>
             <a href="#method" class="icon-link">
                 <img src="./static/img/icons/irepa-blue.svg" alt="Method" class="icon">
-                iREPA<br>Method
+                Accentuating<br>What Matters
             </a>
         </div>
 
@@ -540,7 +567,7 @@
                             <th colspan="2" style="text-align: center;">1 NFE</th>
                         </tr>
                         <tr>
-                            <th style="border-right: 2px solid #ddd;"></th>
+                            <!-- <th style="border-right: 2px solid #ddd;"></th> -->
                             <th style="text-align: center;">IS↑</th>
                             <th style="text-align: center;">FID↓</th>
                             <th style="text-align: center;">IS↑</th>
@@ -605,92 +632,92 @@
                 Both spatial normalization and convolution projection contribute significantly to performance gains.
             </p>
 
-            <div class="table-container" style="margin: 30px auto; max-width: 1100px;">
-                <table class="data-table" style="width: 100%; font-size: 0.9em;">
+            <div class="table-container" style="margin: 30px auto; overflow: visible !important; max-width: 100% !important;">
+                <table class="data-table" style="width: 100%; font-size: 0.85em;">
                     <caption style="margin-bottom: 10px; font-weight: bold;">Table 3: Component ablation (SiT-XL/2, 100K steps)</caption>
                     <thead>
                         <tr>
-                            <th rowspan="2" style="text-align: left; border-right: 2px solid #ddd;">Method</th>
-                            <th colspan="3" style="text-align: center; border-right: 2px solid #ddd;">DINOv2-B</th>
-                            <th colspan="3" style="text-align: center; border-right: 2px solid #ddd;">DINOv3-B</th>
-                            <th colspan="3" style="text-align: center; border-right: 2px solid #ddd;">WebSSL-1B</th>
-                            <th colspan="3" style="text-align: center;">PE-Core-G</th>
+                            <th rowspan="2" style="text-align: left; border-right: 2px solid #ddd; padding: 4px; width: 15%;">Method</th>
+                            <th colspan="3" style="text-align: center; border-right: 2px solid #ddd; padding: 4px;">DINOv2-B</th>
+                            <th colspan="3" style="text-align: center; border-right: 2px solid #ddd; padding: 4px;">DINOv3-B</th>
+                            <th colspan="3" style="text-align: center; border-right: 2px solid #ddd; padding: 4px;">WebSSL-1B</th>
+                            <th colspan="3" style="text-align: center; padding: 4px;">PE-Core-G</th>
                         </tr>
                         <tr>
-                            <th style="text-align: center;">FID↓</th>
-                            <th style="text-align: center;">IS↑</th>
-                            <th style="text-align: center; border-right: 2px solid #ddd;">sFID↓</th>
-                            <th style="text-align: center;">FID↓</th>
-                            <th style="text-align: center;">IS↑</th>
-                            <th style="text-align: center; border-right: 2px solid #ddd;">sFID↓</th>
-                            <th style="text-align: center;">FID↓</th>
-                            <th style="text-align: center;">IS↑</th>
-                            <th style="text-align: center; border-right: 2px solid #ddd;">sFID↓</th>
-                            <th style="text-align: center;">FID↓</th>
-                            <th style="text-align: center;">IS↑</th>
-                            <th style="text-align: center;">sFID↓</th>
+                            <th style="text-align: center; padding: 4px;">FID↓</th>
+                            <th style="text-align: center; padding: 4px;">IS↑</th>
+                            <th style="text-align: center; border-right: 2px solid #ddd; padding: 4px;">sFID↓</th>
+                            <th style="text-align: center; padding: 4px;">FID↓</th>
+                            <th style="text-align: center; padding: 4px;">IS↑</th>
+                            <th style="text-align: center; border-right: 2px solid #ddd; padding: 4px;">sFID↓</th>
+                            <th style="text-align: center; padding: 4px;">FID↓</th>
+                            <th style="text-align: center; padding: 4px;">IS↑</th>
+                            <th style="text-align: center; border-right: 2px solid #ddd; padding: 4px;">sFID↓</th>
+                            <th style="text-align: center; padding: 4px;">FID↓</th>
+                            <th style="text-align: center; padding: 4px;">IS↑</th>
+                            <th style="text-align: center; padding: 4px;">sFID↓</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="text-align: left; border-right: 2px solid #ddd;">Baseline REPA</td>
-                            <td style="text-align: center;">19.1</td>
-                            <td style="text-align: center;">70.3</td>
-                            <td style="text-align: center; border-right: 2px solid #ddd;">5.83</td>
-                            <td style="text-align: center;">21.5</td>
-                            <td style="text-align: center;">63.4</td>
-                            <td style="text-align: center; border-right: 2px solid #ddd;">6.19</td>
-                            <td style="text-align: center;">26.1</td>
-                            <td style="text-align: center;">53.0</td>
-                            <td style="text-align: center; border-right: 2px solid #ddd;">6.90</td>
-                            <td style="text-align: center;">32.4</td>
-                            <td style="text-align: center;">42.7</td>
-                            <td style="text-align: center;">6.70</td>
+                            <td style="text-align: left; border-right: 2px solid #ddd; padding: 2px 4px; font-size: 0.9em;">Baseline REPA</td>
+                            <td style="text-align: center; padding: 2px 4px;">19.06</td>
+                            <td style="text-align: center; padding: 2px 4px;">70.3</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd; padding: 2px 4px;">5.83</td>
+                            <td style="text-align: center; padding: 2px 4px;">21.47</td>
+                            <td style="text-align: center; padding: 2px 4px;">63.4</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd; padding: 2px 4px;">6.19</td>
+                            <td style="text-align: center; padding: 2px 4px;">26.10</td>
+                            <td style="text-align: center; padding: 2px 4px;">53.0</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd; padding: 2px 4px;">6.90</td>
+                            <td style="text-align: center; padding: 2px 4px;">32.35</td>
+                            <td style="text-align: center; padding: 2px 4px;">42.7</td>
+                            <td style="text-align: center; padding: 2px 4px;">6.70</td>
                         </tr>
                         <tr>
-                            <td style="text-align: left; border-right: 2px solid #ddd;">iREPA (w/o spatial norm)</td>
-                            <td style="text-align: center;">18.5</td>
-                            <td style="text-align: center;">73.3</td>
-                            <td style="text-align: center; border-right: 2px solid #ddd;">6.11</td>
-                            <td style="text-align: center;">17.8</td>
-                            <td style="text-align: center;">74.7</td>
-                            <td style="text-align: center; border-right: 2px solid #ddd;">5.81</td>
-                            <td style="text-align: center;">21.2</td>
-                            <td style="text-align: center;">64.6</td>
-                            <td style="text-align: center; border-right: 2px solid #ddd;">6.27</td>
-                            <td style="text-align: center;">25.0</td>
-                            <td style="text-align: center;">57.4</td>
-                            <td style="text-align: center;">6.21</td>
+                            <td style="text-align: left; border-right: 2px solid #ddd; padding: 2px 4px; font-size: 0.9em;">iREPA (w/o spatial norm)</td>
+                            <td style="text-align: center; padding: 2px 4px;">18.52</td>
+                            <td style="text-align: center; padding: 2px 4px;">73.3</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd; padding: 2px 4px;">6.11</td>
+                            <td style="text-align: center; padding: 2px 4px;">17.76</td>
+                            <td style="text-align: center; padding: 2px 4px;">74.7</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd; padding: 2px 4px;">5.81</td>
+                            <td style="text-align: center; padding: 2px 4px;">21.17</td>
+                            <td style="text-align: center; padding: 2px 4px;">64.6</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd; padding: 2px 4px;">6.27</td>
+                            <td style="text-align: center; padding: 2px 4px;">24.97</td>
+                            <td style="text-align: center; padding: 2px 4px;">57.4</td>
+                            <td style="text-align: center; padding: 2px 4px;">6.21</td>
                         </tr>
                         <tr>
-                            <td style="text-align: left; border-right: 2px solid #ddd;">iREPA (w/o conv proj)</td>
-                            <td style="text-align: center;">17.7</td>
-                            <td style="text-align: center;">72.8</td>
-                            <td style="text-align: center; border-right: 2px solid #ddd;">6.03</td>
-                            <td style="text-align: center;">18.3</td>
-                            <td style="text-align: center;">70.8</td>
-                            <td style="text-align: center; border-right: 2px solid #ddd;">6.18</td>
-                            <td style="text-align: center;">18.4</td>
-                            <td style="text-align: center;">71.0</td>
-                            <td style="text-align: center; border-right: 2px solid #ddd;">6.22</td>
-                            <td style="text-align: center;">21.7</td>
-                            <td style="text-align: center;">61.5</td>
-                            <td style="text-align: center;">6.26</td>
+                            <td style="text-align: left; border-right: 2px solid #ddd; padding: 2px 4px; font-size: 0.9em;">iREPA (w/o conv proj)</td>
+                            <td style="text-align: center; padding: 2px 4px;">17.66</td>
+                            <td style="text-align: center; padding: 2px 4px;">72.8</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd; padding: 2px 4px;">6.03</td>
+                            <td style="text-align: center; padding: 2px 4px;">18.28</td>
+                            <td style="text-align: center; padding: 2px 4px;">70.8</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd; padding: 2px 4px;">6.18</td>
+                            <td style="text-align: center; padding: 2px 4px;">18.44</td>
+                            <td style="text-align: center; padding: 2px 4px;">71.0</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd; padding: 2px 4px;">6.22</td>
+                            <td style="text-align: center; padding: 2px 4px;">21.72</td>
+                            <td style="text-align: center; padding: 2px 4px;">61.5</td>
+                            <td style="text-align: center; padding: 2px 4px;">6.26</td>
                         </tr>
                         <tr style="background-color: #fffacd;">
-                            <td style="text-align: left; border-right: 2px solid #ddd;"><strong>iREPA (full)</strong></td>
-                            <td style="text-align: center;"><strong>17.0</strong></td>
-                            <td style="text-align: center;"><strong>77.9</strong></td>
-                            <td style="text-align: center; border-right: 2px solid #ddd;"><strong>6.26</strong></td>
-                            <td style="text-align: center;"><strong>16.3</strong></td>
-                            <td style="text-align: center;"><strong>78.8</strong></td>
-                            <td style="text-align: center; border-right: 2px solid #ddd;"><strong>6.14</strong></td>
-                            <td style="text-align: center;"><strong>16.7</strong></td>
-                            <td style="text-align: center;"><strong>77.5</strong></td>
-                            <td style="text-align: center; border-right: 2px solid #ddd;"><strong>6.18</strong></td>
-                            <td style="text-align: center;"><strong>18.2</strong></td>
-                            <td style="text-align: center;"><strong>75.0</strong></td>
-                            <td style="text-align: center;"><strong>6.03</strong></td>
+                            <td style="text-align: left; border-right: 2px solid #ddd; padding: 2px 4px; font-size: 0.9em;"><strong>iREPA (full)</strong></td>
+                            <td style="text-align: center; padding: 2px 4px;"><strong>16.96</strong></td>
+                            <td style="text-align: center; padding: 2px 4px;"><strong>77.9</strong></td>
+                            <td style="text-align: center; border-right: 2px solid #ddd; padding: 2px 4px;"><strong>6.26</strong></td>
+                            <td style="text-align: center; padding: 2px 4px;"><strong>16.26</strong></td>
+                            <td style="text-align: center; padding: 2px 4px;"><strong>78.8</strong></td>
+                            <td style="text-align: center; border-right: 2px solid #ddd; padding: 2px 4px;"><strong>6.14</strong></td>
+                            <td style="text-align: center; padding: 2px 4px;"><strong>16.66</strong></td>
+                            <td style="text-align: center; padding: 2px 4px;"><strong>77.5</strong></td>
+                            <td style="text-align: center; border-right: 2px solid #ddd; padding: 2px 4px;"><strong>6.18</strong></td>
+                            <td style="text-align: center; padding: 2px 4px;"><strong>18.19</strong></td>
+                            <td style="text-align: center; padding: 2px 4px;"><strong>75.0</strong></td>
+                            <td style="text-align: center; padding: 2px 4px;"><strong>6.03</strong></td>
                         </tr>
                     </tbody>
                 </table>
@@ -716,18 +743,106 @@
         </d-article>
         <d-appendix>
             <h3>BibTeX</h3>
-            <p class="bibtex">
-                @article{singh2025irepa,<br>
-                &nbsp;&nbsp;title={{What matters for Representation Alignment: Global Information or Spatial Structure?}},<br>
-                &nbsp;&nbsp;author={Singh, Jaskirat and Leng, Xingjian and Wu, Zongze and Zheng, Liang and Zhang, Richard and Shechtman, Eli and Xie, Saining},<br>
-                &nbsp;&nbsp;journal={arXiv preprint},<br>
-                &nbsp;&nbsp;year={2025}<br>
-                }
-            </p>
+            <div class="bibtex-container" style="position: relative;">
+                <button class="copy-btn" id="copy-bibtex-btn" onclick="copyBibtex()" style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    padding: 5px 10px;
+                    background: #508af6;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 0.85em;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                    z-index: 10;
+                ">📋 Copy</button>
+                <p class="bibtex" id="bibtex-content">
+                    @article{singh2025irepa,<br>
+                    &nbsp;&nbsp;title={{What matters for Representation Alignment: Global Information or Spatial Structure?}},<br>
+                    &nbsp;&nbsp;author={Singh, Jaskirat and Leng, Xingjian and Wu, Zongze and Zheng, Liang and Zhang, Richard and Shechtman, Eli and Xie, Saining},<br>
+                    &nbsp;&nbsp;journal={arXiv preprint},<br>
+                    &nbsp;&nbsp;year={2025}<br>
+                    }
+                </p>
+            </div>
 
             <d-footnote-list></d-footnote-list>
             <d-citation-list></d-citation-list>
         </d-appendix>
         <script src="./static/js/nav-bar.js"></script>
+
+        <!-- Copy BibTeX functionality -->
+        <style>
+            .bibtex-container:hover .copy-btn {
+                opacity: 1 !important;
+            }
+
+            .copy-btn:hover {
+                background: #3a6ed8 !important;
+                transform: translateY(-1px);
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+
+            .copy-btn.copied {
+                background: #4caf50 !important;
+            }
+        </style>
+
+        <script>
+            function copyBibtex() {
+                // Get the BibTeX text without HTML tags
+                const bibtexElement = document.getElementById('bibtex-content');
+                const bibtexText = bibtexElement.innerText || bibtexElement.textContent;
+
+                // Copy to clipboard
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(bibtexText).then(() => {
+                        showCopySuccess();
+                    }).catch(err => {
+                        // Fallback method
+                        copyWithFallback(bibtexText);
+                    });
+                } else {
+                    // Fallback for older browsers
+                    copyWithFallback(bibtexText);
+                }
+            }
+
+            function copyWithFallback(text) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+
+                try {
+                    document.execCommand('copy');
+                    showCopySuccess();
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                }
+
+                document.body.removeChild(textarea);
+            }
+
+            function showCopySuccess() {
+                const button = document.getElementById('copy-bibtex-btn');
+                const originalText = button.innerHTML;
+
+                // Change button to show success
+                button.innerHTML = '✓ Copied!';
+                button.classList.add('copied');
+
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }
+        </script>
     </body>
 </html>
