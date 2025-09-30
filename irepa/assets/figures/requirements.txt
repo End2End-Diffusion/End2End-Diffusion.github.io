@@ -1,0 +1,8 @@
+## Requirements for figure generation scripts
+
+matplotlib>=3.7.0
+numpy>=1.24.0
+pandas>=2.0.0
+seaborn>=0.12.0
+pillow>=10.0.0
+scipy>=1.10.0

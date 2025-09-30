@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>What matters for Representation Alignment: Global Information or Spatial Structure?</title>
+        <link rel="icon" type="image/x-icon" href="/static/img/icons/favicon.ico">
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Open Graph -->
+        <meta property="og:url" content="https://end2end-diffusion.github.io/irepa" />
+        <meta property="og:title" content="What matters for Representation Alignment: Global Information or Spatial Structure?" />
+        <meta property="og:description" content="We investigate what drives representation alignment in diffusion transformers: global semantic information or spatial structure? Through large-scale analysis, we show spatial structure matters more than ImageNet accuracy." />
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="What matters for Representation Alignment: Global Information or Spatial Structure?" />
+        <meta name="twitter:description" content="We investigate what drives representation alignment in diffusion transformers: global semantic information or spatial structure? Through large-scale analysis, we show spatial structure matters more than ImageNet accuracy." />
+
+        <script src="./static/js/distill_template.v2.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+        <script defer="" src="./static/js/hider.js"></script>
+
+        <link rel="stylesheet" href="./static/css/style.css">
+        <link rel="stylesheet" href="./static/css/custom.css">
+        <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js" integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+            onload="renderMathInElement(document.body);"></script>
+        <script defer src="./static/js/fontawesome.all.min.js"></script>
+
+        <!-- medium zoom -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+        <script defer src="./static/js/medium-zoom.min.js"></script>
+        <script defer src="./static/js/zoom.js"></script>
+    </head>
+    <body>
+        <div class="header-wrapper">
+            <div class="header-container" id="header-container">
+                <div class="header-content">
+                    <h1 style="margin-top: 0px">What matters for Representation Alignment:</h1>
+                    <h2>Global Information or <em>Spatial Structure</em>?</h2>
+
+                    <p>
+                        Representation alignment guides diffusion model training by distilling knowledge from pretrained vision encoders.
+                        But what truly drives its effectiveness: <em>global semantic information</em> or <em>spatial structure</em>?
+                        Through large-scale analysis across 27 vision encoders, we reveal that
+                        <em><strong>spatial structure, not global information, determines generation performance.</strong></em>
+                    </p>
+
+                    <!-- Key Points Icon Container -->
+                    <div class="icon-container">
+                        <div class="icon-item">
+                            <img src="./static/img/icons/accuracy.svg" alt="Accuracy Icon">
+                            <div><strong>ImageNet Accuracy ≠ Better Generation</strong>: Encoders with 60% lower ImageNet-1K accuracy can outperform higher-accuracy models. SAM2 (24.1%) beats PE-Core-G (82.8%) in generation quality.</div>
+                        </div>
+                        <div class="icon-item">
+                            <img src="./static/img/icons/spatial.svg" alt="Spatial Structure Icon">
+                            <div><strong>Spatial Structure Dominates</strong>: Our SSM metric shows remarkably high correlation (|r| = 0.852) with generation FID, while ImageNet accuracy shows poor correlation (|r| = 0.26).</div>
+                        </div>
+                        <div class="icon-item">
+                            <img src="./static/img/icons/irepa.svg" alt="iREPA Icon">
+                            <div><strong>Simple Yet Effective</strong>: iREPA requires &lt;4 lines of code change but consistently improves REPA convergence across all tested encoders, model sizes, and training recipes.</div>
+                        </div>
+                    </div>
+
+                    <div class="button-container">
+                        <a href="https://arxiv.org/abs/coming-soon" class="button paper-link" target="_blank">
+                            <span class="icon is-small">
+                                <i class="ai ai-arxiv"></i>
+                            </span>
+                            arXiv (Coming Soon)
+                        </a>
+                        <a href="docs/paper/main-arxiv.pdf" class="button paper-link" target="_blank">
+                            <span class="icon is-small">
+                                <i class="fas fa-file-pdf"></i>
+                            </span>
+                            <span>PDF</span>
+                        </a>
+                        <a href="https://github.com/end2end-diffusion/irepa" class="button" target="_blank">
+                            <span class="icon is-small">
+                                <i class="fab fa-github"></i>
+                            </span>
+                            <span>Code (Coming Soon)</span>
+                        </a>
+                        <a href="https://huggingface.co/collections/irepa" class="button" target="_blank">
+                            <span class="icon is-small">
+                                <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face logo" style="height: 1em;">
+                            </span>
+                            <span>Models (Coming Soon)</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="header-image">
+                    <!-- Flux-generated hero image -->
+                    <img draggable="false" src="static/img/hero.png" alt="Spatial Structure vs Global Information Visualization" class="teaser-image">
+                </div>
+            </div>
+        </div>
+    <d-article>
+        <div class="byline">
+            <div class="byline-container">
+                <p>
+                    <a href="#" class="author-link" target="_blank">Jaskirat Singh<sup>1,2</sup></a> &emsp;
+                    <a href="#" class="author-link" target="_blank">Xingjian Leng<sup>2</sup></a> &emsp;
+                    <a href="#" class="author-link" target="_blank">Zongze Wu<sup>1</sup></a> &emsp;
+                    <br>
+                    <a href="#" class="author-link" target="_blank">Liang Zheng<sup>2</sup></a> &emsp;
+                    <a href="#" class="author-link" target="_blank">Richard Zhang<sup>1</sup></a> &emsp;
+                    <a href="#" class="author-link" target="_blank">Eli Shechtman<sup>1</sup></a> &emsp;
+                    <a href="#" class="author-link" target="_blank">Saining Xie<sup>3</sup></a>
+                    <p></p>
+                </p>
+                <p style="text-align: center;">
+                    <span class="affiliation-link"><sup>1</sup>Adobe Research</span> &emsp;
+                    <span class="affiliation-link"><sup>2</sup>ANU</span> &emsp;
+                    <span class="affiliation-link"><sup>3</sup>New York University</span>
+                </p>
+                <p style="text-align: center; margin-bottom: 0;">
+                    <span class="author-note"><sup>*</sup>Done during internship at Adobe Research</span>
+                </p>
+            </div>
+        </div>
+
+        <p class="text">
+            Representation alignment (REPA) accelerates diffusion model training by distilling knowledge from pretrained vision encoders to intermediate diffusion features.
+            A fundamental question persists: what aspect of the target representation drives generation performance –
+            its <strong>global semantic information</strong> (measured by ImageNet-1K accuracy) or its <strong>spatial structure</strong> (pairwise similarity between patch tokens)?
+        </p>
+
+        <!-- REPA Quote Box -->
+        <div style="margin: 30px auto; max-width: 85%; background-color: #f0f4f8; border-left: 4px solid #508af6; padding: 20px; border-radius: 5px;">
+            <p style="margin-top: 0; color: #666; font-size: 0.95em;">The prevailing understanding suggests:</p>
+            <blockquote style="margin: 15px 0; padding: 0 20px; font-style: italic; color: #333; line-height: 1.6;">
+                "When a diffusion transformer is aligned with a pretrained encoder that offers more semantically meaningful representations
+                (i.e., better linear probing results), the model not only captures better semantics but also exhibits enhanced generation performance,
+                as reflected by improved validation accuracy with linear probing and lower FID scores."
+            </blockquote>
+            <p style="text-align: right; margin-bottom: 0; color: #666; font-size: 0.9em;">
+                — REPA (Yu et al., 2024)
+            </p>
+        </div>
+
+        <p class="text">
+            <strong>We challenge this view.</strong> Through comprehensive experiments across 27 vision encoders and multiple model scales, we reveal three surprising findings:
+            <ol class="text">
+                <li><strong><a href="#motivation">&sect;Higher Accuracy ≠ Better Generation</a></strong>: Vision encoders with lower ImageNet accuracy can outperform those with higher accuracy for representation alignment.</li>
+                <li><strong><a href="#spatial-structure">&sect;Spatial Structure Drives Performance</a></strong>: Our Spatial Structure Metric (SSM) shows 3× higher correlation with generation FID compared to linear probing accuracy.</li>
+                <li><strong><a href="#method">&sect;iREPA Method</a></strong>: Simple modifications (&lt;4 lines) to accentuate spatial information consistently improve convergence across encoders and model sizes.</li>
+            </ol>
+        </p>
+
+        <!-- Teaser Figure - Main Highlight -->
+        <d-figure id="fig-teaser" style="margin-top: 40px; margin-bottom: 40px;">
+            <figure>
+                <img data-zoomable="" draggable="false" src="static/img/teaser-v2.png" alt="Teaser: Spatial Structure vs Global Information">
+                <figcaption>
+                    <strong>Spatial structure drives representation alignment, not global information.</strong>
+                    Our analysis reveals that vision encoders with better spatial structure consistently achieve superior generation quality,
+                    even when they have significantly lower ImageNet accuracy.
+                    The Spatial Structure Metric (SSM) shows remarkably high correlation with generation performance (|r| = 0.852),
+                    while ImageNet accuracy shows poor correlation (|r| = 0.26).
+                </figcaption>
+            </figure>
+        </d-figure>
+
+        <!-- Jump to Sections (Cambrian style) -->
+        <div class="icon-row">
+            <a href="#motivation" class="icon-link">
+                <img src="./static/img/icons/accuracy-blue.svg" alt="Motivation" class="icon">
+                Higher Accuracy ≠<br>Better Generation
+            </a>
+            <a href="#spatial-structure" class="icon-link">
+                <img src="./static/img/icons/spatial-blue.svg" alt="Spatial Structure" class="icon">
+                Spatial Structure<br>Drives Performance
+            </a>
+            <a href="#method" class="icon-link">
+                <img src="./static/img/icons/irepa-blue.svg" alt="Method" class="icon">
+                iREPA<br>Method
+            </a>
+        </div>
+
+        <p class="click-hint" style="width: 85%;">
+            <img src="static/img/icons/click.gif" style="width: 1.5rem">
+            <strong>Click to jump to each section.</strong>
+        </p>
+
+        <hr>
+
+        <!-- Motivation Section -->
+        <div id='motivation' class="motivation-block">
+            <h1 class="text">Motivation: Global Information Matters Less</h1>
+
+            <p class="text">
+                We identify four key trends in representation alignment that cannot be explained by global accuracy (ImageNet-1K performance).
+                These observations challenge the conventional assumption that better classification accuracy implies better generation with REPA.
+            </p>
+
+            <h3 class="text">Trend 1: Recent Vision Encoders Show Inverse Patterns</h3>
+            <p class="text">
+                Recent vision encoders exhibit surprising inverse relationships between accuracy and generation quality.
+                PE-Core-G (1.88B params, 82.8% accuracy) performs worse than PE-Spatial-B (80M params, 53.1% accuracy) with FID 32.3 vs 21.0.
+                Similarly, WebSSL-1B (76.0% accuracy) underperforms PE-Spatial-B despite having 23% higher ImageNet accuracy, yielding FID 26.1 vs 21.0.
+            </p>
+
+            <d-figure id="fig-anecdotal" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure style="display: flex; gap: 20px;">
+                    <img data-zoomable="" draggable="false" src="static/img/spatial-pe-v3.png" alt="PE-G vs PE-Spatial-B comparison" style="width: 48%;">
+                    <img data-zoomable="" draggable="false" src="static/img/spatial-webssl-v3.png" alt="WebSSL-1B vs PE-Spatial-B comparison" style="width: 48%;">
+                </figure>
+                <figcaption>
+                    <strong>Vision encoders with higher accuracy can have worse generation.</strong>
+                    Left: PE-G (82.8% acc) vs PE-Spatial-B (53.1% acc) - despite higher validation accuracy, PE-G shows worse generation quality.
+                    Right: WebSSL-1B (76.0% acc) vs PE-Spatial-B (53.1% acc) - similarly, WebSSL-1B has better global performance but worse generation.
+                    Spatial self-similarity provides a better predictor of generation quality. All results at 100K using SiT-XL/2 and REPA.
+                </figcaption>
+            </d-figure>
+
+            <h3 class="text">Trend 2: SAM2 Outperforms "Better" Vision Encoders</h3>
+            <p class="text">
+                SAM2-S, with only 24.1% ImageNet accuracy, achieves better generation performance than encoders with ~60% higher accuracy.
+                This tiny model (46M params) outperforms giants like PE-Core-G (82.8% accuracy) when used for REPA,
+                demonstrating that global semantic understanding is not the key driver.
+            </p>
+
+            <h3 class="text">Trend 3: Larger Models Within Same Family Perform Worse</h3>
+            <p class="text">
+                Contrary to expectations, larger model variants within the same encoder family often lead to similar (DINOv2) or worse (PE, C-RADIO) generation performance.
+                Despite having better ImageNet accuracy, these larger models fail to improve—and sometimes harm—generation quality with REPA.
+            </p>
+
+            <h3 class="text">Trend 4: Adding Global Information Actively Hurts Generation</h3>
+            <p class="text">
+                In controlled experiments mixing CLS tokens into patch representations (α ∈ [0, 0.5]),
+                linear probing accuracy improves from 70.7% to 78.5%.
+                Yet generation quality deteriorates significantly, with FID worsening from 19.2 to 25.4.
+                This proves that injecting global information actively harms generation performance.
+            </p>
+
+            <d-figure id="fig-controlled" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                        <!-- Top row: Linear Probing -->
+                        <img data-zoomable="" draggable="false" src="static/img/sam_gfid_vs_lp.png" alt="SAM2 vs better encoders - Linear Probing">
+                        <img data-zoomable="" draggable="false" src="static/img/pe_gfid_vs_lp.png" alt="Larger models worse FID - Linear Probing">
+                        <img data-zoomable="" draggable="false" src="static/img/cls_gfid_vs_lp.png" alt="CLS mixing - Linear Probing">
+
+                        <!-- Bottom row: Spatial Structure -->
+                        <img data-zoomable="" draggable="false" src="static/img/sam_gfid_vs_lds.png" alt="SAM2 vs better encoders - Spatial Structure">
+                        <img data-zoomable="" draggable="false" src="static/img/pe_gfid_vs_ssm.png" alt="Larger models worse FID - Spatial Structure">
+                        <img data-zoomable="" draggable="false" src="static/img/cls_gfid_vs_lds.png" alt="CLS mixing - Spatial Structure">
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 5px; text-align: center; font-size: 0.9em;">
+                        <div>(a) SAM2 vs "better" encoders</div>
+                        <div>(b) Larger models but worse FID</div>
+                        <div>(c) Adding global info hurts FID</div>
+                    </div>
+                </figure>
+                <figcaption style="margin-top: 15px;">
+                    <strong>Higher global information does not imply better REPA performance.</strong>
+                    <strong>Top row:</strong> Several trends showing global performance (linear probing) does not correlate well with generation FID.
+                    (a) SAM2-S with only 24.1% accuracy outperforms models with ~60% higher accuracy.
+                    (b) Larger encoders within same family can have better validation but worse generation.
+                    (c) Adding global information via CLS token improves accuracy but hurts generation.
+                    <strong>Bottom row:</strong> Spatial structure provides a much better indicator for generation performance.
+                </figcaption>
+            </d-figure>
+
+            <p class="text" style="margin-top: 30px; font-style: italic;">
+                These trends cannot be explained by global accuracy. We next show that spatial structure provides a significantly better predictor of generation performance...
+            </p>
+        </div>
+
+        <hr>
+
+        <!-- Spatial Structure Analysis -->
+        <div id='spatial-structure' class="spatial-structure-block">
+            <h1 class="text">Spatial Structure Provides Better Signal</h1>
+
+            <h3 class="text">Spatial structure correlates much higher with generation performance</h3>
+            <p class="text">
+                To quantify spatial structure, we measure the spatial self-similarity between patch tokens - essentially how similarity varies with spatial distance.
+                We perform large-scale correlation analysis across 27 diverse vision encoders.
+            </p>
+
+            <d-figure id="fig-correlation">
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/spatial_metrics_comparison-sit-xl-2.png" alt="Spatial structure correlation">
+                    <figcaption>
+                        <strong>Spatial structure shows higher correlation with generation quality than linear probing.</strong>
+                        Correlation analysis across 27 diverse vision encoders with SiT-XL/2 and REPA.
+                        Linear probing shows weak correlation with FID (Pearson |r| = 0.260), while all spatial structure metrics
+                        demonstrate much stronger correlation: LDS (|r| = 0.852), SRSS (|r| = 0.885), CDS (|r| = 0.847), and RMSC (|r| = 0.888).
+                    </figcaption>
+                </figure>
+            </d-figure>
+
+            <h3 class="text">Trend generalizes across model scales</h3>
+            <p class="text">
+                The correlation pattern holds consistently across different model sizes - SiT-B, SiT-L, and SiT-XL.
+            </p>
+
+            <d-figure id="fig-model-scales">
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/correlation_across_modelsizes.png" alt="Correlation across model scales">
+                    <figcaption>
+                        <strong>Correlation analysis across model scales.</strong>
+                        Linear probing (left) shows weak correlation (|r| < 0.306) while spatial structure (right)
+                        maintains strong correlation (|r| > 0.826) across all model sizes.
+                    </figcaption>
+                </figure>
+            </d-figure>
+
+            <h3 class="text">If spatial is important, can we use SIFT or HOG?</h3>
+            <p class="text">
+                Surprisingly, yes. Classical spatial features like SIFT, HOG, and intermediate VGG features all lead to performance gains with REPA,
+                providing further evidence that spatial structure alone drives effectiveness.
+            </p>
+
+            <div style="width: 50%; margin: 0 auto;">
+                <d-figure id="fig-sift-hog">
+                    <figure>
+                        <img data-zoomable="" draggable="false" src="static/img/gfid_sift_hog.png" alt="SIFT and HOG performance">
+                        <figcaption>
+                            <strong>Classical spatial features work with REPA.</strong>
+                            SIFT, HOG and VGG intermediate features achieve reasonable FID scores,
+                            demonstrating that spatial structure without semantic information can still benefit representation alignment.
+                        </figcaption>
+                    </figure>
+                </d-figure>
+            </div>
+
+            <h3 class="text">Can spatial metrics explain improvements with REPA?</h3>
+            <p class="text">
+                Yes. The spatial structure metrics can explain both the gains from baseline REPA and our improved iREPA method.
+            </p>
+
+            <div style="width: 50%; margin: 0 auto;">
+                <d-figure id="fig-ssm-explains">
+                    <figure>
+                        <img data-zoomable="" draggable="false" src="static/img/ssm-explains-repa.png" alt="SSM explains REPA gains">
+                        <figcaption>
+                            <strong>Spatial metrics explain REPA effectiveness.</strong>
+                            Higher spatial structure scores correlate with better generation performance,
+                            explaining gains from both REPA and iREPA training recipes.
+                        </figcaption>
+                    </figure>
+                </d-figure>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Method Section -->
+        <div id='method' class="method-block">
+            <h1 class="text">iREPA: Accentuating Spatial Information Transfer</h1>
+
+            <p class="text">
+                Building on the insight that spatial structure drives REPA performance, we introduce two straightforward modifications to enhance the transfer of spatial information from target representation to diffusion features.
+            </p>
+
+            <h3 class="text">1. Convolutional Projection Layer Instead of MLP</h3>
+            <p class="text">
+                The standard REPA uses a 3-layer MLP to map diffusion features to target representation dimensions.
+                However, this MLP projection is lossy and diminishes spatial contrast between patch tokens.
+                We replace it with a lightweight convolutional layer (kernel size 3) that naturally preserves local spatial relationships.
+            </p>
+
+            <d-figure id="fig-conv-proj">
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/viz-simplerproj-layer8.png" alt="Convolution vs MLP projection comparison">
+                    <figcaption>
+                        <strong>Simpler projection layer for REPA.</strong>
+                        Standard MLP projection layer in REPA (middle) loses spatial information while transferring features from target representation (left) to diffusion features.
+                        Using a simpler convolution layer leads to better spatial information transfer (right).
+                        All visualizations at layer 8 with SiT-L/2 and REPA at 100K steps.
+                    </figcaption>
+                </figure>
+            </d-figure>
+
+            <h3 class="text">2. Spatial Normalization Layer</h3>
+            <p class="text">
+                Patch tokens of pretrained vision encoders contain a global component that limits spatial contrast.
+                This causes tokens in one semantic region (e.g., tomato) to show high similarity with unrelated tokens (e.g., background).
+                We introduce spatial normalization that sacrifices this global information to enhance spatial contrast between patches:
+            </p>
+            <p class="text" style="text-align: center; font-style: italic;">
+                y = (x - 𝔼[x]) / √(Var[x] + ε)
+            </p>
+            <p class="text">
+                where expectations are computed across the spatial dimension.
+            </p>
+
+            <d-figure id="fig-spatial-norm">
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/viz-spatialnorm-main-v1.png" alt="Spatial normalization effect">
+                    <figcaption>
+                        <strong>Spatial normalization layer.</strong>
+                        Patch tokens of pretrained vision encoders have a global component which limits spatial contrast.
+                        This causes tokens in one semantic region (e.g., tomato) to show decent cosine similarity with unrelated tokens (e.g., background or cucumber).
+                        Spatial normalization sacrifices global information to improve spatial contrast, leading to better generation performance.
+                    </figcaption>
+                </figure>
+            </d-figure>
+
+            <h3 class="text">Overall Impact</h3>
+            <p class="text">
+                Together, these two modifications significantly enhance the spatial structure of diffusion features,
+                leading to consistently improved convergence speed across diverse encoders and model sizes.
+            </p>
+
+            <d-figure id="fig-irepa-impact">
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/viz-irepa-comparison-layer8.png" alt="Overall impact of iREPA">
+                    <figcaption>
+                        <strong>Overall impact of iREPA on spatial structure.</strong>
+                        Comparison of diffusion features' spatial structure between baseline REPA and our improved recipe (iREPA).
+                        iREPA produces features with clearer spatial organization and better semantic coherence.
+                    </figcaption>
+                </figure>
+            </d-figure>
+
+            <p class="text">
+                Despite requiring less than 4 lines of code change, iREPA consistently improves convergence speed across diverse encoders (DINOv2, CLIP, WebSSL, PE-Core),
+                model sizes (SiT-B, SiT-L, SiT-XL), and training recipes including REPA-E and Meanflow with REPA.
+            </p>
+        </div>
+
+        <hr>
+
+        <!-- Results Section -->
+        <div id='results' class="results-block">
+            <h1 class="text">Key Results</h1>
+
+            <h3 class="text">1. Accentuating Spatial Transfer Improves Convergence Speed</h3>
+            <p class="text">
+                iREPA consistently achieves faster convergence across diverse vision encoders and model sizes.
+            </p>
+
+            <d-figure id="fig-convergence">
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/convergence_fid_v2.png" alt="Convergence results">
+                    <figcaption>
+                        <strong>Convergence speed improvement.</strong>
+                        Accentuating transfer of spatial features from target representation to diffusion model consistently improves convergence.
+                        Results shown across multiple encoders (DINOv3-B, WebSSL-1B, PE-Core-G, CLIP-L, MoCov3, PE-Lang-G) and model sizes (SiT-XL/2, SiT-B/2).
+                    </figcaption>
+                </figure>
+            </d-figure>
+
+            <h3 class="text">2. Generalization Across Training Recipes</h3>
+            <p class="text">
+                iREPA improvements generalize to different training recipes including REPA-E and MeanFlow with REPA.
+            </p>
+
+            <div class="table-container" style="margin: 30px auto; max-width: 900px;">
+                <table class="data-table" style="width: 100%; font-size: 0.9em;">
+                    <caption style="margin-bottom: 10px; font-weight: bold;">Table 2a: REPA-E (SiT-XL/2, 100K steps)</caption>
+                    <thead>
+                        <tr>
+                            <th style="text-align: left;">Encoder</th>
+                            <th style="text-align: center;">IS↑</th>
+                            <th style="text-align: center;">FID↓</th>
+                            <th style="text-align: center;">sFID↓</th>
+                            <th style="text-align: center;">Prec.↑</th>
+                            <th style="text-align: center;">Rec.↑</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: left;">WebSSL-1B</td>
+                            <td style="text-align: center;">52.8</td>
+                            <td style="text-align: center;">26.5</td>
+                            <td style="text-align: center;">5.20</td>
+                            <td style="text-align: center;">0.620</td>
+                            <td style="text-align: center;">0.585</td>
+                        </tr>
+                        <tr style="background-color: #f0f8ff;">
+                            <td style="text-align: left;"><strong>+iREPA-E</strong></td>
+                            <td style="text-align: center;"><strong>87.0</strong></td>
+                            <td style="text-align: center;"><strong>13.2</strong></td>
+                            <td style="text-align: center;"><strong>5.28</strong></td>
+                            <td style="text-align: center;"><strong>0.699</strong></td>
+                            <td style="text-align: center;"><strong>0.598</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">PE-G</td>
+                            <td style="text-align: center;">50.9</td>
+                            <td style="text-align: center;">25.9</td>
+                            <td style="text-align: center;">5.68</td>
+                            <td style="text-align: center;">0.612</td>
+                            <td style="text-align: center;">0.576</td>
+                        </tr>
+                        <tr style="background-color: #f0f8ff;">
+                            <td style="text-align: left;"><strong>+iREPA-E</strong></td>
+                            <td style="text-align: center;"><strong>80.0</strong></td>
+                            <td style="text-align: center;"><strong>16.4</strong></td>
+                            <td style="text-align: center;"><strong>5.40</strong></td>
+                            <td style="text-align: center;"><strong>0.667</strong></td>
+                            <td style="text-align: center;"><strong>0.616</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">DINOv3-B</td>
+                            <td style="text-align: center;">82.2</td>
+                            <td style="text-align: center;">14.4</td>
+                            <td style="text-align: center;">4.68</td>
+                            <td style="text-align: center;">0.694</td>
+                            <td style="text-align: center;">0.596</td>
+                        </tr>
+                        <tr style="background-color: #f0f8ff;">
+                            <td style="text-align: left;"><strong>+iREPA-E</strong></td>
+                            <td style="text-align: center;"><strong>93.6</strong></td>
+                            <td style="text-align: center;"><strong>11.7</strong></td>
+                            <td style="text-align: center;"><strong>4.57</strong></td>
+                            <td style="text-align: center;"><strong>0.703</strong></td>
+                            <td style="text-align: center;"><strong>0.613</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-container" style="margin: 30px auto; max-width: 1000px;">
+                <table class="data-table" style="width: 100%; font-size: 0.9em;">
+                    <caption style="margin-bottom: 10px; font-weight: bold;">Table 2b: MeanFlow w/ REPA (SiT-B/2, 100K steps)</caption>
+                    <thead>
+                        <tr>
+                            <th rowspan="3" style="text-align: left; border-right: 2px solid #ddd;">Encoder</th>
+                            <th colspan="4" style="text-align: center; border-right: 2px solid #ddd;">w/o CFG</th>
+                            <th colspan="4" style="text-align: center;">w/ CFG (2.0)</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="text-align: center;">4 NFE</th>
+                            <th colspan="2" style="text-align: center; border-right: 2px solid #ddd;">1 NFE</th>
+                            <th colspan="2" style="text-align: center;">4 NFE</th>
+                            <th colspan="2" style="text-align: center;">1 NFE</th>
+                        </tr>
+                        <tr>
+                            <th style="border-right: 2px solid #ddd;"></th>
+                            <th style="text-align: center;">IS↑</th>
+                            <th style="text-align: center;">FID↓</th>
+                            <th style="text-align: center;">IS↑</th>
+                            <th style="text-align: center; border-right: 2px solid #ddd;">FID↓</th>
+                            <th style="text-align: center;">IS↑</th>
+                            <th style="text-align: center;">FID↓</th>
+                            <th style="text-align: center;">IS↑</th>
+                            <th style="text-align: center;">FID↓</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: left; border-right: 2px solid #ddd;">WebSSL-1B</td>
+                            <td style="text-align: center;">27.2</td>
+                            <td style="text-align: center;">51.4</td>
+                            <td style="text-align: center;">24.1</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd;">58.7</td>
+                            <td style="text-align: center;">87.9</td>
+                            <td style="text-align: center;">16.6</td>
+                            <td style="text-align: center;">69.1</td>
+                            <td style="text-align: center;">23.7</td>
+                        </tr>
+                        <tr style="background-color: #f0f8ff;">
+                            <td style="text-align: left; border-right: 2px solid #ddd;"><strong>+iREPA</strong></td>
+                            <td style="text-align: center;"><strong>31.5</strong></td>
+                            <td style="text-align: center;"><strong>45.7</strong></td>
+                            <td style="text-align: center;"><strong>27.3</strong></td>
+                            <td style="text-align: center; border-right: 2px solid #ddd;"><strong>55.7</strong></td>
+                            <td style="text-align: center;"><strong>100.7</strong></td>
+                            <td style="text-align: center;"><strong>13.9</strong></td>
+                            <td style="text-align: center;"><strong>78.7</strong></td>
+                            <td style="text-align: center;"><strong>20.7</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; border-right: 2px solid #ddd;">DINOv3-B</td>
+                            <td style="text-align: center;">28.4</td>
+                            <td style="text-align: center;">49.6</td>
+                            <td style="text-align: center;">25.5</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd;">57.0</td>
+                            <td style="text-align: center;">93.3</td>
+                            <td style="text-align: center;">15.6</td>
+                            <td style="text-align: center;">72.4</td>
+                            <td style="text-align: center;">22.6</td>
+                        </tr>
+                        <tr style="background-color: #f0f8ff;">
+                            <td style="text-align: left; border-right: 2px solid #ddd;"><strong>+iREPA</strong></td>
+                            <td style="text-align: center;"><strong>33.6</strong></td>
+                            <td style="text-align: center;"><strong>44.5</strong></td>
+                            <td style="text-align: center;"><strong>29.7</strong></td>
+                            <td style="text-align: center; border-right: 2px solid #ddd;"><strong>53.8</strong></td>
+                            <td style="text-align: center;"><strong>124.5</strong></td>
+                            <td style="text-align: center;"><strong>11.1</strong></td>
+                            <td style="text-align: center;"><strong>98.9</strong></td>
+                            <td style="text-align: center;"><strong>17.3</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text">3. Ablation Study: Role of Components</h3>
+            <p class="text">
+                Both spatial normalization and convolution projection contribute significantly to performance gains.
+            </p>
+
+            <div class="table-container" style="margin: 30px auto; max-width: 1100px;">
+                <table class="data-table" style="width: 100%; font-size: 0.9em;">
+                    <caption style="margin-bottom: 10px; font-weight: bold;">Table 3: Component ablation (SiT-XL/2, 100K steps)</caption>
+                    <thead>
+                        <tr>
+                            <th rowspan="2" style="text-align: left; border-right: 2px solid #ddd;">Method</th>
+                            <th colspan="3" style="text-align: center; border-right: 2px solid #ddd;">DINOv2-B</th>
+                            <th colspan="3" style="text-align: center; border-right: 2px solid #ddd;">DINOv3-B</th>
+                            <th colspan="3" style="text-align: center; border-right: 2px solid #ddd;">WebSSL-1B</th>
+                            <th colspan="3" style="text-align: center;">PE-Core-G</th>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center;">FID↓</th>
+                            <th style="text-align: center;">IS↑</th>
+                            <th style="text-align: center; border-right: 2px solid #ddd;">sFID↓</th>
+                            <th style="text-align: center;">FID↓</th>
+                            <th style="text-align: center;">IS↑</th>
+                            <th style="text-align: center; border-right: 2px solid #ddd;">sFID↓</th>
+                            <th style="text-align: center;">FID↓</th>
+                            <th style="text-align: center;">IS↑</th>
+                            <th style="text-align: center; border-right: 2px solid #ddd;">sFID↓</th>
+                            <th style="text-align: center;">FID↓</th>
+                            <th style="text-align: center;">IS↑</th>
+                            <th style="text-align: center;">sFID↓</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: left; border-right: 2px solid #ddd;">Baseline REPA</td>
+                            <td style="text-align: center;">19.1</td>
+                            <td style="text-align: center;">70.3</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd;">5.83</td>
+                            <td style="text-align: center;">21.5</td>
+                            <td style="text-align: center;">63.4</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd;">6.19</td>
+                            <td style="text-align: center;">26.1</td>
+                            <td style="text-align: center;">53.0</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd;">6.90</td>
+                            <td style="text-align: center;">32.4</td>
+                            <td style="text-align: center;">42.7</td>
+                            <td style="text-align: center;">6.70</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; border-right: 2px solid #ddd;">iREPA (w/o spatial norm)</td>
+                            <td style="text-align: center;">18.5</td>
+                            <td style="text-align: center;">73.3</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd;">6.11</td>
+                            <td style="text-align: center;">17.8</td>
+                            <td style="text-align: center;">74.7</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd;">5.81</td>
+                            <td style="text-align: center;">21.2</td>
+                            <td style="text-align: center;">64.6</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd;">6.27</td>
+                            <td style="text-align: center;">25.0</td>
+                            <td style="text-align: center;">57.4</td>
+                            <td style="text-align: center;">6.21</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; border-right: 2px solid #ddd;">iREPA (w/o conv proj)</td>
+                            <td style="text-align: center;">17.7</td>
+                            <td style="text-align: center;">72.8</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd;">6.03</td>
+                            <td style="text-align: center;">18.3</td>
+                            <td style="text-align: center;">70.8</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd;">6.18</td>
+                            <td style="text-align: center;">18.4</td>
+                            <td style="text-align: center;">71.0</td>
+                            <td style="text-align: center; border-right: 2px solid #ddd;">6.22</td>
+                            <td style="text-align: center;">21.7</td>
+                            <td style="text-align: center;">61.5</td>
+                            <td style="text-align: center;">6.26</td>
+                        </tr>
+                        <tr style="background-color: #fffacd;">
+                            <td style="text-align: left; border-right: 2px solid #ddd;"><strong>iREPA (full)</strong></td>
+                            <td style="text-align: center;"><strong>17.0</strong></td>
+                            <td style="text-align: center;"><strong>77.9</strong></td>
+                            <td style="text-align: center; border-right: 2px solid #ddd;"><strong>6.26</strong></td>
+                            <td style="text-align: center;"><strong>16.3</strong></td>
+                            <td style="text-align: center;"><strong>78.8</strong></td>
+                            <td style="text-align: center; border-right: 2px solid #ddd;"><strong>6.14</strong></td>
+                            <td style="text-align: center;"><strong>16.7</strong></td>
+                            <td style="text-align: center;"><strong>77.5</strong></td>
+                            <td style="text-align: center; border-right: 2px solid #ddd;"><strong>6.18</strong></td>
+                            <td style="text-align: center;"><strong>18.2</strong></td>
+                            <td style="text-align: center;"><strong>75.0</strong></td>
+                            <td style="text-align: center;"><strong>6.03</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Conclusion -->
+        <div id="conclusion" style="position: relative; margin-top: 40px; margin-bottom: 0px;">
+            <h2 class="text" style="margin-top:0px; margin-bottom:10px">Conclusion</h2>
+            <p class="text">
+                We investigate what truly drives the effectiveness of representation alignment: global information or spatial structure of the target representation?
+                Through large-scale empirical analysis we uncover a surprising finding: <strong>spatial structure, not global information, drives the effectiveness of representation alignment.</strong>
+                <br><br>
+                We further study this by introducing two simple modifications which accentuate the transfer of spatial information from target representation to diffusion features.
+                Our simple method, termed iREPA, consistently improves convergence speed with REPA across diverse variations in vision encoders and training recipes.
+                <br><br>
+                We hope our work will motivate future research to revisit the fundamental working mechanism of representational alignment and how we can better leverage it for improved training of generative models.
+            </p>
+        </div>
+
+        </d-article>
+        <d-appendix>
+            <h3>BibTeX</h3>
+            <p class="bibtex">
+                @article{singh2025irepa,<br>
+                &nbsp;&nbsp;title={{What matters for Representation Alignment: Global Information or Spatial Structure?}},<br>
+                &nbsp;&nbsp;author={Singh, Jaskirat and Leng, Xingjian and Wu, Zongze and Zheng, Liang and Zhang, Richard and Shechtman, Eli and Xie, Saining},<br>
+                &nbsp;&nbsp;journal={arXiv preprint},<br>
+                &nbsp;&nbsp;year={2025}<br>
+                }
+            </p>
+
+            <d-footnote-list></d-footnote-list>
+            <d-citation-list></d-citation-list>
+        </d-appendix>
+        <script src="./static/js/nav-bar.js"></script>
+    </body>
+</html>
