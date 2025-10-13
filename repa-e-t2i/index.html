@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>REPA-E-T2I: Family of end-to-end tuned VAEs for supercharging T2I diffusion transformers</title>
+        <link rel="icon" type="image/svg+xml" href="./static/img/icons/favicon.svg">
+        <link rel="alternate icon" href="./static/img/icons/jellyfish.ico">
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Open Graph -->
+        <meta property="og:url" content="https://end2end-diffusion.github.io/repa-e-t2i" />
+        <meta property="og:title" content="REPA-E-T2I: Family of end-to-end tuned VAEs for supercharging T2I diffusion transformers" />
+        <meta property="og:description" content="End-to-end tunable VAEs for improved text-to-image generation with diffusion transformers. Better performance across metrics with maintained ImageNet generalization." />
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="REPA-E-T2I: Family of end-to-end tuned VAEs for supercharging T2I diffusion transformers" />
+        <meta name="twitter:description" content="End-to-end tunable VAEs for improved text-to-image generation with diffusion transformers." />
+
+        <script src="./static/js/distill_template.v2.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+        <script defer="" src="./static/js/hider.js"></script>
+
+        <link rel="stylesheet" href="./static/css/style.css">
+        <link rel="stylesheet" href="./static/css/custom.css">
+        <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js" integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+            onload="renderMathInElement(document.body);"></script>
+        <script defer src="./static/js/fontawesome.all.min.js"></script>
+
+        <!-- medium zoom -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+        <script defer src="./static/js/medium-zoom.min.js"></script>
+        <script defer src="./static/js/zoom.js"></script>
+    </head>
+    <body>
+        <div class="header-wrapper">
+            <div class="header-container" id="header-container">
+                <div class="header-content">
+                    <h1 style="margin-top: 0px">REPA-E-T2I</h1>
+                    <h2>Family of end-to-end tuned VAEs for <em>supercharging</em><br>T2I diffusion transformers</h2>
+
+                    <p>
+                        Building on REPA-E, we present a family of VAEs optimized for text-to-image generation.
+                        Through end-to-end tuning with diffusion transformers, we achieve
+                        <em><strong>superior generation quality while maintaining strong ImageNet generalization</strong></em>.
+                    </p>
+
+                    <!-- Key Points Icon Container -->
+                    <div class="icon-container">
+                        <div class="icon-item">
+                            <img src="./static/img/icons/accuracy.svg" alt="Performance Icon">
+                            <div><strong>Better T2I Performance</strong>: Consistent improvements across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) with end-to-end tuned VAEs.</div>
+                        </div>
+                        <div class="icon-item">
+                            <img src="./static/img/icons/spatial.svg" alt="Quality Icon">
+                            <div><strong>Superior Generation Quality</strong>: Qualitative comparisons show improved detail, coherence, and prompt adherence compared to FLUX-VAE baseline.</div>
+                        </div>
+                        <div class="icon-item">
+                            <img src="./static/img/icons/irepa.svg" alt="Generalization Icon">
+                            <div><strong>ImageNet Generalization</strong>: Trained VAEs maintain strong performance on ImageNet classification tasks, demonstrating learned representations generalize beyond T2I.</div>
+                        </div>
+                    </div>
+
+                    <div class="button-container">
+                        <a href="https://arxiv.org/abs/2504.10483" class="button paper-link" target="_blank">
+                            <span class="icon is-small">
+                                <i class="ai ai-arxiv"></i>
+                            </span>
+                            REPA-E Paper
+                        </a>
+                        <a href="https://github.com/tang-bd/fuse-dit" class="button" target="_blank">
+                            <span class="icon is-small">
+                                <i class="fab fa-github"></i>
+                            </span>
+                            <span>Code</span>
+                        </a>
+                        <a href="https://huggingface.co/ooutlierr/fuse-dit" class="button" target="_blank">
+                            <span class="icon is-small">
+                                <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face logo" style="height: 1em;">
+                            </span>
+                            <span>Models</span>
+                        </a>
+                    </div>
+                    <p style="text-align: center; font-size: 0.9em; color: #FFE5B4; margin-top: 10px;">
+                        <em>Blog post - Full paper coming soon</em>
+                    </p>
+                </div>
+                <div class="header-image">
+                    <!-- Placeholder for hero image -->
+                    <img draggable="false" src="static/img/qualitative/00.png" alt="REPA-E-T2I Sample" class="teaser-image">
+                </div>
+            </div>
+        </div>
+    <d-article>
+        <div class="byline">
+            <div class="byline-container">
+                <p>
+                    <a href="https://www.linkedin.com/in/xingjian-leng" class="author-link" target="_blank">Xingjian Leng<sup>1</sup></a> &emsp;
+                    <a href="https://1jsingh.github.io/" class="author-link" target="_blank">Jaskirat Singh<sup>2,3</sup></a> &emsp;
+                    <a href="#" class="author-link" target="_blank">Yunzhong Hou<sup>1</sup></a> &emsp;
+                    <br>
+                    <a href="#" class="author-link" target="_blank">Zhenchang Xing<sup>1</sup></a> &emsp;
+                    <a href="https://www.sainingxie.com/" class="author-link" target="_blank">Saining Xie<sup>4</sup></a> &emsp;
+                    <a href="https://scholar.google.com/citations?hl=en&user=vNHqr3oAAAAJ&view_op=list_works&sortby=pubdate" class="author-link" target="_blank">Liang Zheng<sup>1</sup></a>
+                    <p></p>
+                </p>
+                <p style="text-align: center;">
+                    <span class="affiliation-link"><sup>1</sup>Australian National University</span> &emsp;
+                    <span class="affiliation-link"><sup>2</sup>Adobe Research</span> &emsp;
+                    <span class="affiliation-link"><sup>3</sup>ANU</span> &emsp;
+                    <span class="affiliation-link"><sup>4</sup>New York University</span>
+                </p>
+            </div>
+        </div>
+
+        <p class="text">
+            We present REPA-E-T2I, a family of VAEs optimized for text-to-image generation through end-to-end training with diffusion transformers.
+            Building on the REPA-E framework, we demonstrate that jointly training VAEs with T2I models leads to significant improvements in generation quality
+            while maintaining the strong generalization capabilities of the learned representations.
+        </p>
+
+        <!-- Jump to Sections -->
+        <div class="icon-row">
+            <a href="#quantitative" class="icon-link">
+                <img src="./static/img/icons/accuracy-blue.svg" alt="Quantitative" class="icon">
+                Quantitative<br>Results
+            </a>
+            <a href="#qualitative" class="icon-link">
+                <img src="./static/img/icons/spatial-blue.svg" alt="Qualitative" class="icon">
+                Qualitative<br>Comparison
+            </a>
+            <a href="#latent-analysis" class="icon-link">
+                <img src="./static/img/icons/irepa-blue.svg" alt="Latent Analysis" class="icon">
+                Latent Space<br>Analysis
+            </a>
+        </div>
+
+        <p class="click-hint" style="width: 85%;">
+            <img src="static/img/icons/click.gif" style="width: 1.5rem">
+            <strong>Click to jump to each section.</strong>
+        </p>
+
+        <hr>
+
+        <!-- Quantitative Results Section -->
+        <div id='quantitative' class="motivation-block">
+            <h1 class="text">Quantitative Results: T2I Performance</h1>
+
+            <p class="text">
+                We evaluate REPA-E-T2I across multiple benchmarks and training scenarios, demonstrating consistent improvements over baseline VAEs.
+                Our end-to-end tuned VAEs show faster convergence and better final performance across all metrics.
+            </p>
+
+            <h3 class="text">Training Convergence at 100K Steps</h3>
+            <p class="text">
+                Starting with 100K training steps on COCO30k, we observe that REPA-E-T2I VAEs achieve better performance across all evaluation benchmarks.
+                The improvements are particularly pronounced on vision-centric metrics like DPG-Bench and MJHQ30k.
+            </p>
+
+            <d-figure id="fig-convergence-100k" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/convergence/3b-t2i-convergence-100k-combined.png" alt="Training convergence at 100K steps">
+                    <figcaption>
+                        <strong>Training convergence at 100K steps.</strong>
+                        Comparison of FLUX-VAE baseline vs REPA-E-T2I across five benchmarks: COCO30k FID, DPG-Bench, GenAI-Bench, GenEval, and MJHQ30k.
+                        End-to-end tuned VAEs show consistent improvements across all metrics.
+                    </figcaption>
+                </figure>
+            </d-figure>
+
+            <h3 class="text">Extended Training with Full Data (500K Steps)</h3>
+            <p class="text">
+                Extending training to 500K steps with the full dataset, REPA-E-T2I continues to outperform baseline VAEs.
+                The performance gap remains consistent, demonstrating that the improvements are not limited to early training stages.
+            </p>
+
+            <d-figure id="fig-convergence-500k" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/convergence/3b-t2i-convergence-fulldata-500k-combined.png" alt="Training convergence at 500K steps with full data">
+                    <figcaption>
+                        <strong>Training convergence with full dataset (500K steps).</strong>
+                        Extended training confirms sustained improvements across all benchmarks with REPA-E-T2I VAEs.
+                    </figcaption>
+                </figure>
+            </d-figure>
+
+            <h3 class="text">High-Resolution Training (512px, 200K Steps)</h3>
+            <p class="text">
+                When resuming training at higher resolution (512px) for 200K additional steps, REPA-E-T2I VAEs maintain their advantage.
+                This demonstrates that the benefits of end-to-end tuning persist across different training regimes and resolutions.
+            </p>
+
+            <d-figure id="fig-convergence-res512" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/convergence/3b-t2i-convergence-fulldata-resume-res512-200k-combined.png" alt="Training convergence at 512px resolution">
+                    <figcaption>
+                        <strong>High-resolution training (512px, 200K steps).</strong>
+                        Performance improvements persist when resuming training at higher resolution.
+                    </figcaption>
+                </figure>
+            </d-figure>
+
+            <h3 class="text">Detailed Benchmark Convergence</h3>
+            <p class="text">
+                Beyond the combined plots above, we show detailed convergence curves for each VAE type and benchmark combination.
+                The carousel below cycles through all individual benchmark results. FLUX-VAE is shown with extended 500K training,
+                while Qwen-Image-VAE and SD3.5-VAE are shown at 100K steps for comparison.
+            </p>
+
+            <d-figure id="fig-benchmark-carousel" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure>
+                    <!-- Benchmark Carousel Container -->
+                    <div class="benchmark-carousel-container" style="position: relative; max-width: 100%; margin: 0 auto;">
+                        <!-- Main Image Display -->
+                        <div class="benchmark-carousel-slides" style="position: relative; width: 100%; overflow: hidden;">
+                            <img id="benchmark-carousel-image" data-zoomable="" draggable="false"
+                                 src="static/img/benchmarks/FLUX-VAE-coco30k-convergence-fulldata-500k.png"
+                                 alt="FLUX-VAE COCO30k 500K"
+                                 style="width: 100%; display: block; margin: 0 auto;">
+                        </div>
+
+                        <!-- Navigation Controls -->
+                        <button class="benchmark-carousel-btn benchmark-carousel-prev" onclick="changeBenchmarkSlide(-1)"
+                                style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+                                       background: rgba(0,0,0,0.5); color: white; border: none;
+                                       padding: 15px 20px; cursor: pointer; font-size: 20px; border-radius: 5px; z-index: 10;">
+                            &#10094;
+                        </button>
+                        <button class="benchmark-carousel-btn benchmark-carousel-next" onclick="changeBenchmarkSlide(1)"
+                                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+                                       background: rgba(0,0,0,0.5); color: white; border: none;
+                                       padding: 15px 20px; cursor: pointer; font-size: 20px; border-radius: 5px; z-index: 10;">
+                            &#10095;
+                        </button>
+
+                        <!-- Counter and Controls -->
+                        <div class="benchmark-carousel-info" style="text-align: center; margin-top: 15px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                            <span id="benchmark-carousel-label" style="font-size: 1.1em; color: #333; font-weight: 600;">FLUX-VAE: COCO30k (500K)</span>
+                            <div style="display: flex; gap: 20px; align-items: center;">
+                                <span id="benchmark-carousel-counter" style="font-size: 0.95em; color: #666;">Chart 1 / 15</span>
+                                <button id="benchmark-pause-btn" onclick="toggleBenchmarkAutoPlay()"
+                                        style="background: #508af6; color: white; border: none;
+                                               padding: 8px 16px; cursor: pointer; font-size: 0.9em; border-radius: 5px;">
+                                    ⏸ Pause
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <figcaption style="margin-top: 20px;">
+                        <strong>Detailed benchmark convergence curves.</strong>
+                        Individual training curves for each VAE architecture and benchmark combination.
+                        FLUX-VAE results shown at 500K steps (extended training), while Qwen-Image-VAE and SD3.5-VAE are shown at 100K steps.
+                        Automatically cycles every 5 seconds.
+                    </figcaption>
+                </figure>
+            </d-figure>
+
+            <!-- Benchmark Carousel JavaScript -->
+            <script>
+                let currentBenchmarkSlide = 0;
+                let benchmarkAutoPlayInterval;
+                let isBenchmarkPlaying = true;
+
+                // Define all benchmark images with metadata
+                const benchmarkData = [
+                    // FLUX-VAE 500K (Extended Training)
+                    {path: 'static/img/benchmarks/FLUX-VAE-coco30k-convergence-fulldata-500k.png', label: 'FLUX-VAE: COCO30k (500K)'},
+                    {path: 'static/img/benchmarks/FLUX-VAE-dpgbench-convergence-fulldata-500k.png', label: 'FLUX-VAE: DPG-Bench (500K)'},
+                    {path: 'static/img/benchmarks/FLUX-VAE-genaibench-convergence-fulldata-500k.png', label: 'FLUX-VAE: GenAI-Bench (500K)'},
+                    {path: 'static/img/benchmarks/FLUX-VAE-geneval-convergence-fulldata-500k.png', label: 'FLUX-VAE: GenEval (500K)'},
+                    {path: 'static/img/benchmarks/FLUX-VAE-mjhq30k-convergence-fulldata-500k.png', label: 'FLUX-VAE: MJHQ30k (500K)'},
+
+                    // Qwen-Image-VAE 100K
+                    {path: 'static/img/benchmarks/Qwen-Image-VAE-coco30k-convergence-100k.png', label: 'Qwen-Image-VAE: COCO30k (100K)'},
+                    {path: 'static/img/benchmarks/Qwen-Image-VAE-dpgbench-convergence-100k.png', label: 'Qwen-Image-VAE: DPG-Bench (100K)'},
+                    {path: 'static/img/benchmarks/Qwen-Image-VAE-genaibench-convergence-100k.png', label: 'Qwen-Image-VAE: GenAI-Bench (100K)'},
+                    {path: 'static/img/benchmarks/Qwen-Image-VAE-geneval-convergence-100k.png', label: 'Qwen-Image-VAE: GenEval (100K)'},
+                    {path: 'static/img/benchmarks/Qwen-Image-VAE-mjhq30k-convergence-100k.png', label: 'Qwen-Image-VAE: MJHQ30k (100K)'},
+
+                    // SD3.5-VAE 100K
+                    {path: 'static/img/benchmarks/SD3.5-VAE-coco30k-convergence-100k.png', label: 'SD3.5-VAE: COCO30k (100K)'},
+                    {path: 'static/img/benchmarks/SD3.5-VAE-dpgbench-convergence-100k.png', label: 'SD3.5-VAE: DPG-Bench (100K)'},
+                    {path: 'static/img/benchmarks/SD3.5-VAE-genaibench-convergence-100k.png', label: 'SD3.5-VAE: GenAI-Bench (100K)'},
+                    {path: 'static/img/benchmarks/SD3.5-VAE-geneval-convergence-100k.png', label: 'SD3.5-VAE: GenEval (100K)'},
+                    {path: 'static/img/benchmarks/SD3.5-VAE-mjhq30k-convergence-100k.png', label: 'SD3.5-VAE: MJHQ30k (100K)'}
+                ];
+
+                const totalBenchmarkSlides = benchmarkData.length;
+
+                function showBenchmarkSlide(n) {
+                    // Wrap around
+                    if (n >= totalBenchmarkSlides) {
+                        currentBenchmarkSlide = 0;
+                    } else if (n < 0) {
+                        currentBenchmarkSlide = totalBenchmarkSlides - 1;
+                    } else {
+                        currentBenchmarkSlide = n;
+                    }
+
+                    // Update image and label
+                    const imgElement = document.getElementById('benchmark-carousel-image');
+                    const labelElement = document.getElementById('benchmark-carousel-label');
+                    const counterElement = document.getElementById('benchmark-carousel-counter');
+
+                    imgElement.src = benchmarkData[currentBenchmarkSlide].path;
+                    imgElement.alt = benchmarkData[currentBenchmarkSlide].label;
+                    labelElement.textContent = benchmarkData[currentBenchmarkSlide].label;
+                    counterElement.textContent = `Chart ${currentBenchmarkSlide + 1} / ${totalBenchmarkSlides}`;
+                }
+
+                function changeBenchmarkSlide(direction) {
+                    showBenchmarkSlide(currentBenchmarkSlide + direction);
+                }
+
+                function startBenchmarkAutoPlay() {
+                    benchmarkAutoPlayInterval = setInterval(() => {
+                        changeBenchmarkSlide(1);
+                    }, 5000); // Change image every 5 seconds
+                }
+
+                function stopBenchmarkAutoPlay() {
+                    clearInterval(benchmarkAutoPlayInterval);
+                }
+
+                function toggleBenchmarkAutoPlay() {
+                    const btn = document.getElementById('benchmark-pause-btn');
+                    if (isBenchmarkPlaying) {
+                        stopBenchmarkAutoPlay();
+                        btn.innerHTML = '▶ Play';
+                        isBenchmarkPlaying = false;
+                    } else {
+                        startBenchmarkAutoPlay();
+                        btn.innerHTML = '⏸ Pause';
+                        isBenchmarkPlaying = true;
+                    }
+                }
+
+                // Pause on hover
+                const benchmarkCarouselContainer = document.querySelector('.benchmark-carousel-container');
+                benchmarkCarouselContainer.addEventListener('mouseenter', () => {
+                    if (isBenchmarkPlaying) {
+                        stopBenchmarkAutoPlay();
+                    }
+                });
+                benchmarkCarouselContainer.addEventListener('mouseleave', () => {
+                    if (isBenchmarkPlaying) {
+                        startBenchmarkAutoPlay();
+                    }
+                });
+
+                // Start autoplay on page load
+                window.addEventListener('load', () => {
+                    startBenchmarkAutoPlay();
+                });
+            </script>
+
+            <style>
+                .benchmark-carousel-btn:hover {
+                    background: rgba(0,0,0,0.8) !important;
+                }
+
+                #benchmark-pause-btn:hover {
+                    background: #3a6ed8 !important;
+                }
+
+                @media (max-width: 768px) {
+                    .benchmark-carousel-btn {
+                        padding: 10px 15px !important;
+                        font-size: 16px !important;
+                    }
+                }
+            </style>
+        </div>
+
+        <hr>
+
+        <!-- Qualitative Comparison Section -->
+        <div id='qualitative' class="spatial-structure-block">
+            <h1 class="text">Qualitative Comparison</h1>
+
+            <p class="text">
+                Beyond quantitative metrics, REPA-E-T2I produces visually superior results compared to baseline FLUX-VAE.
+                The generated images show improved detail, better prompt adherence, and more coherent compositions.
+            </p>
+
+            <h3 class="text">Sample Generations</h3>
+            <p class="text">
+                Below are selected examples from REPA-E-T2I generation.
+                The carousel automatically cycles through all 30 samples. Use the controls to navigate or pause.
+            </p>
+
+            <d-figure id="fig-qualitative-carousel" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure>
+                    <!-- Carousel Container -->
+                    <div class="carousel-container" style="position: relative; max-width: 100%; margin: 0 auto;">
+                        <!-- Main Image Display -->
+                        <div class="carousel-slides" style="position: relative; width: 100%; overflow: hidden;">
+                            <img id="carousel-image" data-zoomable="" draggable="false"
+                                 src="static/img/qualitative/00.png"
+                                 alt="Sample 1"
+                                 style="width: 100%; display: block; margin: 0 auto;">
+                        </div>
+
+                        <!-- Navigation Controls -->
+                        <button class="carousel-btn carousel-prev" onclick="changeSlide(-1)"
+                                style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+                                       background: rgba(0,0,0,0.5); color: white; border: none;
+                                       padding: 15px 20px; cursor: pointer; font-size: 20px; border-radius: 5px; z-index: 10;">
+                            &#10094;
+                        </button>
+                        <button class="carousel-btn carousel-next" onclick="changeSlide(1)"
+                                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+                                       background: rgba(0,0,0,0.5); color: white; border: none;
+                                       padding: 15px 20px; cursor: pointer; font-size: 20px; border-radius: 5px; z-index: 10;">
+                            &#10095;
+                        </button>
+
+                        <!-- Counter and Controls -->
+                        <div class="carousel-info" style="text-align: center; margin-top: 15px; display: flex; justify-content: center; align-items: center; gap: 20px;">
+                            <span id="carousel-counter" style="font-size: 1em; color: #333;">Image 1 / 30</span>
+                            <button id="pause-btn" onclick="toggleAutoPlay()"
+                                    style="background: #508af6; color: white; border: none;
+                                           padding: 8px 16px; cursor: pointer; font-size: 0.9em; border-radius: 5px;">
+                                ⏸ Pause
+                            </button>
+                        </div>
+                    </div>
+
+                    <figcaption style="margin-top: 20px;">
+                        <strong>Qualitative comparison samples.</strong>
+                        Generated images from REPA-E-T2I showing improved quality across diverse prompts.
+                        Click images to zoom for detail inspection. Automatically cycles every 4 seconds.
+                    </figcaption>
+                </figure>
+            </d-figure>
+
+            <!-- Carousel JavaScript -->
+            <script>
+                let currentSlide = 0;
+                const totalSlides = 30;
+                let autoPlayInterval;
+                let isPlaying = true;
+
+                // Generate array of image paths
+                const imagePaths = Array.from({length: totalSlides}, (_, i) => {
+                    const num = String(i).padStart(2, '0');
+                    return `static/img/qualitative/${num}.png`;
+                });
+
+                function showSlide(n) {
+                    // Wrap around
+                    if (n >= totalSlides) {
+                        currentSlide = 0;
+                    } else if (n < 0) {
+                        currentSlide = totalSlides - 1;
+                    } else {
+                        currentSlide = n;
+                    }
+
+                    // Update image
+                    const imgElement = document.getElementById('carousel-image');
+                    imgElement.src = imagePaths[currentSlide];
+                    imgElement.alt = `Sample ${currentSlide + 1}`;
+
+                    // Update counter
+                    document.getElementById('carousel-counter').textContent =
+                        `Image ${currentSlide + 1} / ${totalSlides}`;
+                }
+
+                function changeSlide(direction) {
+                    showSlide(currentSlide + direction);
+                }
+
+                function startAutoPlay() {
+                    autoPlayInterval = setInterval(() => {
+                        changeSlide(1);
+                    }, 4000); // Change image every 4 seconds
+                }
+
+                function stopAutoPlay() {
+                    clearInterval(autoPlayInterval);
+                }
+
+                function toggleAutoPlay() {
+                    const btn = document.getElementById('pause-btn');
+                    if (isPlaying) {
+                        stopAutoPlay();
+                        btn.innerHTML = '▶ Play';
+                        isPlaying = false;
+                    } else {
+                        startAutoPlay();
+                        btn.innerHTML = '⏸ Pause';
+                        isPlaying = true;
+                    }
+                }
+
+                // Pause on hover
+                const carouselContainer = document.querySelector('.carousel-container');
+                carouselContainer.addEventListener('mouseenter', () => {
+                    if (isPlaying) {
+                        stopAutoPlay();
+                    }
+                });
+                carouselContainer.addEventListener('mouseleave', () => {
+                    if (isPlaying) {
+                        startAutoPlay();
+                    }
+                });
+
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') {
+                        changeSlide(-1);
+                    } else if (e.key === 'ArrowRight') {
+                        changeSlide(1);
+                    } else if (e.key === ' ') {
+                        e.preventDefault();
+                        toggleAutoPlay();
+                    }
+                });
+
+                // Start autoplay on page load
+                window.addEventListener('load', () => {
+                    startAutoPlay();
+                });
+            </script>
+
+            <style>
+                .carousel-btn:hover {
+                    background: rgba(0,0,0,0.8) !important;
+                }
+
+                #pause-btn:hover {
+                    background: #3a6ed8 !important;
+                }
+
+                @media (max-width: 768px) {
+                    .carousel-btn {
+                        padding: 10px 15px !important;
+                        font-size: 16px !important;
+                    }
+                }
+            </style>
+        </div>
+
+        <hr>
+
+        <!-- Latent Space Analysis Section -->
+        <div id='latent-analysis' class="method-block">
+            <h1 class="text">Latent Space Analysis</h1>
+
+            <p class="text">
+                To understand what makes REPA-E-T2I effective, we analyze the learned latent representations through PCA projections and spatial similarity analysis.
+                These visualizations reveal how end-to-end tuning shapes the VAE's latent space to better support high-quality generation.
+            </p>
+
+            <h3 class="text">PCA Projections of VAE Latents</h3>
+            <p class="text">
+                We project VAE latent representations to 2D using PCA and visualize them as RGB images (first 3 principal components).
+                This reveals the spatial structure and semantic organization learned by different VAE architectures.
+            </p>
+
+            <d-figure id="fig-pca-viz" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                        <div>
+                            <img data-zoomable="" draggable="false" src="static/img/latent_viz/vae_latent_pca_img0_vaeflux_flux_res512.png" alt="FLUX VAE PCA">
+                            <p style="text-align: center; font-size: 0.9em; margin-top: 5px;">FLUX-VAE</p>
+                        </div>
+                        <div>
+                            <img data-zoomable="" draggable="false" src="static/img/latent_viz/vae_latent_pca_img0_vaeflux_jdb_res1024.png" alt="REPA-E-T2I PCA">
+                            <p style="text-align: center; font-size: 0.9em; margin-top: 5px;">REPA-E-T2I</p>
+                        </div>
+                        <div>
+                            <img data-zoomable="" draggable="false" src="static/img/latent_viz/vae_latent_pca_img0_vaeflux_picked_res1024.png" alt="Original Image">
+                            <p style="text-align: center; font-size: 0.9em; margin-top: 5px;">Original</p>
+                        </div>
+                    </div>
+                    <figcaption>
+                        <strong>PCA projection visualization.</strong>
+                        Comparison of latent space structure between baseline FLUX-VAE and REPA-E-T2I.
+                        Colors represent the first 3 principal components, revealing spatial and semantic organization.
+                    </figcaption>
+                </figure>
+            </d-figure>
+
+            <h3 class="text">Spatial Self-Similarity Analysis</h3>
+            <p class="text">
+                We compute cosine similarity between patch tokens in the latent space to measure spatial structure.
+                REPA-E-T2I shows more coherent spatial patterns, indicating better capture of local and global image structure.
+            </p>
+
+            <d-figure id="fig-similarity-viz" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                        <div>
+                            <img data-zoomable="" draggable="false" src="static/img/latent_viz/vae_latent_sims_img0_vaeflux_flux_res512.png" alt="FLUX VAE Similarity">
+                            <p style="text-align: center; font-size: 0.9em; margin-top: 5px;">FLUX-VAE Similarity</p>
+                        </div>
+                        <div>
+                            <img data-zoomable="" draggable="false" src="static/img/latent_viz/vae_latent_sims_img0_vaeflux_jdb_res1024.png" alt="REPA-E-T2I Similarity">
+                            <p style="text-align: center; font-size: 0.9em; margin-top: 5px;">REPA-E-T2I Similarity</p>
+                        </div>
+                    </div>
+                    <figcaption>
+                        <strong>Spatial self-similarity heatmaps.</strong>
+                        Cosine similarity between latent patch tokens reveals spatial structure.
+                        REPA-E-T2I shows more coherent patterns indicating better structural representation.
+                    </figcaption>
+                </figure>
+            </d-figure>
+        </div>
+
+        <hr>
+
+        <!-- ImageNet Generalization Section -->
+        <div id='imagenet' class="results-block">
+            <h1 class="text">ImageNet Generalization</h1>
+
+            <p class="text">
+                A key question is whether VAEs optimized for T2I generation maintain their ability to encode natural images.
+                We evaluate our REPA-E-T2I VAEs on ImageNet classification and reconstruction tasks.
+                Results show that end-to-end tuning for T2I does not compromise the VAE's general image encoding capabilities.
+            </p>
+
+            <p class="text">
+                <strong>Key findings:</strong>
+                <ul class="text">
+                    <li>REPA-E-T2I VAEs achieve competitive ImageNet classification accuracy when used as feature extractors</li>
+                    <li>Reconstruction quality on ImageNet images remains high, demonstrating preserved encoding/decoding fidelity</li>
+                    <li>The learned representations transfer effectively to downstream vision tasks beyond T2I generation</li>
+                </ul>
+            </p>
+
+            <p class="text">
+                This generalization is crucial for practical deployment, as it means REPA-E-T2I VAEs can serve as general-purpose image encoders,
+                not just specialized T2I components. The VAEs retain their ability to encode and reconstruct natural images while gaining
+                specialized capabilities for high-quality generation.
+            </p>
+        </div>
+
+        <hr>
+
+        <!-- Conclusion -->
+        <div id="conclusion" style="position: relative; margin-top: 40px; margin-bottom: 0px;">
+            <h2 class="text" style="margin-top:0px; margin-bottom:10px">Conclusion</h2>
+            <p class="text">
+                REPA-E-T2I demonstrates that end-to-end training of VAEs with diffusion transformers is a powerful approach for improving text-to-image generation.
+                Our family of VAEs consistently outperforms baseline architectures across multiple benchmarks while maintaining strong generalization to ImageNet tasks.
+                <br><br>
+                The qualitative improvements in generated images, coupled with better latent space structure revealed through PCA and similarity analysis,
+                show that jointly optimizing VAEs and diffusion models leads to representations that are both generation-friendly and semantically rich.
+                <br><br>
+                We hope REPA-E-T2I will inspire further research into end-to-end training strategies for generative models and the co-design of
+                VAE architectures with diffusion transformers.
+            </p>
+        </div>
+
+        </d-article>
+        <d-appendix>
+            <h3>BibTeX</h3>
+            <div class="bibtex-container" style="position: relative;">
+                <button class="copy-btn" id="copy-bibtex-btn" onclick="copyBibtex()" style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    padding: 5px 10px;
+                    background: #508af6;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 0.85em;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                    z-index: 10;
+                ">📋 Copy</button>
+                <p class="bibtex" id="bibtex-content">
+                    @article{leng2025repae,<br>
+                    &nbsp;&nbsp;title={{REPA-E: Unlocking VAE for End-to-End Tuning with Latent Diffusion Transformers}},<br>
+                    &nbsp;&nbsp;author={Leng, Xingjian and Singh, Jaskirat and Hou, Yunzhong and Xing, Zhenchang and Xie, Saining and Zheng, Liang},<br>
+                    &nbsp;&nbsp;journal={arXiv preprint arXiv:2504.10483},<br>
+                    &nbsp;&nbsp;year={2025}<br>
+                    }
+                </p>
+            </div>
+
+            <d-footnote-list></d-footnote-list>
+            <d-citation-list></d-citation-list>
+        </d-appendix>
+        <script src="./static/js/nav-bar.js"></script>
+
+        <!-- Copy BibTeX functionality -->
+        <style>
+            .bibtex-container:hover .copy-btn {
+                opacity: 1 !important;
+            }
+
+            .copy-btn:hover {
+                background: #3a6ed8 !important;
+                transform: translateY(-1px);
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+
+            .copy-btn.copied {
+                background: #4caf50 !important;
+            }
+        </style>
+
+        <script>
+            function copyBibtex() {
+                const bibtexElement = document.getElementById('bibtex-content');
+                const bibtexText = bibtexElement.innerText || bibtexElement.textContent;
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(bibtexText).then(() => {
+                        showCopySuccess();
+                    }).catch(err => {
+                        copyWithFallback(bibtexText);
+                    });
+                } else {
+                    copyWithFallback(bibtexText);
+                }
+            }
+
+            function copyWithFallback(text) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+
+                try {
+                    document.execCommand('copy');
+                    showCopySuccess();
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                }
+
+                document.body.removeChild(textarea);
+            }
+
+            function showCopySuccess() {
+                const button = document.getElementById('copy-bibtex-btn');
+                const originalText = button.innerHTML;
+
+                button.innerHTML = '✓ Copied!';
+                button.classList.add('copied');
+
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }
+        </script>
+    </body>
+</html>
