@@ -457,23 +457,33 @@
 
             <p class="text">
                 A key question is whether VAEs optimized for T2I generation maintain their ability to encode natural images.
-                We evaluate our REPA-E-T2I VAEs on ImageNet classification and reconstruction tasks.
-                Results show that end-to-end tuning for T2I does not compromise the VAE's general image encoding capabilities.
+                We evaluate our REPA-E-T2I VAEs on ImageNet reconstruction tasks, measuring FID scores to assess encoding/decoding quality.
             </p>
+
+            <d-figure id="fig-imagenet-convergence" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/e2e_vae_convergence.png" alt="ImageNet FID convergence" style="width: 100%;">
+                    <figcaption>
+                        <strong>ImageNet reconstruction quality (FID scores).</strong>
+                        Comparison of Standard VAE vs E2E-tuned VAE across FLUX, Qwen, and SD3.5 architectures.
+                        End-to-end tuned VAEs achieve significantly lower FID scores (6.1 vs 11.9 for FLUX, 5.2 vs 9.2 for Qwen, 5.2 vs 9.5 for SD3.5),
+                        demonstrating improved reconstruction quality on ImageNet despite being optimized for T2I generation.
+                    </figcaption>
+                </figure>
+            </d-figure>
 
             <p class="text">
                 <strong>Key findings:</strong>
                 <ul class="text">
-                    <li>REPA-E-T2I VAEs achieve competitive ImageNet classification accuracy when used as feature extractors</li>
-                    <li>Reconstruction quality on ImageNet images remains high, demonstrating preserved encoding/decoding fidelity</li>
-                    <li>The learned representations transfer effectively to downstream vision tasks beyond T2I generation</li>
+                    <li>E2E-tuned VAEs achieve <strong>substantially lower ImageNet FID scores</strong> across all architectures (roughly 45-50% improvement)</li>
+                    <li>The improvements are consistent across different VAE architectures (FLUX, Qwen-Image, SD3.5)</li>
+                    <li>End-to-end training enhances both T2I generation <em>and</em> natural image reconstruction capabilities</li>
                 </ul>
             </p>
 
             <p class="text">
-                This generalization is crucial for practical deployment, as it means REPA-E-T2I VAEs can serve as general-purpose image encoders,
-                not just specialized T2I components. The VAEs retain their ability to encode and reconstruct natural images while gaining
-                specialized capabilities for high-quality generation.
+                This demonstrates that REPA-E-T2I VAEs serve as general-purpose image encoders, not just specialized T2I components.
+                The joint optimization with diffusion transformers leads to representations that excel at both tasks.
             </p>
         </div>
 
