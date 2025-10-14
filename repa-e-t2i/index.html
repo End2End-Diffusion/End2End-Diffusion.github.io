@@ -150,13 +150,13 @@
             <h1 class="text">Quantitative Results: T2I Performance</h1>
 
             <p class="text">
-                We evaluate REPA-E-T2I across multiple benchmarks and training scenarios, demonstrating consistent improvements over baseline VAEs.
+                We evaluate End-to-End Tuned VAEs across multiple benchmarks and training scenarios, demonstrating consistent improvements over baseline VAEs.
                 Our end-to-end tuned VAEs show faster convergence and better final performance across all metrics.
             </p>
 
             <h3 class="text">Training Convergence at 100K Steps</h3>
             <p class="text">
-                Starting with 100K training steps on COCO30k, we observe that REPA-E-T2I VAEs achieve better performance across all evaluation benchmarks.
+                Starting with 100K training steps on COCO30k, we observe that End-to-End Tuned VAEs achieve better performance across all evaluation benchmarks.
                 The improvements are particularly pronounced on vision-centric metrics like DPG-Bench and MJHQ30k.
             </p>
 
@@ -165,7 +165,7 @@
                     <img data-zoomable="" draggable="false" src="static/img/convergence/3b-t2i-convergence-100k-combined.png" alt="Training convergence at 100K steps">
                     <figcaption>
                         <strong>Training convergence at 100K steps.</strong>
-                        Comparison of FLUX-VAE baseline vs REPA-E-T2I across five benchmarks: COCO30k FID, DPG-Bench, GenAI-Bench, GenEval, and MJHQ30k.
+                        Comparison of FLUX-VAE baseline vs End-to-End Tuned VAEs across five benchmarks: COCO30k FID, DPG-Bench, GenAI-Bench, GenEval, and MJHQ30k.
                         End-to-end tuned VAEs show consistent improvements across all metrics.
                     </figcaption>
                 </figure>
@@ -173,7 +173,7 @@
 
             <h3 class="text">Extended Training with Full Data (500K Steps)</h3>
             <p class="text">
-                Extending training to 500K steps with the full dataset, REPA-E-T2I continues to outperform baseline VAEs.
+                Extending training to 500K steps with the full dataset, End-to-End Tuned VAEs continue to outperform baseline VAEs.
                 The performance gap remains consistent, demonstrating that the improvements are not limited to early training stages.
             </p>
 
@@ -182,14 +182,14 @@
                     <img data-zoomable="" draggable="false" src="static/img/convergence/3b-t2i-convergence-fulldata-500k-combined.png" alt="Training convergence at 500K steps with full data">
                     <figcaption>
                         <strong>Training convergence with full dataset (500K steps).</strong>
-                        Extended training confirms sustained improvements across all benchmarks with REPA-E-T2I VAEs.
+                        Extended training confirms sustained improvements across all benchmarks with End-to-End Tuned VAEs.
                     </figcaption>
                 </figure>
             </d-figure>
 
             <h3 class="text">High-Resolution Training (512px, 200K Steps)</h3>
             <p class="text">
-                When resuming training at higher resolution (512px) for 200K additional steps, REPA-E-T2I VAEs maintain their advantage.
+                When resuming training at higher resolution (512px) for 200K additional steps, End-to-End Tuned VAEs maintain their advantage.
                 This demonstrates that the benefits of end-to-end tuning persist across different training regimes and resolutions.
             </p>
 
@@ -212,7 +212,7 @@
             <h1 class="text">Qualitative Comparison</h1>
 
             <p class="text">
-                Beyond quantitative metrics, REPA-E-T2I produces visually superior results compared to baseline FLUX-VAE.
+                Beyond quantitative metrics, End-to-End Tuned VAEs produces visually superior results compared to baseline FLUX-VAE.
                 The generated images show improved detail, better prompt adherence, and more coherent compositions.
                 Below we show comparisons for T2I generations for models training with FLUX-VAE and E2E-Tuned FLUX-VAE (Ours).
             </p>
