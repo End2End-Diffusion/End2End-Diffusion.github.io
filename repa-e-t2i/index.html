@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>REPA-E-T2I: Family of end-to-end tuned VAEs for supercharging T2I diffusion transformers</title>
+        <title>REPA-E for T2I: Family of end-to-end tuned VAEs for supercharging T2I diffusion transformers</title>
         <link rel="icon" type="image/svg+xml" href="./static/img/icons/favicon.svg">
         <link rel="alternate icon" href="./static/img/icons/jellyfish.ico">
 
@@ -10,12 +10,12 @@
 
         <!-- Open Graph -->
         <meta property="og:url" content="https://end2end-diffusion.github.io/repa-e-t2i" />
-        <meta property="og:title" content="REPA-E-T2I: Family of end-to-end tuned VAEs for supercharging T2I diffusion transformers" />
+        <meta property="og:title" content="REPA-E for T2I: Family of end-to-end tuned VAEs for supercharging T2I diffusion transformers" />
         <meta property="og:description" content="End-to-end tunable VAEs for improved text-to-image generation with diffusion transformers. Better performance across metrics with maintained ImageNet generalization." />
 
         <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="REPA-E-T2I: Family of end-to-end tuned VAEs for supercharging T2I diffusion transformers" />
+        <meta name="twitter:title" content="REPA-E for T2I: Family of end-to-end tuned VAEs for supercharging T2I diffusion transformers" />
         <meta name="twitter:description" content="End-to-end tunable VAEs for improved text-to-image generation with diffusion transformers." />
 
         <script src="./static/js/distill_template.v2.js"></script>
@@ -48,24 +48,23 @@
                     <h2>Family of end-to-end tuned VAEs for <em>supercharging</em><br>T2I diffusion transformers</h2>
 
                     <p>
-                        Building on REPA-E, we present a family of VAEs optimized for text-to-image generation.
-                        Through end-to-end tuning with diffusion transformers, we achieve
-                        <em><strong>superior generation quality while maintaining strong ImageNet generalization</strong></em>.
+                        We present REPA-E for T2I, a family of End-to-End Tuned VAEs for supercharging text-to-image generation training.
+                        <strong>End-to-end VAEs show superior performance over FLUX-VAE</strong> across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) without need for any additional representation alignment losses.
                     </p>
 
                     <!-- Key Points Icon Container -->
                     <div class="icon-container">
                         <div class="icon-item">
                             <img src="./static/img/icons/accuracy.svg" alt="Performance Icon">
-                            <div><strong>Better T2I Performance</strong>: Consistent improvements across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) with end-to-end tuned VAEs.</div>
+                            <div><strong>Better T2I Performance</strong>: Consistent improvements over FLUX-VAE across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) with end-to-end tuned VAEs.</div>
                         </div>
                         <div class="icon-item">
                             <img src="./static/img/icons/spatial.svg" alt="Quality Icon">
-                            <div><strong>Superior Generation Quality</strong>: Qualitative comparisons show improved detail, coherence, and prompt adherence compared to FLUX-VAE baseline.</div>
+                            <div><strong>Family of End-to-End Tuned VAEs</strong>: We release a family of end-to-end tuned VAEs across different families (Flux, SD3.5, Qwen-VAE) for supercharging text-to-image generation training.</div>
                         </div>
                         <div class="icon-item">
                             <img src="./static/img/icons/irepa.svg" alt="Generalization Icon">
-                            <div><strong>ImageNet Generalization</strong>: Trained VAEs maintain strong performance on ImageNet classification tasks, demonstrating learned representations generalize beyond T2I.</div>
+                            <div><strong>Better Latent Space Structure</strong>: End-to-end tuned VAEs show better latent space structure compared to traditional VAEs (FLUX-VAE) which are mostly optimized for reconstruction.</div>
                         </div>
                     </div>
 
@@ -76,31 +75,28 @@
                             </span>
                             REPA-E Paper
                         </a>
-                        <a href="https://github.com/tang-bd/fuse-dit" class="button" target="_blank">
+                        <a href="https://github.com/End2End-Diffusion/REPA-E" class="button" target="_blank">
                             <span class="icon is-small">
                                 <i class="fab fa-github"></i>
                             </span>
                             <span>Code</span>
                         </a>
-                        <a href="https://huggingface.co/ooutlierr/fuse-dit" class="button" target="_blank">
+                        <a href="https://huggingface.co/REPA-E" class="button" target="_blank">
                             <span class="icon is-small">
                                 <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face logo" style="height: 1em;">
                             </span>
                             <span>Models</span>
                         </a>
                     </div>
-                    <p style="text-align: center; font-size: 0.9em; color: #FFE5B4; margin-top: 10px;">
-                        <em>Blog post - Full paper coming soon</em>
-                    </p>
                 </div>
                 <div class="header-image">
                     <!-- Placeholder for hero image -->
-                    <img draggable="false" src="static/img/qualitative/00.png" alt="REPA-E-T2I Sample" class="teaser-image">
+                    <img draggable="false" src="hero-v1.png" alt="REPA-E-T2I Sample" class="teaser-image">
                 </div>
             </div>
         </div>
     <d-article>
-        <div class="byline">
+        <!-- <div class="byline">
             <div class="byline-container">
                 <p>
                     <a href="https://www.linkedin.com/in/xingjian-leng" class="author-link" target="_blank">Xingjian Leng<sup>1</sup></a> &emsp;
@@ -119,19 +115,18 @@
                     <span class="affiliation-link"><sup>4</sup>New York University</span>
                 </p>
             </div>
-        </div>
+        </div> -->
 
         <p class="text">
-            We present REPA-E-T2I, a family of VAEs optimized for text-to-image generation through end-to-end training with diffusion transformers.
-            Building on the REPA-E framework, we demonstrate that jointly training VAEs with T2I models leads to significant improvements in generation quality
-            while maintaining the strong generalization capabilities of the learned representations.
+            We present REPA-E for T2I, a family of End-to-End Tuned VAEs for supercharging text-to-image generation training.
+            End-to-end VAEs show superior performance across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) without need for any additional representation alignment losses.
         </p>
 
         <!-- Jump to Sections -->
         <div class="icon-row">
             <a href="#quantitative" class="icon-link">
                 <img src="./static/img/icons/accuracy-blue.svg" alt="Quantitative" class="icon">
-                Quantitative<br>Results
+                Quantitative<br>Results (T2I)
             </a>
             <a href="#qualitative" class="icon-link">
                 <img src="./static/img/icons/spatial-blue.svg" alt="Qualitative" class="icon">
@@ -219,13 +214,14 @@
             <p class="text">
                 Beyond quantitative metrics, REPA-E-T2I produces visually superior results compared to baseline FLUX-VAE.
                 The generated images show improved detail, better prompt adherence, and more coherent compositions.
+                Below we show comparisons for T2I generations for models training with FLUX-VAE and E2E-Tuned FLUX-VAE (Ours).
             </p>
 
-            <h3 class="text">Sample Generations</h3>
+            <!-- <h3 class="text">Sample Generations</h3>
             <p class="text">
                 Below are selected examples from REPA-E-T2I generation.
                 The carousel automatically cycles through all 30 samples. Use the controls to navigate or pause.
-            </p>
+            </p> -->
 
             <d-figure id="fig-qualitative-carousel" style="margin-top: 30px; margin-bottom: 30px;">
                 <figure>
@@ -255,7 +251,7 @@
 
                         <!-- Counter and Controls -->
                         <div class="carousel-info" style="text-align: center; margin-top: 15px; display: flex; justify-content: center; align-items: center; gap: 20px;">
-                            <span id="carousel-counter" style="font-size: 1em; color: #333;">Image 1 / 30</span>
+                            <span id="carousel-counter" style="font-size: 1em; color: #333;">Image 1 / 10</span>
                             <button id="pause-btn" onclick="toggleAutoPlay()"
                                     style="background: #508af6; color: white; border: none;
                                            padding: 8px 16px; cursor: pointer; font-size: 0.9em; border-radius: 5px;">
@@ -265,8 +261,8 @@
                     </div>
 
                     <figcaption style="margin-top: 20px;">
-                        <strong>Qualitative comparison samples.</strong>
-                        Generated images from REPA-E-T2I showing improved quality across diverse prompts.
+                        <strong>Qualitative comparison samples (500K steps, 512px resolution).</strong>
+                        Models trained with End-to-End Tuned VAEs show improved quality across diverse prompts compared to FLUX-VAE.
                         Click images to zoom for detail inspection. Automatically cycles every 4 seconds.
                     </figcaption>
                 </figure>
@@ -275,7 +271,7 @@
             <!-- Carousel JavaScript -->
             <script>
                 let currentSlide = 0;
-                const totalSlides = 30;
+                const totalSlides = 10;
                 let autoPlayInterval;
                 let isPlaying = true;
 
@@ -400,14 +396,10 @@
 
             <d-figure id="fig-pca-viz" style="margin-top: 30px; margin-bottom: 30px;">
                 <figure>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
                         <div>
                             <img data-zoomable="" draggable="false" src="static/img/latent_viz/vae_latent_pca_img0_vaeflux_flux_res512.png" alt="FLUX VAE PCA">
                             <p style="text-align: center; font-size: 0.9em; margin-top: 5px;">FLUX-VAE</p>
-                        </div>
-                        <div>
-                            <img data-zoomable="" draggable="false" src="static/img/latent_viz/vae_latent_pca_img0_vaeflux_jdb_res1024.png" alt="REPA-E-T2I PCA">
-                            <p style="text-align: center; font-size: 0.9em; margin-top: 5px;">REPA-E-T2I</p>
                         </div>
                         <div>
                             <img data-zoomable="" draggable="false" src="static/img/latent_viz/vae_latent_pca_img0_vaeflux_picked_res1024.png" alt="Original Image">
@@ -416,7 +408,7 @@
                     </div>
                     <figcaption>
                         <strong>PCA projection visualization.</strong>
-                        Comparison of latent space structure between baseline FLUX-VAE and REPA-E-T2I.
+                        Comparison of latent space structure between baseline FLUX-VAE and E2E-Tuned Flux-VAE.
                         Colors represent the first 3 principal components, revealing spatial and semantic organization.
                     </figcaption>
                 </figure>
@@ -430,28 +422,71 @@
 
             <d-figure id="fig-similarity-viz" style="margin-top: 30px; margin-bottom: 30px;">
                 <figure>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 15px;">
                         <div>
                             <img data-zoomable="" draggable="false" src="static/img/latent_viz/vae_latent_sims_img0_vaeflux_flux_res512.png" alt="FLUX VAE Similarity">
-                            <p style="text-align: center; font-size: 0.9em; margin-top: 5px;">FLUX-VAE Similarity</p>
+                            <p style="text-align: center; font-size: 0.9em; margin-top: 5px;">FLUX-VAE</p>
                         </div>
                         <div>
-                            <img data-zoomable="" draggable="false" src="static/img/latent_viz/vae_latent_sims_img0_vaeflux_jdb_res1024.png" alt="REPA-E-T2I Similarity">
-                            <p style="text-align: center; font-size: 0.9em; margin-top: 5px;">REPA-E-T2I Similarity</p>
+                            <img data-zoomable="" draggable="false" src="static/img/latent_viz/vae_latent_sims_img0_vaeflux_jdb_res1024.png" alt="E2E-Tuned FLUX-VAE Similarity">
+                            <p style="text-align: center; font-size: 0.9em; margin-top: 5px;">E2E-Tuned FLUX-VAE</p>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 50%; margin: 0 auto;">
+                        <div>
+                            <img data-zoomable="" draggable="false" src="static/img/latent_viz/vae_latent_sims_img0_vaeflux_picked_res1024.png" alt="Original Image">
+                            <p style="text-align: center; font-size: 0.9em; margin-top: 5px;">Original</p>
                         </div>
                     </div>
                     <figcaption>
                         <strong>Spatial self-similarity heatmaps.</strong>
                         Cosine similarity between latent patch tokens reveals spatial structure.
-                        REPA-E-T2I shows more coherent patterns indicating better structural representation.
+                        E2E-Tuned FLUX-VAE shows more coherent patterns indicating better structural representation.
                     </figcaption>
                 </figure>
             </d-figure>
         </div>
 
         <hr>
-
+        
         <!-- ImageNet Generalization Section -->
+        <div id='imagenet' class="results-block">
+            <h1 class="text">ImageNet Generalization</h1>
+
+            <p class="text">
+                Finally, we show that the end-to-end tuned VAEs can also be used for traditional image generation benchmarks like ImageNet 256x256.
+                We observe that the end-to-end tuned VAEs achieve significantly better FID scores (better generation quality) compared to the traditional VAEs (FLUX-VAE), across all VAE families (Flux, Qwen, SD3.5).
+                <!-- A key question is whether VAEs optimized for T2I generation maintain their ability to encode natural images.
+                We evaluate our REPA-E-T2I VAEs on ImageNet reconstruction tasks, measuring FID scores to assess encoding/decoding quality. -->
+            </p>
+
+            <d-figure id="fig-imagenet-convergence" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/e2e_vae_convergence.png" alt="ImageNet FID convergence" style="width: 100%;">
+                    <figcaption>
+                        <strong>ImageNet reconstruction quality (FID scores).</strong>
+                        Comparison of Standard VAE vs E2E-tuned VAE across FLUX, Qwen, and SD3.5 architectures.
+                        End-to-end tuned VAEs achieve significantly lower FID scores (6.1 vs 11.9 for FLUX, 5.2 vs 9.2 for Qwen, 5.2 vs 9.5 for SD3.5).
+                    </figcaption>
+                </figure>
+            </d-figure>
+
+            <!-- <p class="text">
+                <strong>Key findings:</strong>
+                <ul class="text">
+                    <li>E2E-tuned VAEs achieve <strong>substantially lower ImageNet FID scores</strong> across all architectures (roughly 45-50% improvement)</li>
+                    <li>The improvements are consistent across different VAE architectures (FLUX, Qwen-Image, SD3.5)</li>
+                    <li>End-to-end training enhances both T2I generation <em>and</em> natural image reconstruction capabilities</li>
+                </ul>
+            </p>
+
+            <p class="text">
+                This demonstrates that REPA-E-T2I VAEs serve as general-purpose image encoders, not just specialized T2I components.
+                The joint optimization with diffusion transformers leads to representations that excel at both tasks.
+            </p> -->
+        </div>
+
+        <!-- ImageNet Generalization Section
         <div id='imagenet' class="results-block">
             <h1 class="text">ImageNet Generalization</h1>
 
@@ -485,7 +520,7 @@
                 This demonstrates that REPA-E-T2I VAEs serve as general-purpose image encoders, not just specialized T2I components.
                 The joint optimization with diffusion transformers leads to representations that excel at both tasks.
             </p>
-        </div>
+        </div> -->
 
         <hr>
 
@@ -493,13 +528,10 @@
         <div id="conclusion" style="position: relative; margin-top: 40px; margin-bottom: 0px;">
             <h2 class="text" style="margin-top:0px; margin-bottom:10px">Conclusion</h2>
             <p class="text">
-                REPA-E-T2I demonstrates that end-to-end training of VAEs with diffusion transformers is a powerful approach for improving text-to-image generation.
-                Our family of VAEs consistently outperforms baseline architectures across multiple benchmarks while maintaining strong generalization to ImageNet tasks.
+                We present REPA-E for T2I, a family of End-to-End Tuned VAEs for supercharging text-to-image generation training.
+                End-to-end VAEs show superior performance over FLUX-VAE across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) without need for any additional representation alignment losses.
                 <br><br>
-                The qualitative improvements in generated images, coupled with better latent space structure revealed through PCA and similarity analysis,
-                show that jointly optimizing VAEs and diffusion models leads to representations that are both generation-friendly and semantically rich.
-                <br><br>
-                We hope REPA-E-T2I will inspire further research into end-to-end training strategies for generative models and the co-design of
+                We hope REPA-E for T2I will inspire further research into end-to-end training strategies for generative models and the co-design of
                 VAE architectures with diffusion transformers.
             </p>
         </div>
