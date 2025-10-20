@@ -481,18 +481,27 @@ blockquote {
         </center>
     </div>
     <section id="news">
-        <h2>News</h2>
-        <hr>
-        <div class="row">
-            <div><span class="material-icons"> event </span> [Apr 2025] Our paper, code, and pretrained models are now available on <a href="https://github.com/End2End-Diffusion/REPA-E">GitHub</a> and <a href="https://huggingface.co/REPA-E">HuggingFace</a>.</div>
-        </div>
+    <h2>News</h2>
+    <hr>
+    <div class="row">
+        <div><span class="material-icons">event</span> [Oct 2025] Released <a href="https://end2end-diffusion.github.io/repa-e-t2i/">REPA-E for T2I</a> — a family of End-to-End Tuned VAEs for text-to-image generation. Models are available on <a href="https://huggingface.co/REPA-E/models">Hugging Face</a>, including FLUX-VAE, SD-3.5-VAE, and Qwen-Image-VAE.</div>
+    </div>
+    <div class="row">
+        <div><span class="material-icons">event</span> [Oct 2025] Updated results: re-evaluated released models using a class-balanced sampling protocol (50 images per class). Achieved FID scores on ImageNet 256×256 — <b>1.12</b> with CFG and <b>1.69</b> without CFG. Details in the updated paper.</div>
+    </div>
+    <div class="row">
+        <div><span class="material-icons">event</span> [Jun 2025] REPA-E accepted at ICCV 2025!</div>
+    </div>
+    <div class="row">
+        <div><span class="material-icons">event</span> [Apr 2025] Paper, code, and pretrained models available on <a href="https://github.com/End2End-Diffusion/REPA-E">GitHub</a> and <a href="https://huggingface.co/REPA-E">Hugging Face</a>.</div>
+    </div>
     </section>
 
     <section>
         <h2>Overview</h2>
         <hr>
         <p>
-            We address a fundamental question: <b><em style="color: green;">Can latent diffusion models and their VAE tokenizer be trained end-to-end?</em></b> While training both components jointly with standard diffusion loss is observed to be ineffective — often degrading final performance — we show that this limitation can be overcome using a simple representation-alignment (REPA) loss. Our proposed method, <b>REPA-E</b>, enables stable and effective joint training of both the VAE and the diffusion model, achieving state-of-the-art FID scores of <b>1.26</b> and <b>1.83</b> with and without classifier-free guidance on ImageNet 256×256.
+            We address a fundamental question: <b><em style="color: green;">Can latent diffusion models and their VAE tokenizer be trained end-to-end?</em></b> While training both components jointly with standard diffusion loss is observed to be ineffective — often degrading final performance — we show that this limitation can be overcome using a simple representation-alignment (REPA) loss. Our proposed method, <b>REPA-E</b>, enables stable and effective joint training of both the VAE and the diffusion model, achieving state-of-the-art FID scores of <b>1.12</b> and <b>1.69</b> with and without classifier-free guidance on ImageNet 256×256.
         </p>
 
         <center>
@@ -567,7 +576,7 @@ blockquote {
         <hr>
         <ul>
             <li><b>Universal improvement:</b> E2E-VAE serves as a drop-in replacement for original VAEs, delivering superior performance across diverse diffusion architectures</li>
-            <li><b>State-of-the-art generation quality:</b> Achieves gFID of <b>1.26</b> (w/ CFG) and <b>1.83</b> (w/o CFG) when training with REPA for 800 epochs</li>
+            <li><b>State-of-the-art generation quality:</b> Achieves gFID of <b>1.12</b> (w/ CFG) and <b>1.69</b> (w/o CFG) when training with REPA for 800 epochs</li>
             <li><b>Comprehensive performance superiority:</b> Achieves gFID of <b>3.46</b> with SiT-XL and REPA (vs. <b>4.88</b> with VA-VAE and <b>7.90</b> with SD-VAE) and <b>4.20</b> with DiT-XL (vs. <b>4.71</b> with VA-VAE and <b>12.29</b> with SD-VAE)</li>
             <li><b>Architecture-robust performance:</b> E2E-VAE maintains strong generation quality across diffusion models with and without REPA (e.g., gFID <b>3.46</b> on SiT-XL w/ REPA and <b>4.20</b> on DiT-XL w REPA)</li>
         </ul>
@@ -576,6 +585,9 @@ blockquote {
             <div class="figure">
                 <img src="assets/e2e-vae-eval.webp" alt="Drop-in VAE Performance Comparison" style="max-width: 100%; height: auto;" loading="lazy">
             </div>
+            <p style="font-size: 0.8em; color: #555; margin-top: 8px;">
+                Note: For the 800-epoch checkpoints of <b>REPA</b>, <b>LightningDiT</b>, and <b>E2E-VAE</b> in the left table, the models are evaluated using the class-balanced sampling protocol (strictly 50 images per class).
+            </p>
         </center>
     </section>
     
@@ -611,7 +623,7 @@ blockquote {
     </section>
 
     <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #888; text-align: center;">
-        <p>We thank the <a href="https://github.com/sihyun-yu/REPA/tree/gh-pages" target="_blank">REPA project</a> for the website template. Last updated: April 2025.</p>
+        <p>We thank the <a href="https://github.com/sihyun-yu/REPA/tree/gh-pages" target="_blank">REPA project</a> for the website template. Last updated: October 2025.</p>
     </footer>
 
 </div>
