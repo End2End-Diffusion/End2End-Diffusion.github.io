@@ -264,3 +264,29 @@ d-figure figcaption {
     line-height: 1.6;
     overflow-x: auto;
 }
+
+/* Finding box styling - minimalistic gray block for key findings */
+.finding-box {
+    background-color: rgba(240, 240, 240, 0.9); /* Soft gray background */
+    border: 1.2pt solid rgba(25, 25, 25, 0.6); /* Dark border */
+    border-radius: 10pt; /* Rounded corners */
+    padding: 2pt 10pt; /* Compact padding */
+    margin: 0.5em 0; /* Vertical spacing */
+    box-shadow: 2px 2px 4px rgba(128, 128, 128, 0.3); /* Subtle shadow */
+    box-sizing: border-box;
+}
+
+.finding-box ul {
+    margin: 0.5em 0;
+    padding-left: 1.2em;
+    list-style-type: disc;
+}
+
+.finding-box li {
+    margin-bottom: 0.5em;
+    line-height: 1.5;
+}
+
+.finding-box li:last-child {
+    margin-bottom: 0;
+}

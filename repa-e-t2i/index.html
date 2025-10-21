@@ -91,7 +91,7 @@
                 </div>
                 <div class="header-image">
                     <!-- Placeholder for hero image -->
-                    <img draggable="false" src="hero-v1.png" alt="REPA-E-T2I Sample" class="teaser-image">
+                    <img draggable="false" src="e2e-v1.png" alt="REPA-E-T2I Sample" class="teaser-image">
                 </div>
             </div>
         </div>
@@ -119,6 +119,12 @@
             End-to-end VAEs show superior performance across all benchmarks (COCO30k<d-cite key="coco30k"></d-cite>, DPG-Bench<d-cite key="dpgbench"></d-cite>, GenAI-Bench<d-cite key="genaibench"></d-cite>, GenEval<d-cite key="geneval"></d-cite>, MJHQ30k<d-cite key="mjhq30k"></d-cite>) without need for any additional representation alignment losses.
             Beyond T2I improvements, we show that end-to-end tuning enhances latent space structure and maintains strong ImageNet<d-cite key="imagenet"></d-cite> generalization.
         </p>
+
+        <div class="finding-box">
+            <ul>
+                <li><strong>Key Finding:</strong> End-to-End tuned VAEs lead to better T2I generation without need for any additional representation alignment losses.</li>
+            </ul>
+        </div>
 
         <!-- Jump to Sections -->
         <div class="icon-row">
@@ -280,6 +286,12 @@
                     </figcaption>
                 </figure>
             </d-figure>
+
+            <div class="finding-box">
+                <ul>
+                    <li><strong>Key Finding:</strong> End-to-End VAEs tuned on ImageNet 256×256 generalize for better T2I generation across different resolutions (256×256, 512×512).</li>
+                </ul>
+            </div>
 
         </div>
 
@@ -534,6 +546,12 @@
                     </figcaption>
                 </figure>
             </d-figure>
+
+            <div class="finding-box">
+                <ul>
+                    <li><strong>Key Finding:</strong> End-to-End tuned VAEs show improved semantic spatial structure and details over FLUX-VAE, as evidenced by PCA projections and spatial self-similarity analysis.</li>
+                </ul>
+            </div>
         </div>
 
         <hr>
@@ -559,6 +577,12 @@
                     </figcaption>
                 </figure>
             </d-figure>
+
+            <div class="finding-box">
+                <ul>
+                    <li><strong>Key Finding:</strong> End-to-End VAEs improve generation performance while maintaining reconstruction fidelity across all VAE families (FLUX, SD3.5, Qwen-Image).</li>
+                </ul>
+            </div>
 
             <!-- <p class="text">
                 <strong>Key findings:</strong>
