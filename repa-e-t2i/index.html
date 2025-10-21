@@ -272,11 +272,32 @@
 
             <d-figure id="fig-convergence-100k" style="margin-top: 30px; margin-bottom: 30px;">
                 <figure>
-                    <img data-zoomable="" draggable="false" src="static/img/convergence/3b-t2i-convergence-100k-combined.png" alt="Training convergence at 100K steps">
+                    <img data-zoomable="" draggable="false" src="static/img/3b-t2i-convergence-100k-combined.png" alt="Training convergence at 100K steps">
                     <figcaption>
                         <strong>Training convergence at 100K steps.</strong>
-                        Comparison of FLUX-VAE baseline vs End-to-End Tuned VAEs across five benchmarks: COCO30k FID<d-cite key="coco30k"></d-cite>, DPG-Bench<d-cite key="dpgbench"></d-cite>, GenAI-Bench<d-cite key="genaibench"></d-cite>, GenEval<d-cite key="geneval"></d-cite>, and MJHQ30k<d-cite key="mjhq30k"></d-cite>.
-                        End-to-end tuned VAEs show consistent improvements across all metrics.
+                        Comparison of baseline VAEs vs End-to-End Tuned VAEs across three VAE families (FLUX-VAE, SD3.5-VAE, Qwen-Image-VAE) and five benchmarks: COCO30k FID<d-cite key="coco30k"></d-cite>, DPG-Bench<d-cite key="dpgbench"></d-cite>, GenAI-Bench<d-cite key="genaibench"></d-cite>, GenEval<d-cite key="geneval"></d-cite>, and MJHQ30k<d-cite key="mjhq30k"></d-cite>.
+                        End-to-end tuned VAEs show consistent improvements across all metrics and VAE architectures.
+                    </figcaption>
+                </figure>
+            </d-figure>
+
+            <h3 class="text">Comparison with REPA Representation Alignment</h3>
+
+            <p class="text">
+                To understand the effectiveness of end-to-end tuning, we compare three approaches at 100K training steps:
+                (1) FLUX-VAE baseline without modifications,
+                (2) FLUX-VAE with REPA<d-cite key="leng2025repa"></d-cite> representation alignment losses added during T2I training, and
+                (3) E2E-FLUX-VAE (ours) with end-to-end tuning but without additional alignment losses.
+                The results demonstrate that end-to-end tuning outperforms both the baseline and REPA-enhanced approaches across all benchmarks, achieving superior performance without requiring auxiliary alignment objectives.
+            </p>
+
+            <d-figure id="fig-repa-comparison-100k" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/3b-t2i-convergence-100k-combined-bar.png" alt="Comparison of FLUX-VAE, FLUX-VAE+REPA, and E2E-FLUX-VAE at 100K steps">
+                    <figcaption>
+                        <strong>Performance comparison at 100K steps: E2E-FLUX-VAE vs REPA alignment.</strong>
+                        Bar chart comparing three approaches across five benchmarks.
+                        E2E-FLUX-VAE (red) outperforms both FLUX-VAE baseline (blue) and FLUX-VAE+REPA with representation alignment (orange), demonstrating that end-to-end tuning is more effective than adding alignment losses during T2I training.
                     </figcaption>
                 </figure>
             </d-figure>
@@ -298,7 +319,7 @@
 
             <d-figure id="fig-convergence-500k" style="margin-top: 30px; margin-bottom: 30px;">
                 <figure>
-                    <img data-zoomable="" draggable="false" src="static/img/convergence/3b-t2i-convergence-fulldata-500k-combined.png" alt="Training convergence at 500K steps with full data">
+                    <img data-zoomable="" draggable="false" src="static/img/3b-t2i-convergence-fulldata-500k-combined.png" alt="Training convergence at 500K steps with full data">
                     <figcaption>
                         <strong>Training convergence with full dataset (500K steps).</strong>
                         Extended training confirms sustained improvements across all benchmarks with End-to-End Tuned VAEs.
@@ -326,10 +347,11 @@
 
             <d-figure id="fig-convergence-res512" style="margin-top: 30px; margin-bottom: 30px;">
                 <figure>
-                    <img data-zoomable="" draggable="false" src="static/img/convergence/3b-t2i-convergence-fulldata-resume-res512-200k-combined.png" alt="Training convergence at 512px resolution">
+                    <img data-zoomable="" draggable="false" src="static/img/3b-t2i-convergence-fulldata-resume-res512-200k-combined-bar.png" alt="Performance comparison at 512px resolution">
                     <figcaption>
-                        <strong>High-resolution training (512px, 200K steps).</strong>
-                        Performance improvements persist when resuming training at higher resolution.
+                        <strong>High-resolution training (512px, 200K steps) - Final performance.</strong>
+                        Bar chart showing final performance comparison between FLUX-VAE and E2E-FLUX-VAE after 200K additional steps at 512×512 resolution.
+                        Performance improvements persist when resuming training at higher resolution, demonstrating that E2E-tuned VAEs generalize effectively across resolutions.
                     </figcaption>
                 </figure>
             </d-figure>
