@@ -49,22 +49,22 @@
 
                     <p>
                         We present REPA-E for T2I, a family of End-to-End Tuned VAEs for supercharging text-to-image generation training.
-                        <strong>End-to-end VAEs show superior performance over FLUX-VAE</strong> across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) without need for any additional representation alignment losses.
+                        <strong>End-to-end VAEs show superior performance over their original counterparts</strong> across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) without need for any additional representation alignment losses.
                     </p>
 
                     <!-- Key Points Icon Container -->
                     <div class="icon-container">
                         <div class="icon-item">
                             <img src="./static/img/icons/accuracy.svg" alt="Performance Icon">
-                            <div><strong>Better T2I Performance</strong>: Consistent improvements over FLUX-VAE across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) with end-to-end tuned VAEs.</div>
+                            <div><strong>Better T2I Performance</strong>: Consistent improvements over baseline VAEs across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) with end-to-end tuned VAEs.</div>
                         </div>
                         <div class="icon-item">
                             <img src="./static/img/icons/spatial.svg" alt="Quality Icon">
-                            <div><strong>Family of End-to-End Tuned VAEs</strong>: We release a family of end-to-end tuned VAEs across different families (Flux, SD3.5, Qwen-VAE) for supercharging text-to-image generation training.</div>
+                            <div><strong>Family of End-to-End Tuned VAEs</strong>: We release a family of end-to-end tuned VAEs across different families (FLUX-VAE, SD3.5-VAE, Qwen-Image-VAE) for supercharging text-to-image generation training.</div>
                         </div>
                         <div class="icon-item">
                             <img src="./static/img/icons/irepa.svg" alt="Generalization Icon">
-                            <div><strong>Better Latent Space Structure</strong>: End-to-end tuned VAEs show better latent space structure compared to traditional VAEs (FLUX-VAE) which are mostly optimized for reconstruction.</div>
+                            <div><strong>Better Latent Space Structure</strong>: End-to-end tuned VAEs show better latent space structure compared to their original counterparts which are mostly optimized for reconstruction.</div>
                         </div>
                     </div>
 
@@ -96,30 +96,28 @@
             </div>
         </div>
     <d-article>
-        <!-- <div class="byline">
+        <div class="byline">
             <div class="byline-container">
-                <p>
-                    <a href="https://www.linkedin.com/in/xingjian-leng" class="author-link" target="_blank">Xingjian Leng<sup>1</sup></a> &emsp;
-                    <a href="https://1jsingh.github.io/" class="author-link" target="_blank">Jaskirat Singh<sup>2,3</sup></a> &emsp;
-                    <a href="#" class="author-link" target="_blank">Yunzhong Hou<sup>1</sup></a> &emsp;
-                    <br>
-                    <a href="#" class="author-link" target="_blank">Zhenchang Xing<sup>1</sup></a> &emsp;
-                    <a href="https://www.sainingxie.com/" class="author-link" target="_blank">Saining Xie<sup>4</sup></a> &emsp;
-                    <a href="https://scholar.google.com/citations?hl=en&user=vNHqr3oAAAAJ&view_op=list_works&sortby=pubdate" class="author-link" target="_blank">Liang Zheng<sup>1</sup></a>
-                    <p></p>
+                <p align="center">
+                    <a href="https://scholar.google.com.au/citations?user=GQzvqS4AAAAJ" target="_blank">Xingjian&nbsp;Leng</a><sup>1,2*</sup> &ensp; <b>&middot;</b> &ensp;
+                    <a href="https://1jsingh.github.io/" target="_blank">Jaskirat&nbsp;Singh</a><sup>1</sup> &ensp; <b>&middot;</b> &ensp;
+                    <a href="https://rynmurdock.github.io/" target="_blank">Ryan&nbsp;Murdock</a><sup>2</sup> &ensp; <b>&middot;</b> &ensp;
+                    <a href="https://www.ethansmith2000.com/" target="_blank">Ethan&nbsp;Smith</a><sup>2</sup> &ensp; <b>&middot;</b> &ensp;
+                    <a href="https://xiaoyang-rebecca.github.io/cv/" target="_blank">Rebecca&nbsp;Li</a><sup>2</sup> &ensp; <b>&middot;</b> &ensp;
+                    <a href="https://www.sainingxie.com/" target="_blank">Saining&nbsp;Xie</a><sup>3</sup>&ensp; <b>&middot;</b> &ensp;
+                    <a href="https://zheng-lab-anu.github.io/" target="_blank">Liang&nbsp;Zheng</a><sup>1</sup>&ensp;
                 </p>
-                <p style="text-align: center;">
-                    <span class="affiliation-link"><sup>1</sup>Australian National University</span> &emsp;
-                    <span class="affiliation-link"><sup>2</sup>Adobe Research</span> &emsp;
-                    <span class="affiliation-link"><sup>3</sup>ANU</span> &emsp;
-                    <span class="affiliation-link"><sup>4</sup>New York University</span>
+                <p align="center">
+                    <sup>1</sup> Australian National University &emsp; <sup>2</sup>Canva &emsp; <sup>3</sup>New York University &emsp; <br>
+                    <sub><sup>*</sup>Done during internship at Canva &emsp;</sub>
                 </p>
             </div>
-        </div> -->
+        </div>
 
         <p class="text">
             We present REPA-E for T2I, a family of End-to-End Tuned VAEs for supercharging text-to-image generation training.
             End-to-end VAEs show superior performance across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) without need for any additional representation alignment losses.
+            Beyond T2I improvements, we show that end-to-end tuning enhances latent space structure and maintains strong ImageNet generalization.
         </p>
 
         <!-- Jump to Sections -->
@@ -145,6 +143,51 @@
 
         <hr>
 
+        <!-- End-to-End VAE Training Section -->
+        <div class="method-block">
+            <h1 class="text">End-to-End VAE Training</h1>
+
+            <p class="text">
+                Before moving on to text-to-image generation tasks, we first perform end-to-end tuning to VAEs.
+                We use the official REPA-E implementation with the same hyperparameter as the original paper, except for the learning rate.
+                Since we are fine-tuning already high-quality VAEs (FLUX-VAE, SD-3.5-VAE, Qwen-Image-VAE), we opt for a smaller learning rate at 2×10<sup>-5</sup>.
+            </p>
+
+            <div style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                <p class="text" style="margin: 0 0 10px 0;"><strong>End-to-End VAE Tuning Configuration:</strong></p>
+                <ul class="text" style="margin: 0; padding-left: 20px;">
+                    <li><strong>VAE Models:</strong> FLUX-VAE, SD-3.5-VAE, Qwen-Image-VAE</li>
+                    <li><strong>Dataset:</strong> ImageNet-256</li>
+                    <li><strong>Training epochs:</strong> 80 epochs</li>
+                    <li><strong>Learning rate:</strong> 2×10<sup>-5</sup></li>
+                </ul>
+            </div>
+
+            <p class="text">
+                These end-to-end tuned VAEs are then used in all subsequent text-to-image generation experiments, where they are compared against their original counterparts.
+            </p>
+        </div>
+
+        <hr>
+
+        <!-- T2I Setup Section -->
+        <div class="method-block">
+            <h1 class="text">T2I Setup</h1>
+
+            <p class="text">
+                For our diffusion backbone, we adopt a variant of the DiT-3B architecture with a self-attention-based text conditioning mechanism.
+                We use Gemma-2B to encode text prompts into contextual embeddings.
+                Specifically, text representations are projected to produce key and value states, which are concatenated with the keys and values derived from image latent features before the attention operation.
+                The query states come solely from the image features, allowing the model to attend to both visual and textual information simultaneously within a unified self-attention layer.
+            </p>
+
+            <p class="text">
+                For all generation evaluations and qualitative samples, we use 25 sampling steps with a guidance scale of 6.5.
+            </p>
+        </div>
+
+        <hr>
+
         <!-- Quantitative Results Section -->
         <div id='quantitative' class="motivation-block">
             <h1 class="text">Quantitative Results: T2I Performance</h1>
@@ -155,9 +198,23 @@
             </p>
 
             <h3 class="text">Training Convergence at 100K Steps</h3>
+
+            <div style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                <p class="text" style="margin: 0 0 10px 0;"><strong>Training Configuration:</strong></p>
+                <ul class="text" style="margin: 0; padding-left: 20px;">
+                    <li><strong>Dataset:</strong> JourneyDB (~4M samples)</li>
+                    <li><strong>Resolution:</strong> 256×256</li>
+                    <li><strong>Batch size:</strong> 1024</li>
+                    <li><strong>Learning rate:</strong> Constant 1×10<sup>-4</sup></li>
+                    <li><strong>Optimizer:</strong> AdamW</li>
+                    <li><strong>Training steps:</strong> 100K</li>
+                    <li><strong>EMA:</strong> Decay 0.9999, per-step update</li>
+                </ul>
+            </div>
+
             <p class="text">
-                Starting with 100K training steps on COCO30k, we observe that End-to-End Tuned VAEs achieve better performance across all evaluation benchmarks.
-                The improvements are particularly pronounced on vision-centric metrics like DPG-Bench and MJHQ30k.
+                We compare training with original VAEs (FLUX-VAE, SD-3.5-VAE, Qwen-Image-VAE) against their end-to-end tuned counterparts across multiple evaluation benchmarks.
+                End-to-End Tuned VAEs consistently achieve better performance across all metrics, with improvements particularly pronounced on vision-centric benchmarks like MJHQ-30K and GenEval.
             </p>
 
             <d-figure id="fig-convergence-100k" style="margin-top: 30px; margin-bottom: 30px;">
@@ -172,9 +229,18 @@
             </d-figure>
 
             <h3 class="text">Extended Training with Full Data (500K Steps)</h3>
+
+            <div style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                <p class="text" style="margin: 0 0 10px 0;"><strong>Changes from 100K Configuration:</strong></p>
+                <ul class="text" style="margin: 0; padding-left: 20px;">
+                    <li><strong>Dataset:</strong> BLIP-3o pretraining dataset (~28M samples)</li>
+                    <li><strong>Training steps:</strong> 500K</li>
+                </ul>
+            </div>
+
             <p class="text">
-                Extending training to 500K steps with the full dataset, End-to-End Tuned VAEs continue to outperform baseline VAEs.
-                The performance gap remains consistent, demonstrating that the improvements are not limited to early training stages.
+                With extended training on the full BLIP-3o pretraining dataset, end-to-end tuned VAEs maintain their performance advantages over the original VAEs (FLUX-VAE, SD-3.5-VAE, Qwen-Image-VAE).
+                The consistent improvements across all benchmarks demonstrate that the benefits of end-to-end tuning persist at scale with longer training.
             </p>
 
             <d-figure id="fig-convergence-500k" style="margin-top: 30px; margin-bottom: 30px;">
@@ -188,9 +254,21 @@
             </d-figure>
 
             <h3 class="text">High-Resolution Training (512px, 200K Steps)</h3>
+
+            <div style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                <p class="text" style="margin: 0 0 10px 0;"><strong>Changes from 500K Configuration:</strong></p>
+                <ul class="text" style="margin: 0; padding-left: 20px;">
+                    <li><strong>Initialization:</strong> Resumed from 500K checkpoint</li>
+                    <li><strong>Resolution:</strong> 512×512</li>
+                    <li><strong>Batch size:</strong> 448</li>
+                    <li><strong>Training steps:</strong> 200K additional steps</li>
+                </ul>
+            </div>
+
             <p class="text">
-                When resuming training at higher resolution (512px) for 200K additional steps, End-to-End Tuned VAEs maintain their advantage.
-                This demonstrates that the benefits of end-to-end tuning persist across different training regimes and resolutions.
+                After resuming training at higher resolution (512×512), end-to-end tuned VAEs continue to outperform the original VAEs across all benchmarks.
+                These results confirm that the benefits of end-to-end tuning transfer effectively to higher-resolution generation.
+                Notably, even though the end-to-end VAE tuning was performed at 256×256 resolution on ImageNet, the performance improvements hold at higher resolutions.
             </p>
 
             <d-figure id="fig-convergence-res512" style="margin-top: 30px; margin-bottom: 30px;">
@@ -212,9 +290,11 @@
             <h1 class="text">Qualitative Comparison</h1>
 
             <p class="text">
-                Beyond quantitative metrics, End-to-End Tuned VAEs produces visually superior results compared to baseline FLUX-VAE.
+                For qualitative visualization, we use the 200K-step checkpoint trained at 512×512 resolution.
+                All images are generated with 25 sampling steps and a guidance scale of 6.5.
+                Beyond quantitative metrics, End-to-End Tuned VAEs produce visually superior results compared to baseline FLUX-VAE.
                 The generated images show improved detail, better prompt adherence, and more coherent compositions.
-                Below we show comparisons for T2I generations for models training with FLUX-VAE and E2E-Tuned FLUX-VAE (Ours).
+                Below we show comparisons for T2I generations using models trained with FLUX-VAE and E2E-Tuned FLUX-VAE (Ours).
             </p>
 
             <!-- <h3 class="text">Sample Generations</h3>
@@ -251,7 +331,7 @@
 
                         <!-- Counter and Controls -->
                         <div class="carousel-info" style="text-align: center; margin-top: 15px; display: flex; justify-content: center; align-items: center; gap: 20px;">
-                            <span id="carousel-counter" style="font-size: 1em; color: #333;">Image 1 / 24</span>
+                            <span id="carousel-counter" style="font-size: 1em; color: #333;">Image 1 / 4</span>
                             <button id="pause-btn" onclick="toggleAutoPlay()"
                                     style="background: #508af6; color: white; border: none;
                                            padding: 8px 16px; cursor: pointer; font-size: 0.9em; border-radius: 5px;">
@@ -271,7 +351,7 @@
             <!-- Carousel JavaScript -->
             <script>
                 let currentSlide = 0;
-                const totalSlides = 24;
+                const totalSlides = 4;
                 let autoPlayInterval;
                 let isPlaying = true;
 
@@ -386,12 +466,14 @@
             <p class="text">
                 To understand what makes End-to-End Tuned VAEs effective, we analyze the learned latent representations through PCA projections and spatial similarity analysis.
                 These visualizations reveal how end-to-end tuning shapes the VAE's latent space to better support high-quality generation.
+                Notably, end-to-end tuning enriches the VAE latent space by incorporating more structural and semantic information directly during the joint optimization process with the diffusion model.
             </p>
 
             <h3 class="text">PCA Projections of VAE Latents</h3>
             <p class="text">
                 We project VAE latent representations to 2D using PCA and visualize them as RGB images (first 3 principal components).
                 This reveals the spatial structure and semantic organization learned by different VAE architectures.
+                As illustrated in the PCA visualizations, end-to-end training injects additional structural and semantic information into the latent representations.
             </p>
 
             <d-figure id="fig-pca-viz" style="margin-top: 30px; margin-bottom: 30px;">
@@ -424,6 +506,7 @@
             <p class="text">
                 We compute cosine similarity between patch tokens in the latent space to measure spatial structure.
                 End-to-End Tuned VAEs show more coherent spatial patterns, indicating better capture of local and global image structure.
+                As shown in the similarity maps, end-to-end tuning embeds more meaningful structural and semantic relationships between patches, making the latent space more informative for the diffusion model to generate high-quality images.
             </p>
 
             <d-figure id="fig-similarity-viz" style="margin-top: 30px; margin-bottom: 30px;">
@@ -461,7 +544,7 @@
 
             <p class="text">
                 Finally, we show that the end-to-end tuned VAEs can also be used for traditional image generation benchmarks like ImageNet 256x256.
-                We observe that the end-to-end tuned VAEs achieve significantly better FID scores (better generation quality) compared to the traditional VAEs (FLUX-VAE), across all VAE families (Flux, Qwen, SD3.5).
+                We observe that the end-to-end tuned VAEs achieve significantly better FID scores (better generation quality) compared to their original counterparts across all VAE families (FLUX, SD3.5, Qwen).
                 <!-- A key question is whether VAEs optimized for T2I generation maintain their ability to encode natural images.
                 We evaluate our REPA-E-T2I VAEs on ImageNet reconstruction tasks, measuring FID scores to assess encoding/decoding quality. -->
             </p>
@@ -535,7 +618,7 @@
             <h2 class="text" style="margin-top:0px; margin-bottom:10px">Conclusion</h2>
             <p class="text">
                 We present REPA-E for T2I, a family of End-to-End Tuned VAEs for supercharging text-to-image generation training.
-                End-to-end VAEs show superior performance over FLUX-VAE across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) without need for any additional representation alignment losses.
+                End-to-end VAEs show superior performance over their original counterparts across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) without need for any additional representation alignment losses.
                 <br><br>
                 We hope REPA-E for T2I will inspire further research into end-to-end training strategies for generative models and the co-design of
                 VAE architectures with diffusion transformers.
@@ -562,11 +645,12 @@
                     z-index: 10;
                 ">📋 Copy</button>
                 <p class="bibtex" id="bibtex-content">
-                    @article{leng2025repae,<br>
-                    &nbsp;&nbsp;title={{REPA-E: Unlocking VAE for End-to-End Tuning with Latent Diffusion Transformers}},<br>
-                    &nbsp;&nbsp;author={Leng, Xingjian and Singh, Jaskirat and Hou, Yunzhong and Xing, Zhenchang and Xie, Saining and Zheng, Liang},<br>
-                    &nbsp;&nbsp;journal={arXiv preprint arXiv:2504.10483},<br>
-                    &nbsp;&nbsp;year={2025}<br>
+                    @misc{repa-e-t2i,<br>
+                    &nbsp;&nbsp;title={{REPA-E for T2I}},<br>
+                    &nbsp;&nbsp;author={Leng, Xingjian and Singh, Jaskirat and Murdock, Ryan and Smith, Ethan and Li, Rebecca and Xie, Saining and Zheng, Liang},<br>
+                    &nbsp;&nbsp;year={2025},<br>
+                    &nbsp;&nbsp;month={Oct},<br>
+                    &nbsp;&nbsp;url={https://end2end-diffusion.github.io/repa-e-t2i/}<br>
                     }
                 </p>
             </div>
