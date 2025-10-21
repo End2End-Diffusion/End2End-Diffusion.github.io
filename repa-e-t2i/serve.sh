@@ -1,7 +1,7 @@
 #!/bin/bash
 # Simple HTTP server for local preview of the project page
 
-PORT=8005
+PORT=8009
 
 echo "Starting local server on http://localhost:$PORT"
 echo "Press Ctrl+C to stop"
