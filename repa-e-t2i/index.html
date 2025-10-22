@@ -163,17 +163,17 @@
 
         <p class="text">
             We present REPA-E for T2I, a family of End-to-End Tuned VAEs for supercharging text-to-image generation training.
-            End-to-end VAEs show superior performance across all benchmarks (COCO30k<d-cite key="coco30k"></d-cite>, DPG-Bench<d-cite key="dpgbench"></d-cite>, GenAI-Bench<d-cite key="genaibench"></d-cite>, GenEval<d-cite key="geneval"></d-cite>, MJHQ30k<d-cite key="mjhq30k"></d-cite>) without need for any additional representation alignment losses.
-            Beyond T2I improvements, we show that end-to-end tuning enhances latent space structure and maintains strong ImageNet<d-cite key="imagenet"></d-cite> generalization.
+            End-to-end VAEs show superior performance across all benchmarks (COCO30k<d-cite key="coco30k"></d-cite>, DPG-Bench<d-cite key="dpgbench"></d-cite>, GenAI-Bench<d-cite key="genaibench"></d-cite>, GenEval<d-cite key="geneval"></d-cite>, MJHQ30k<d-cite key="mjhq30k"></d-cite>) without need for any additional representation alignment losses!
+            <!-- Beyond T2I improvements, we show that end-to-end tuning enhances latent space structure and maintains strong ImageNet<d-cite key="imagenet"></d-cite> generalization. -->
         </p>
 
         <p class="text">
-            Through comprehensive evaluation across multiple scales, datasets, and resolutions, we reveal four key findings:
+            <!-- Through comprehensive evaluation across multiple scales, datasets, and resolutions, we reveal four key findings: -->
             <ol class="text">
-                <li><strong><a href="#quantitative">&sect;Better T2I Performance</a></strong>: End-to-End tuned VAEs lead to better T2I generation without need for any additional representation alignment losses.</li>
-                <li><strong><a href="#quantitative">&sect;Resolution Generalization</a></strong>: End-to-End VAEs tuned on ImageNet 256×256 generalize for better T2I generation across different resolutions (256×256, 512×512).</li>
-                <li><strong><a href="#latent-analysis">&sect;Improved Latent Space Structure</a></strong>: End-to-End tuned VAEs show improved semantic spatial structure and details over FLUX-VAE, as evidenced by PCA projections and spatial self-similarity analysis.</li>
-                <li><strong><a href="#imagenet">&sect;ImageNet Generalization</a></strong>: End-to-End VAEs improve generation performance while maintaining reconstruction fidelity across all VAE families (FLUX, SD3.5, Qwen-Image).</li>
+                <li><strong><a href="#quantitative">&sect;Better T2I Performance</a></strong>: End-to-End tuned VAEs lead to better T2I generation without need for any additional representation alignment losses!</li>
+                <li><strong><a href="#quantitative">&sect;End-to-End Training on ImageNet Generalizes to T2I</a></strong>: End-to-End VAEs tuned on just "ImageNet 256×256" <d-cite key="imagenet"></d-cite> generalize for better "T2I generation" across different resolutions (256×256, 512×512).</li>
+                <li><strong><a href="#latent-analysis">&sect;Improved Latent Space Structure</a></strong>: End-to-End tuned VAEs show improved semantic spatial structure and details over traditionally used VAEs like FLUX-VAE, SD3.5-VAE, Qwen-Image-VAE etc.</li>
+                <li><strong><a href="#imagenet">&sect;SOTA performance on Imagenet</a></strong>: End-to-End tuned VAEs achieve new state-of-the-art performance on ImageNet 256×256 <d-cite key="imagenet"></d-cite> achieving gFID 1.12 with classifer-free guidance.</li>
             </ol>
         </p>
 
@@ -726,7 +726,7 @@
         <d-appendix>
             <h3>Contributors</h3>
             <p style="font-size: 0.9em;">
-                This work is a collaboration between the REPA-E team and Canva.
+                This work is a joint collaboration between the REPA-E team and Canva.
             </p>
 
             <p style="font-size: 0.9em; margin-top: 10px;">
@@ -741,7 +741,7 @@
 
             <p style="font-size: 0.9em; margin-top: 10px;">
                 <strong>Canva Team:</strong>
-                <a href="https://scholar.google.com.au/citations?user=GQzvqS4AAAAJ" target="_blank">Xingjian Leng</a>,
+                <!-- <a href="https://scholar.google.com.au/citations?user=GQzvqS4AAAAJ" target="_blank">Xingjian Leng</a>, -->
                 <a href="https://rynmurdock.github.io/" target="_blank">Ryan Murdock</a>,
                 <a href="https://www.ethansmith2000.com/" target="_blank">Ethan Smith</a>,
                 <a href="https://xiaoyang-rebecca.github.io/cv/" target="_blank">Rebecca Li</a>
