@@ -202,14 +202,20 @@
 
         <!-- End-to-End VAE Training Section -->
         <div class="method-block">
-            <h1 class="text">End-to-End VAE Training</h1>
+            <h1 class="text">End-to-End VAE Training Recipe and T2I Setup</h1>
 
             <p class="text">
-                Before moving on to text-to-image generation tasks, we first perform end-to-end tuning to VAEs.
+                We perform end-to-end tuning on ImageNet 256×256.  <d-cite key="imagenet"></d-cite> to obtained end-to-end tuned encoders for popular VAE families like FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>. 
+                We then compare the performance of obtained end-to-end tuned VAEs with the standard VAEs (e.g, Flux-VAE) for text-to-image (T2I) generation tasks.
+                <!-- Before moving on to text-to-image generation tasks, we first perform end-to-end tuning to VAEs.
                 We use the official REPA-E<d-cite key="leng2025repa"></d-cite> implementation with the same hyperparameter as the original paper, except for the learning rate.
-                Since we are fine-tuning already high-quality VAEs (FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>), we opt for a smaller learning rate at 2×10<sup>-5</sup>.
+                Since we are fine-tuning already high-quality VAEs (FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>), we opt for a smaller learning rate at 2×10<sup>-5</sup>. -->
             </p>
-
+            
+            <p class="text">
+                <strong>End-to-End VAE Tuning on ImageNet 256×256</strong> We follow the same training recipe as the original REPA-E<d-cite key="leng2025repa"></d-cite> paper, for end-to-end tuning on ImageNet 256×256.
+                We use a small learning rate of 2×10<sup>-5</sup>, AdamW optimizer and 80 epochs for end-to-end tuning across all VAE families (FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>). We next refer the corresponding finetuned VAEs as E2E-FLUX-VAE<d-cite key="e2e-flux"></d-cite>, E2E-SD-3.5-VAE<d-cite key="e2e-sd3.5"></d-cite>, E2E-Qwen-Image-VAE<d-cite key="e2e-qwen-image"></d-cite> respectively.
+            </p>
             <div class="config-box">
                 <p class="text"><strong>End-to-End VAE Tuning Configuration:</strong></p>
                 <ul class="text">
@@ -221,14 +227,45 @@
             </div>
 
             <p class="text">
-                These end-to-end tuned VAEs are then used in all subsequent text-to-image generation experiments, where they are compared against their original counterparts.
+                <strong>T2I Training Setup.</strong> For our diffusion backbone, we follow the setup in Fuse-DiT<d-cite key="fuse-dit"></d-cite> and adopt a variant of the DiT-3B<d-cite key="dit"></d-cite> architecture with a self-attention-based text conditioning mechanism.
+                We use Gemma-2B<d-cite key="gemma"></d-cite> to encode text prompts into contextual embeddings.
+                <!-- Specifically, text representations are projected to produce key and value states, which are concatenated with the keys and values derived from image latent features before the attention operation. -->
+                <!-- The query states come solely from the image features, allowing the model to attend to both visual and textual information simultaneously within a unified self-attention layer. -->
+                For training we use the BLIP-3o<d-cite key="blip3o"></d-cite> pretraining dataset (~28M samples) for T2I training with both original and end-to-end tuned VAEs. We perform experiments at both 256×256 and 512×512 resolutions. Unless otherwise specified, we use 25 sampling steps with a guidance scale of 6.5 for inference.
             </p>
+
+            <div class="config-box">
+                <p class="text"><strong>T2I Training Configuration:</strong></p>
+                <ul class="text">
+                    <li><strong>Dataset:</strong> BLIP-3o<d-cite key="blip3o"></d-cite> (~28M samples)</li>
+                    <li><strong>Resolution:</strong> 256×256, 512×512</li>
+                    <li><strong>Batch size:</strong> 1024 (256×256), 448 (512×512)</li>
+                    <li><strong>Learning rate:</strong> Constant 1×10<sup>-4</sup></li>
+                    <li><strong>Optimizer:</strong> AdamW<d-cite key="adamw"></d-cite></li>
+                    <!-- <li><strong>Training steps:</strong> 100K</li> -->
+                    <li><strong>EMA:</strong> Decay 0.9999, per-step update</li>
+                </ul>
+            </div>
+
+            <!-- <div class="config-box">
+                <p class="text"><strong>End-to-End VAE Tuning Configuration:</strong></p>
+                <ul class="text">
+                    <li><strong>VAE Models:</strong> FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite></li>
+                    <li><strong>Dataset:</strong> ImageNet-256<d-cite key="imagenet"></d-cite></li>
+                    <li><strong>Training epochs:</strong> 80 epochs</li>
+                    <li><strong>Learning rate:</strong> 2×10<sup>-5</sup></li>
+                </ul>
+            </div> -->
+
+            <!-- <p class="text">
+                These end-to-end tuned VAEs are then used in all subsequent text-to-image generation experiments, where they are compared against their original counterparts.
+            </p> -->
         </div>
 
-        <hr>
+        <!-- <hr> -->
 
         <!-- T2I Setup Section -->
-        <div class="method-block">
+        <!-- <div class="method-block">
             <h1 class="text">T2I Setup</h1>
 
             <p class="text">
@@ -241,7 +278,7 @@
             <p class="text">
                 For all generation evaluations and qualitative samples, we use 25 sampling steps with a guidance scale of 6.5.
             </p>
-        </div>
+        </div> -->
 
         <hr>
 
@@ -251,12 +288,12 @@
 
             <p class="text">
                 We evaluate End-to-End Tuned VAEs across multiple benchmarks and training scenarios, demonstrating consistent improvements over baseline VAEs.
-                Our end-to-end tuned VAEs show faster convergence and better final performance across all metrics.
+                End-to-end tuned VAEs show faster convergence and better final performance across all metrics.
             </p>
 
-            <h3 class="text">Training Convergence at 100K Steps</h3>
+            <h3 class="text">Training Convergence</h3>
 
-            <div class="config-box">
+            <!-- <div class="config-box">
                 <p class="text"><strong>Training Configuration:</strong></p>
                 <ul class="text">
                     <li><strong>Dataset:</strong> JourneyDB<d-cite key="journeydb"></d-cite> (~4M samples)</li>
@@ -267,7 +304,7 @@
                     <li><strong>Training steps:</strong> 100K</li>
                     <li><strong>EMA:</strong> Decay 0.9999, per-step update</li>
                 </ul>
-            </div>
+            </div> -->
 
             <p class="text">
                 We compare training with original VAEs (FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>) against their end-to-end tuned counterparts across multiple evaluation benchmarks.
@@ -714,9 +751,10 @@
         <div id="conclusion" style="position: relative; margin-top: 40px; margin-bottom: 0px;">
             <h2 class="text" style="margin-top:0px; margin-bottom:10px">Limitations and Future Work</h2>
             <p class="text">
-                In this work, we show how end-to-end tuned VAEs lead to better T2I training over more standard VAEs like Flux-VAE and SDVAE which primarily trained for reconstruction alone. for a family of End-to-End Tuned VAEs for supercharging text-to-image generation training.
-                End-to-end tuned VAEs lead to better semantic representations while maintaining strong reconstruction fidelity.
-                In future, we are actively studying the impact of end-to-end tuned VAEs for other downstream tasks which are reliant on both the semantic and reconstrcution ability of the VAE latents such as Image-to-Image Translation, Image-editing, Image inpainitng etc.
+                In this work, we show how end-to-end tuned VAEs lead to better T2I training over more standard VAEs like Flux-VAE and SDVAE which primarily trained for reconstruction alone.
+                This primarily happens because end-to-end tuned VAEs lead to better semantic representations while maintaining strong reconstruction fidelity.
+                <br><br>
+                In future, we are actively studying the impact of end-to-end tuned VAEs for other downstream tasks which are also reliant on both the semantic and reconstrcution ability of the VAE latents. Examples include Image-to-Image Translation, Image-editing, Image inpainitng etc.
             </p>
         </div>
 
