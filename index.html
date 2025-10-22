@@ -515,6 +515,14 @@ blockquote {
         <hr>
 
         <style>
+        .quickstart-box {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+
         .tab-container {
             display: flex;
             flex-wrap: wrap;
@@ -553,10 +561,14 @@ blockquote {
         }
 
         .install-note {
-            background: #f9f9f9;
+            background: #ffffff;
             border-left: 4px solid #0E710E;
             padding: 15px;
             margin: 20px 0;
+        }
+
+        .install-note strong {
+            font-weight: 600;
         }
 
         .quickstart-example {
@@ -577,6 +589,7 @@ blockquote {
         }
         </style>
 
+        <div class="quickstart-box">
         <!-- Tab Buttons -->
         <div class="tab-container">
             <button class="tab-button active" onclick="switchTab('tab-flux')">E2E-FLUX-VAE</button>
@@ -589,9 +602,8 @@ blockquote {
 
         <!-- FLUX-VAE Tab -->
         <div id="tab-flux" class="tab-content active">
-            <div class="quickstart-example">
-                <h3>Installation</h3>
-                <pre><code class="language-bash">pip install diffusers>=0.33.0 torch>=2.3.1</code></pre>
+            <div class="install-note">
+                <strong>Installation:</strong> <code>pip install diffusers>=0.33.0 torch>=2.3.1</code>
             </div>
 
             <div class="quickstart-example">
@@ -632,9 +644,8 @@ with torch.no_grad():
 
         <!-- SD3.5-VAE Tab -->
         <div id="tab-sd35" class="tab-content">
-            <div class="quickstart-example">
-                <h3>Installation</h3>
-                <pre><code class="language-bash">pip install diffusers>=0.33.0 torch>=2.3.1</code></pre>
+            <div class="install-note">
+                <strong>Installation:</strong> <code>pip install diffusers>=0.33.0 torch>=2.3.1</code>
             </div>
 
             <div class="quickstart-example">
@@ -675,9 +686,8 @@ with torch.no_grad():
 
         <!-- Qwen-Image-VAE Tab -->
         <div id="tab-qwen" class="tab-content">
-            <div class="quickstart-example">
-                <h3>Installation</h3>
-                <pre><code class="language-bash">pip install diffusers>=0.35.0 torch>=2.5.0</code></pre>
+            <div class="install-note">
+                <strong>Installation:</strong> <code>pip install diffusers>=0.35.0 torch>=2.5.0</code>
             </div>
 
             <div class="quickstart-example">
@@ -725,9 +735,8 @@ reconstructed = reconstructed.squeeze(2)</code></pre>
 
         <!-- SD-VAE Tab -->
         <div id="tab-sdvae" class="tab-content">
-            <div class="quickstart-example">
-                <h3>Installation</h3>
-                <pre><code class="language-bash">pip install diffusers>=0.33.0 torch>=2.3.1</code></pre>
+            <div class="install-note">
+                <strong>Installation:</strong> <code>pip install diffusers>=0.33.0 torch>=2.3.1</code>
             </div>
 
             <div class="quickstart-example">
@@ -768,9 +777,8 @@ with torch.no_grad():
 
         <!-- VA-VAE Tab -->
         <div id="tab-vavae" class="tab-content">
-            <div class="quickstart-example">
-                <h3>Installation</h3>
-                <pre><code class="language-bash">pip install diffusers>=0.33.0 torch>=2.3.1</code></pre>
+            <div class="install-note">
+                <strong>Installation:</strong> <code>pip install diffusers>=0.33.0 torch>=2.3.1</code>
             </div>
 
             <div class="quickstart-example">
@@ -811,9 +819,8 @@ with torch.no_grad():
 
         <!-- InVAE Tab -->
         <div id="tab-invae" class="tab-content">
-            <div class="quickstart-example">
-                <h3>Installation</h3>
-                <pre><code class="language-bash">pip install diffusers>=0.33.0 torch>=2.3.1</code></pre>
+            <div class="install-note">
+                <strong>Installation:</strong> <code>pip install diffusers>=0.33.0 torch>=2.3.1</code>
             </div>
 
             <div class="quickstart-example">
@@ -878,6 +885,7 @@ with torch.no_grad():
             }
         }
         </script>
+        </div>
 
         <p style="margin-top: 0px;">For complete usage examples and integration with diffusion models, see the individual <a href="https://huggingface.co/REPA-E">model cards on Hugging Face</a>.</p>
     </section>
