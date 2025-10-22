@@ -502,7 +502,7 @@ with torch.no_grad():
             
             <p class="text">
                 <strong>End-to-End VAE Tuning on ImageNet 256×256.</strong> We follow the same training recipe as the original REPA-E<d-cite key="leng2025repa"></d-cite> paper, for end-to-end tuning on ImageNet 256×256.
-                We use a small learning rate of 2×10<sup>-5</sup>, AdamW optimizer and 80 epochs for end-to-end tuning across all VAE families (FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>). We next refer the corresponding finetuned VAEs as E2E-FLUX-VAE<d-cite key="e2e-flux"></d-cite>, E2E-SD-3.5-VAE<d-cite key="e2e-sd3.5"></d-cite>, E2E-Qwen-Image-VAE<d-cite key="e2e-qwen-image"></d-cite> respectively.
+                We use a small learning rate of 2×10<sup>-5</sup>, AdamW optimizer and 80 epochs for end-to-end tuning across all VAE families (FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>). We next refer the corresponding finetuned VAEs as E2E-FLUX-VAE, E2E-SD-3.5-VAE, E2E-Qwen-Image-VAE respectively.
             </p>
             <div class="config-box">
                 <p class="text"><strong>End-to-End Tuning Configuration for VAE:</strong></p>
@@ -534,6 +534,7 @@ with torch.no_grad():
                     <li><strong>EMA:</strong> Decay 0.9999, per-step update</li>
                 </ul>
             </div>
+            We next evaluate the performance of end-to-end tuned VAEs on various text-to-image generation benchmarks.
 
             <!-- <div class="config-box">
                 <p class="text"><strong>End-to-End VAE Tuning Configuration:</strong></p>
@@ -548,6 +549,7 @@ with torch.no_grad():
             <!-- <p class="text">
                 These end-to-end tuned VAEs are then used in all subsequent text-to-image generation experiments, where they are compared against their original counterparts.
             </p> -->
+            
         </div>
 
         <!-- <hr> -->
@@ -567,7 +569,7 @@ with torch.no_grad():
                 For all generation evaluations and qualitative samples, we use 25 sampling steps with a guidance scale of 6.5.
             </p>
         </div> -->
-
+        
         <hr>
 
         <!-- Quantitative Results Section -->
