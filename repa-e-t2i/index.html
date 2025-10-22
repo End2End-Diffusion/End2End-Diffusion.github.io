@@ -291,7 +291,7 @@
                 End-to-end tuned VAEs show faster convergence and better final performance across all metrics.
             </p>
 
-            <h3 class="text">Training Convergence</h3>
+            <h3 class="text">End-to-End VAEs Leads to Accelerated T2I Training</h3>
 
             <!-- <div class="config-box">
                 <p class="text"><strong>Training Configuration:</strong></p>
@@ -322,6 +322,31 @@
                 </figure>
             </d-figure>
 
+            <!-- <h3 class="text">Extended Training with Full Data (500K Steps)</h3> -->
+
+            <!-- <div class="config-box">
+                <p class="text"><strong>Changes from 100K Configuration:</strong></p>
+                <ul class="text">
+                    <li><strong>Dataset:</strong> BLIP-3o<d-cite key="blip3o"></d-cite> pretraining dataset (~28M samples)</li>
+                    <li><strong>Training steps:</strong> 500K</li>
+                </ul>
+            </div> -->
+
+            <!-- <p class="text">
+                With extended training on the full BLIP-3o<d-cite key="blip3o"></d-cite> pretraining dataset, end-to-end tuned VAEs maintain their performance advantages over the original VAEs (FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>).
+                The consistent improvements across all benchmarks demonstrate that the benefits of end-to-end tuning persist at scale with longer training.
+            </p> -->
+
+            <d-figure id="fig-convergence-500k" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/3b-t2i-convergence-fulldata-500k-combined.png" alt="Training convergence at 500K steps with full data">
+                    <figcaption>
+                        <strong>Training convergence (500K steps).</strong>
+                        Extended training confirms sustained improvements across all benchmarks with End-to-End Tuned VAEs.
+                    </figcaption>
+                </figure>
+            </d-figure>
+            
             <h3 class="text">Comparison with REPA Representation Alignment</h3>
 
             <p class="text">
@@ -338,42 +363,17 @@
                     <figcaption>
                         <strong>Performance comparison at 100K steps: E2E-FLUX-VAE vs REPA alignment.</strong>
                         Bar chart comparing three approaches across five benchmarks.
-                        E2E-FLUX-VAE (red) outperforms both FLUX-VAE baseline (blue) and FLUX-VAE+REPA with representation alignment (orange), demonstrating that end-to-end tuning is more effective than adding alignment losses during T2I training.
+                        E2E-FLUX-VAE (red) outperforms both FLUX-VAE baseline (blue) and FLUX-VAE+REPA with representation alignment (orange), demonstrating that end-to-end tuned VAEs lead to better T2I generation without need for any additional representation alignment losses.
                     </figcaption>
                 </figure>
             </d-figure>
 
-            <h3 class="text">Extended Training with Full Data (500K Steps)</h3>
-
-            <div class="config-box">
-                <p class="text"><strong>Changes from 100K Configuration:</strong></p>
-                <ul class="text">
-                    <li><strong>Dataset:</strong> BLIP-3o<d-cite key="blip3o"></d-cite> pretraining dataset (~28M samples)</li>
-                    <li><strong>Training steps:</strong> 500K</li>
-                </ul>
-            </div>
-
-            <p class="text">
-                With extended training on the full BLIP-3o<d-cite key="blip3o"></d-cite> pretraining dataset, end-to-end tuned VAEs maintain their performance advantages over the original VAEs (FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>).
-                The consistent improvements across all benchmarks demonstrate that the benefits of end-to-end tuning persist at scale with longer training.
-            </p>
-
-            <d-figure id="fig-convergence-500k" style="margin-top: 30px; margin-bottom: 30px;">
-                <figure>
-                    <img data-zoomable="" draggable="false" src="static/img/3b-t2i-convergence-fulldata-500k-combined.png" alt="Training convergence at 500K steps with full data">
-                    <figcaption>
-                        <strong>Training convergence with full dataset (500K steps).</strong>
-                        Extended training confirms sustained improvements across all benchmarks with End-to-End Tuned VAEs.
-                    </figcaption>
-                </figure>
-            </d-figure>
-
-            <h3 class="text">High-Resolution Training (512px, 200K Steps)</h3>
+            <h3 class="text">Generalization to Higher Resolutions</h3>
 
             <div class="config-box">
                 <p class="text"><strong>Changes from 500K Configuration:</strong></p>
                 <ul class="text">
-                    <li><strong>Initialization:</strong> Resumed from 500K checkpoint</li>
+                    <li><strong>Initialization:</strong> Resumed from 500K checkpoint trained at 256×256 resolution</li>
                     <li><strong>Resolution:</strong> 512×512</li>
                     <li><strong>Batch size:</strong> 448</li>
                     <li><strong>Training steps:</strong> 200K additional steps</li>
