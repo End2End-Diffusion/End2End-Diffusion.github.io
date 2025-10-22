@@ -487,13 +487,20 @@ blockquote {
     <h2>News</h2>
     <hr>
     <div class="row">
-        <div><span class="material-icons">event</span> [Oct 2025] Released <a href="https://end2end-diffusion.github.io/repa-e-t2i/">REPA-E for T2I</a> — a family of End-to-End Tuned VAEs for text-to-image generation. Models are available on <a href="https://huggingface.co/REPA-E/models">HF Models</a>, including <a href="https://huggingface.co/REPA-E/e2e-flux-vae">FLUX-VAE</a>, <a href="https://huggingface.co/REPA-E/e2e-sd3.5-vae">SD-3.5-VAE</a>, and <a href="https://huggingface.co/REPA-E/e2e-qwenimage-vae">Qwen-Image-VAE</a>.</div>
-    </div>
-    <div class="row">
-        <div><span class="material-icons">event</span> [Oct 2025] Updated results: re-evaluated released models using a class-balanced sampling protocol (50 images per class). Achieved FID scores on ImageNet 256×256 — <b>1.12</b> with CFG and <b>1.69</b> without CFG. Details in the updated paper.</div>
-    </div>
-    <div class="row">
-        <div><span class="material-icons">event</span> [Oct 2025] AutoencoderKL-Compatible Release: We now provide <b>Hugging Face-compatible AutoencoderKL</b> checkpoints for REPA-E VAEs! Load directly with <code>diffusers</code> API — no custom wrapper needed. Available at <a href="https://huggingface.co/REPA-E/models">HF Models</a>.</div>
+        <div><span class="material-icons">event</span> [Oct 2025] 🚨 Released <a href="https://end2end-diffusion.github.io/repa-e-t2i/">REPA-E for T2I</a> 🚨 — a family of End-to-End Tuned VAEs:
+            <ul style="margin-top: 8px; margin-bottom: 4px;">
+                <li>Family of end-to-end tuned VAEs:
+                    <ul style="margin-top: 4px; margin-bottom: 4px;">
+                        <li>T2I VAEs: <a href="https://huggingface.co/REPA-E/e2e-flux-vae">FLUX-VAE</a>, <a href="https://huggingface.co/REPA-E/e2e-sd3.5-vae">SD-3.5-VAE</a>, <a href="https://huggingface.co/REPA-E/e2e-qwenimage-vae">Qwen-Image-VAE</a></li>
+                        <li>ImageNet VAEs: <a href="https://huggingface.co/REPA-E/e2e-sdvae-hf">SD-VAE</a>, <a href="https://huggingface.co/REPA-E/e2e-invae-hf">IN-VAE</a>, <a href="https://huggingface.co/REPA-E/e2e-vavae-hf">VA-VAE</a></li>
+                    </ul>
+                </li>
+                <li>End-to-end training generalizes to T2I: E2E-VAEs achieve better T2I generation quality across multiple resolutions (256×256, 512×512) compared to their standard VAE counterparts (FLUX-VAE, SD3.5-VAE, Qwen-Image-VAE), without requiring additional representation alignment losses</li>
+                <li>SOTA results on ImageNet 256×256: FID <b>1.12</b> with CFG and <b>1.69</b> without CFG</li>
+                <li>Improved latent space structure with enhanced semantic spatial details compared to standard VAEs (FLUX-VAE, SD3.5-VAE, Qwen-Image-VAE)</li>
+                <li>All models available as <b>Hugging Face-compatible AutoencoderKL</b> checkpoints — load directly with <code>diffusers</code> API, no custom wrapper needed</li>
+            </ul>
+        </div>
     </div>
     <div class="row">
         <div><span class="material-icons">event</span> [Jun 2025] REPA-E accepted at ICCV 2025!</div>
@@ -503,84 +510,376 @@ blockquote {
     </div>
     </section>
 
-    <section id="updates">
-        <h2>Updates</h2>
+    <section id="quickstart">
+        <h2>Quickstart</h2>
         <hr>
 
-        <h3 style="color:#0E710E; margin-top: 20px;">🆕 Model Releases: Hugging Face Compatible VAEs</h3>
+        <style>
+        .tab-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
 
-        <p>
-            We are excited to release <b>REPA-E E2E-VAE</b> models as fully <b>Hugging Face AutoencoderKL</b> checkpoints, ready to use with <code>diffusers</code> out of the box. This release includes both our ImageNet-trained VAEs and our new text-to-image VAEs, all optimized for seamless integration into existing pipelines.
-        </p>
+        .tab-button {
+            padding: 10px 20px;
+            background: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            border-radius: 5px 5px 0 0;
+        }
 
-        <h4 style="margin-top: 20px; margin-bottom: 10px;">ImageNet VAEs (SD-VAE, IN-VAE, VA-VAE)</h4>
-        <p>
-            Our ImageNet-trained VAEs (E2E-SD-VAE, E2E-IN-VAE, E2E-VA-VAE) are now available as Hugging Face-compatible <code>AutoencoderKL</code> checkpoints. Previously, these models required loading through custom classes in our REPA-E repository. This new release provides direct compatibility with the <code>diffusers</code> API — no extra code or custom wrapper needed.
-        </p>
+        .tab-button:hover {
+            background: #e0e0e0;
+        }
 
-        <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
-            <thead>
-                <tr style="background-color: #f0f0f0;">
-                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd; width: 50%;">Model</th>
-                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd; width: 50%;">Hugging Face Link</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid #ddd; width: 50%;"><b>E2E-SDVAE-HF</b></td>
-                    <td style="padding: 10px; border: 1px solid #ddd; width: 50%;"><a href="https://huggingface.co/REPA-E/e2e-sdvae-hf">🤗 REPA-E/e2e-sdvae-hf</a></td>
-                </tr>
-                <tr style="background-color: #f9f9f9;">
-                    <td style="padding: 10px; border: 1px solid #ddd; width: 50%;"><b>E2E-INVAE-HF</b></td>
-                    <td style="padding: 10px; border: 1px solid #ddd; width: 50%;"><a href="https://huggingface.co/REPA-E/e2e-invae-hf">🤗 REPA-E/e2e-invae-hf</a></td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid #ddd; width: 50%;"><b>E2E-VAVAE-HF</b></td>
-                    <td style="padding: 10px; border: 1px solid #ddd; width: 50%;"><a href="https://huggingface.co/REPA-E/e2e-vavae-hf">🤗 REPA-E/e2e-vavae-hf</a></td>
-                </tr>
-            </tbody>
-        </table>
+        .tab-button.active {
+            background: #0E710E;
+            color: white;
+        }
 
-        <h4 style="margin-top: 20px; margin-bottom: 10px;">Text-to-Image VAEs</h4>
-        <p>
-            Building on the success of our ImageNet VAEs, we now release <b>REPA-E for T2I</b> — a family of end-to-end tuned VAEs specifically designed to supercharge text-to-image generation. These models consistently outperform standard VAEs across all T2I benchmarks (COCO-30K, DPG-Bench, GenAI-Bench, GenEval, MJHQ-30K), enable faster training convergence, without requiring additional representation alignment losses.
-        </p>
+        .tab-content {
+            display: none;
+            padding: 20px 0;
+        }
 
-        <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
-            <thead>
-                <tr style="background-color: #f0f0f0;">
-                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd; width: 50%;">Model</th>
-                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd; width: 50%;">Hugging Face Link</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid #ddd; width: 50%;"><b>FLUX-VAE</b> (E2E-trained)</td>
-                    <td style="padding: 10px; border: 1px solid #ddd; width: 50%;"><a href="https://huggingface.co/REPA-E/e2e-flux-vae">🤗 REPA-E/e2e-flux-vae</a></td>
-                </tr>
-                <tr style="background-color: #f9f9f9;">
-                    <td style="padding: 10px; border: 1px solid #ddd; width: 50%;"><b>SD-3.5-VAE</b> (E2E-trained)</td>
-                    <td style="padding: 10px; border: 1px solid #ddd; width: 50%;"><a href="https://huggingface.co/REPA-E/e2e-sd3.5-vae">🤗 REPA-E/e2e-sd3.5-vae</a></td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid #ddd; width: 50%;"><b>Qwen-Image-VAE</b> (E2E-trained)</td>
-                    <td style="padding: 10px; border: 1px solid #ddd; width: 50%;"><a href="https://huggingface.co/REPA-E/e2e-qwenimage-vae">🤗 REPA-E/e2e-qwenimage-vae</a></td>
-                </tr>
-            </tbody>
-        </table>
+        .tab-content.active {
+            display: block;
+        }
 
-        <h4 style="margin-top: 20px; margin-bottom: 10px;">⚡ Quickstart Example</h4>
-        <p>Using REPA-E VAEs is as simple as loading from Hugging Face:</p>
-        <pre><code class="language-python">from diffusers import AutoencoderKL
+        .install-note {
+            background: #f9f9f9;
+            border-left: 4px solid #0E710E;
+            padding: 15px;
+            margin: 20px 0;
+        }
 
-# Load end-to-end tuned VAE (ImageNet VAE example)
-vae = AutoencoderKL.from_pretrained("REPA-E/e2e-vavae-hf").to("cuda")
+        .quickstart-example {
+            margin: 30px 0;
+        }
 
-# Or load a text-to-image VAE
-vae = AutoencoderKL.from_pretrained("REPA-E/e2e-flux-vae").to("cuda")
+        .quickstart-example h3 {
+            color: #0E710E;
+            margin-bottom: 10px;
+        }
 
-# Use in your pipeline with vae.encode(...) / vae.decode(...)</code></pre>
-        <p>For complete usage examples and integration with diffusion models, see the individual <a href="https://huggingface.co/REPA-E">model cards on Hugging Face</a>.</p>
+        .quickstart-example pre {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        </style>
+
+        <!-- Tab Buttons -->
+        <div class="tab-container">
+            <button class="tab-button active" onclick="switchTab('tab-flux')">E2E-FLUX-VAE</button>
+            <button class="tab-button" onclick="switchTab('tab-sd35')">E2E-SD3.5-VAE</button>
+            <button class="tab-button" onclick="switchTab('tab-qwen')">E2E-Qwen-Image-VAE</button>
+            <button class="tab-button" onclick="switchTab('tab-sdvae')">E2E-SD-VAE</button>
+            <button class="tab-button" onclick="switchTab('tab-vavae')">E2E-VA-VAE</button>
+            <button class="tab-button" onclick="switchTab('tab-invae')">E2E-INVAE</button>
+        </div>
+
+        <!-- FLUX-VAE Tab -->
+        <div id="tab-flux" class="tab-content active">
+            <div class="quickstart-example">
+                <h3>Installation</h3>
+                <pre><code class="language-bash">pip install diffusers>=0.33.0 torch>=2.3.1</code></pre>
+            </div>
+
+            <div class="quickstart-example">
+                <h3>Quick Start</h3>
+                <p>Loading the VAE is as easy as:</p>
+                <pre><code class="language-python">from diffusers import AutoencoderKL
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-flux-vae").to("cuda")</code></pre>
+            </div>
+
+            <div class="quickstart-example">
+                <h3>Complete Example</h3>
+                <p>Full workflow for encoding and decoding images:</p>
+                <pre><code class="language-python">from io import BytesIO
+import requests
+from diffusers import AutoencoderKL
+import numpy as np
+import torch
+from PIL import Image
+
+response = requests.get("https://raw.githubusercontent.com/End2End-Diffusion/fuse-dit/main/assets/example.png")
+device = "cuda"
+
+image = torch.from_numpy(
+    np.array(
+        Image.open(BytesIO(response.content))
+    )
+).permute(2, 0, 1).unsqueeze(0).to(torch.float32) / 127.5 - 1
+image = image.to(device)
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-flux-vae").to(device)
+
+with torch.no_grad():
+    latents = vae.encode(image).latent_dist.sample()
+    reconstructed = vae.decode(latents).sample</code></pre>
+            </div>
+        </div>
+
+        <!-- SD3.5-VAE Tab -->
+        <div id="tab-sd35" class="tab-content">
+            <div class="quickstart-example">
+                <h3>Installation</h3>
+                <pre><code class="language-bash">pip install diffusers>=0.33.0 torch>=2.3.1</code></pre>
+            </div>
+
+            <div class="quickstart-example">
+                <h3>Quick Start</h3>
+                <p>Loading the VAE is as easy as:</p>
+                <pre><code class="language-python">from diffusers import AutoencoderKL
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-sd3.5-vae").to("cuda")</code></pre>
+            </div>
+
+            <div class="quickstart-example">
+                <h3>Complete Example</h3>
+                <p>Full workflow for encoding and decoding images:</p>
+                <pre><code class="language-python">from io import BytesIO
+import requests
+from diffusers import AutoencoderKL
+import numpy as np
+import torch
+from PIL import Image
+
+response = requests.get("https://raw.githubusercontent.com/End2End-Diffusion/fuse-dit/main/assets/example.png")
+device = "cuda"
+
+image = torch.from_numpy(
+    np.array(
+        Image.open(BytesIO(response.content))
+    )
+).permute(2, 0, 1).unsqueeze(0).to(torch.float32) / 127.5 - 1
+image = image.to(device)
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-sd3.5-vae").to(device)
+
+with torch.no_grad():
+    latents = vae.encode(image).latent_dist.sample()
+    reconstructed = vae.decode(latents).sample</code></pre>
+            </div>
+        </div>
+
+        <!-- Qwen-Image-VAE Tab -->
+        <div id="tab-qwen" class="tab-content">
+            <div class="quickstart-example">
+                <h3>Installation</h3>
+                <pre><code class="language-bash">pip install diffusers>=0.35.0 torch>=2.5.0</code></pre>
+            </div>
+
+            <div class="quickstart-example">
+                <h3>Quick Start</h3>
+                <p>Loading the VAE is as easy as:</p>
+                <pre><code class="language-python">from diffusers import AutoencoderKLQwenImage
+
+vae = AutoencoderKLQwenImage.from_pretrained("REPA-E/e2e-qwenimage-vae").to("cuda")</code></pre>
+            </div>
+
+            <div class="quickstart-example">
+                <h3>Complete Example</h3>
+                <p>Full workflow for encoding and decoding images (note the frame dimension handling):</p>
+                <pre><code class="language-python">from io import BytesIO
+import requests
+from diffusers import AutoencoderKLQwenImage
+import numpy as np
+import torch
+from PIL import Image
+
+response = requests.get("https://raw.githubusercontent.com/End2End-Diffusion/fuse-dit/main/assets/example.png")
+device = "cuda"
+
+image = torch.from_numpy(
+    np.array(
+        Image.open(BytesIO(response.content))
+    )
+).permute(2, 0, 1).unsqueeze(0).to(torch.float32) / 127.5 - 1
+image = image.to(device)
+
+vae = AutoencoderKLQwenImage.from_pretrained("REPA-E/e2e-qwenimage-vae").to(device)
+
+# Add frame dimension (required for QwenImage VAE)
+image_ = image.unsqueeze(2)
+
+with torch.no_grad():
+    latents = vae.encode(image_).latent_dist.sample()
+    reconstructed = vae.decode(latents).sample
+
+# Remove frame dimension
+latents = latents.squeeze(2)
+reconstructed = reconstructed.squeeze(2)</code></pre>
+            </div>
+        </div>
+
+        <!-- SD-VAE Tab -->
+        <div id="tab-sdvae" class="tab-content">
+            <div class="quickstart-example">
+                <h3>Installation</h3>
+                <pre><code class="language-bash">pip install diffusers>=0.33.0 torch>=2.3.1</code></pre>
+            </div>
+
+            <div class="quickstart-example">
+                <h3>Quick Start</h3>
+                <p>Loading the VAE is as easy as:</p>
+                <pre><code class="language-python">from diffusers import AutoencoderKL
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-sdvae-hf").to("cuda")</code></pre>
+            </div>
+
+            <div class="quickstart-example">
+                <h3>Complete Example</h3>
+                <p>Full workflow for encoding and decoding images (512×512 resolution):</p>
+                <pre><code class="language-python">from io import BytesIO
+import requests
+from diffusers import AutoencoderKL
+import numpy as np
+import torch
+from PIL import Image
+
+response = requests.get("https://raw.githubusercontent.com/End2End-Diffusion/fuse-dit/main/assets/example.png")
+device = "cuda"
+
+image = torch.from_numpy(
+    np.array(
+        Image.open(BytesIO(response.content)).resize((512, 512))
+    )
+).permute(2, 0, 1).unsqueeze(0).to(torch.float32) / 127.5 - 1
+image = image.to(device)
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-sdvae-hf").to(device)
+
+with torch.no_grad():
+    latents = vae.encode(image).latent_dist.sample()
+    reconstructed = vae.decode(latents).sample</code></pre>
+            </div>
+        </div>
+
+        <!-- VA-VAE Tab -->
+        <div id="tab-vavae" class="tab-content">
+            <div class="quickstart-example">
+                <h3>Installation</h3>
+                <pre><code class="language-bash">pip install diffusers>=0.33.0 torch>=2.3.1</code></pre>
+            </div>
+
+            <div class="quickstart-example">
+                <h3>Quick Start</h3>
+                <p>Loading the VAE is as easy as:</p>
+                <pre><code class="language-python">from diffusers import AutoencoderKL
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-vavae-hf").to("cuda")</code></pre>
+            </div>
+
+            <div class="quickstart-example">
+                <h3>Complete Example</h3>
+                <p>Full workflow for encoding and decoding images (512×512 resolution):</p>
+                <pre><code class="language-python">from io import BytesIO
+import requests
+from diffusers import AutoencoderKL
+import numpy as np
+import torch
+from PIL import Image
+
+response = requests.get("https://raw.githubusercontent.com/End2End-Diffusion/fuse-dit/main/assets/example.png")
+device = "cuda"
+
+image = torch.from_numpy(
+    np.array(
+        Image.open(BytesIO(response.content)).resize((512, 512))
+    )
+).permute(2, 0, 1).unsqueeze(0).to(torch.float32) / 127.5 - 1
+image = image.to(device)
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-vavae-hf").to(device)
+
+with torch.no_grad():
+    latents = vae.encode(image).latent_dist.sample()
+    reconstructed = vae.decode(latents).sample</code></pre>
+            </div>
+        </div>
+
+        <!-- InVAE Tab -->
+        <div id="tab-invae" class="tab-content">
+            <div class="quickstart-example">
+                <h3>Installation</h3>
+                <pre><code class="language-bash">pip install diffusers>=0.33.0 torch>=2.3.1</code></pre>
+            </div>
+
+            <div class="quickstart-example">
+                <h3>Quick Start</h3>
+                <p>Loading the VAE is as easy as:</p>
+                <pre><code class="language-python">from diffusers import AutoencoderKL
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-invae-hf").to("cuda")</code></pre>
+            </div>
+
+            <div class="quickstart-example">
+                <h3>Complete Example</h3>
+                <p>Full workflow for encoding and decoding images (512×512 resolution):</p>
+                <pre><code class="language-python">from io import BytesIO
+import requests
+from diffusers import AutoencoderKL
+import numpy as np
+import torch
+from PIL import Image
+
+response = requests.get("https://raw.githubusercontent.com/End2End-Diffusion/fuse-dit/main/assets/example.png")
+device = "cuda"
+
+image = torch.from_numpy(
+    np.array(
+        Image.open(BytesIO(response.content)).resize((512, 512))
+    )
+).permute(2, 0, 1).unsqueeze(0).to(torch.float32) / 127.5 - 1
+image = image.to(device)
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-invae-hf").to(device)
+
+with torch.no_grad():
+    latents = vae.encode(image).latent_dist.sample()
+    reconstructed = vae.decode(latents).sample</code></pre>
+            </div>
+        </div>
+
+        <script>
+        function switchTab(tabId) {
+            // Hide all tab contents
+            var contents = document.getElementsByClassName('tab-content');
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].classList.remove('active');
+            }
+
+            // Remove active class from all buttons
+            var buttons = document.getElementsByClassName('tab-button');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
+
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+
+            // Set active button
+            event.target.classList.add('active');
+
+            // Re-highlight code syntax
+            if (typeof Prism !== 'undefined') {
+                Prism.highlightAll();
+            }
+        }
+        </script>
+
+        <p style="margin-top: 0px;">For complete usage examples and integration with diffusion models, see the individual <a href="https://huggingface.co/REPA-E">model cards on Hugging Face</a>.</p>
     </section>
 
     <section>
@@ -672,7 +971,7 @@ vae = AutoencoderKL.from_pretrained("REPA-E/e2e-flux-vae").to("cuda")
                 <img src="assets/e2e-vae-eval.webp" alt="Drop-in VAE Performance Comparison" style="max-width: 100%; height: auto;" loading="lazy">
             </div>
             <p style="font-size: 0.8em; color: #555; margin-top: 8px;">
-                Note: For the 800-epoch checkpoints of <b>REPA</b>, <b>LightningDiT</b>, and <b>E2E-VAE</b> in the left table, the models are evaluated using the class-balanced sampling protocol (strictly 50 images per class).
+                Note: Results for the 800-epoch checkpoints of <b>REPA</b>, <b>LightningDiT</b>, and <b>E2E-VAE</b> in the left table are evaluated with 50 images per class (class-balanced sampling).
             </p>
         </center>
     </section>
