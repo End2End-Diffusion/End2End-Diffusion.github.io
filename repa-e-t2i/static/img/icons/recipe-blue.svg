@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Book/Recipe icon -->
+  <path d="M4 4 L4 20 L20 20 L20 4 Z" fill="#f0f4ff" stroke="#667eea" stroke-width="2"/>
+  <line x1="12" y1="4" x2="12" y2="20" stroke="#764ba2" stroke-width="2"/>
+  <!-- Recipe lines -->
+  <line x1="6" y1="8" x2="10" y2="8" stroke="#508af6" stroke-width="1.5"/>
+  <line x1="6" y1="12" x2="10" y2="12" stroke="#508af6" stroke-width="1.5"/>
+  <line x1="6" y1="16" x2="10" y2="16" stroke="#508af6" stroke-width="1.5"/>
+  <line x1="14" y1="8" x2="18" y2="8" stroke="#508af6" stroke-width="1.5"/>
+  <line x1="14" y1="12" x2="18" y2="12" stroke="#508af6" stroke-width="1.5"/>
+  <line x1="14" y1="16" x2="18" y2="16" stroke="#508af6" stroke-width="1.5"/>
+</svg>
