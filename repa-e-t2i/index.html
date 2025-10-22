@@ -897,10 +897,9 @@ with torch.no_grad():
             <h3 class="text">Impact of End-to-End Tuning on VAE Reconstruction Quality</h3>
 
             <p class="text">
-                We compare the reconstruction quality of all 6 end-to-end tuned VAEs on the same input images.
-                Each VAE encodes the original image to its latent space and decodes it back, revealing differences in reconstruction fidelity and detail preservation across architectures.
+                We also analyze the impact of end-to-end tuning on VAE reconstruction quality.
+                Notably, despite being only tuned on ImageNet 256×256, end-to-end tuned VAEs show improved generation quality while maintaining reconstruction fidelity across challenging scenes with multiple faces, subjects and text.
             </p>
-
             <d-figure style="margin-top: 30px; margin-bottom: 30px;">
                 <figure>
                     <div style="margin-bottom: 15px;">
@@ -927,7 +926,7 @@ with torch.no_grad():
             </d-figure>
             <div class="finding-box">
                 <ul>
-                    <li><strong>Finding 5:</strong> End-to-End VAEs despite being only tuned on ImageNet 256×256 improve generation performance while maintaining reconstruction fidelity across challenging scenes with multiple faces, subjects and text.</li>
+                    <li><strong>Finding 4:</strong> End-to-End VAEs despite being only tuned on ImageNet 256×256 improve generation performance while maintaining reconstruction fidelity across challenging scenes with multiple faces, subjects and text.</li>
                 </ul>
             </div>
         </div>
@@ -1012,7 +1011,7 @@ with torch.no_grad():
 
             <div class="finding-box">
                 <ul>
-                    <li><strong>Finding 4:</strong> End-to-End tuned VAEs show improved semantic spatial structure and details over FLUX-VAE, as evidenced by PCA projections and spatial self-similarity analysis.</li>
+                    <li><strong>Finding 5:</strong> End-to-End tuned VAEs show improved semantic spatial structure and details over FLUX-VAE, as evidenced by PCA projections and spatial self-similarity analysis.</li>
                 </ul>
             </div>
         </div>
