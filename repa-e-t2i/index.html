@@ -371,7 +371,7 @@
             <h3 class="text">Generalization to Higher Resolutions</h3>
 
             <div class="config-box">
-                <p class="text"><strong>Changes from 500K Configuration:</strong></p>
+                <p class="text"><strong>Changes from T2I Conf at 256×256 resolution:</strong></p>
                 <ul class="text">
                     <li><strong>Initialization:</strong> Resumed from 500K checkpoint trained at 256×256 resolution</li>
                     <li><strong>Resolution:</strong> 512×512</li>
@@ -381,9 +381,11 @@
             </div>
 
             <p class="text">
-                After resuming training at higher resolution (512×512), end-to-end tuned VAEs continue to outperform the original VAEs across all benchmarks.
-                These results confirm that the benefits of end-to-end tuning transfer effectively to higher-resolution generation.
-                Notably, even though the end-to-end VAE tuning was performed at 256×256 resolution on ImageNet<d-cite key="imagenet"></d-cite>, the performance improvements hold at higher resolutions.
+                We also analyze the generalization of end-to-end tuned VAEs to higher resolutions. We observe that despite being trained at 256×256 resolution on ImageNet<d-cite key="imagenet"></d-cite>, 
+                end-to-end tuned VAEs continue to outperform the original VAEs across all benchmarks even when trained at 512×512 resolution for T2I generation.
+                <!-- After resuming training at higher resolution (512×512), end-to-end tuned VAEs continue to outperform the original VAEs across all benchmarks. -->
+                <!-- These results confirm that the benefits of end-to-end tuning transfer effectively to higher-resolution generation. -->
+                <!-- Notably, even though the end-to-end VAE tuning was performed at 256×256 resolution on ImageNet<d-cite key="imagenet"></d-cite>, the performance improvements hold at higher resolutions. -->
             </p>
 
             <d-figure id="fig-convergence-res512" style="margin-top: 30px; margin-bottom: 30px;">
