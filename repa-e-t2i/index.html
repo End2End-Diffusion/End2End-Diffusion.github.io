@@ -890,6 +890,48 @@ with torch.no_grad():
             </style>
         </div>
 
+        <!-- <hr> -->
+
+        <!-- VAE Reconstruction Quality Section -->
+        <div id='reconstruction' class="spatial-structure-block">
+            <h3 class="text">Impact of End-to-End Tuning on VAE Reconstruction Quality</h3>
+
+            <p class="text">
+                We compare the reconstruction quality of all 6 end-to-end tuned VAEs on the same input images.
+                Each VAE encodes the original image to its latent space and decodes it back, revealing differences in reconstruction fidelity and detail preservation across architectures.
+            </p>
+
+            <d-figure style="margin-top: 30px; margin-bottom: 30px;">
+                <figure>
+                    <div style="margin-bottom: 15px;">
+                        <img data-zoomable="" draggable="false" src="static/img/reconstruction/cat_repa_e.png" alt="VAE reconstruction comparison - cat with sign">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <img data-zoomable="" draggable="false" src="static/img/reconstruction/children_birthday.png" alt="VAE reconstruction comparison - children with birthday sign">
+                    </div>
+                    <!-- <div style="margin-bottom: 15px;">
+                        <img data-zoomable="" draggable="false" src="static/img/reconstruction/friends_photo.png" alt="VAE reconstruction comparison - friends posing for photo">
+                    </div> -->
+                    <div style="margin-bottom: 15px;">
+                        <img data-zoomable="" draggable="false" src="static/img/reconstruction/text_v1.png" alt="VAE reconstruction comparison - textbook study scene">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <img data-zoomable="" draggable="false" src="static/img/reconstruction/children_8_photo.png" alt="VAE reconstruction comparison - 8 children posing">
+                    </div>
+                    <figcaption>
+                        <strong>Reconstruction comparison across all E2E-tuned VAEs.</strong>
+                        End-to-End Tuned VAEs show improved generation quality while maintaining reconstruction fidelity across all VAE families (FLUX, SD3.5, Qwen-Image).
+                        Click images to zoom for detail inspection.
+                    </figcaption>
+                </figure>
+            </d-figure>
+            <div class="finding-box">
+                <ul>
+                    <li><strong>Finding 5:</strong> End-to-End VAEs improve generation performance while maintaining reconstruction fidelity across all VAE families (FLUX, SD3.5, Qwen-Image).</li>
+                </ul>
+            </div>
+        </div>
+
         <hr>
 
         <!-- Latent Space Analysis Section -->
@@ -999,11 +1041,11 @@ with torch.no_grad():
                 </figure>
             </d-figure>
 
-            <div class="finding-box">
+            <!-- <div class="finding-box">
                 <ul>
                     <li><strong>Finding 5:</strong> End-to-End VAEs improve generation performance while maintaining reconstruction fidelity across all VAE families (FLUX, SD3.5, Qwen-Image).</li>
                 </ul>
-            </div>
+            </div> -->
 
             <!-- <p class="text">
                 <strong>Key findings:</strong>
