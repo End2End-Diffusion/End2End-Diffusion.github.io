@@ -601,12 +601,12 @@
 
         <!-- Latent Space Analysis Section -->
         <div id='latent-analysis' class="method-block">
-            <h1 class="text">Latent Space Analysis</h1>
+            <h1 class="text">End-to-End Tuned VAEs Lead to Better Latent Space Structure</h1>
 
             <p class="text">
                 To understand what makes End-to-End Tuned VAEs effective, we analyze the learned latent representations through PCA projections and spatial similarity analysis.
                 These visualizations reveal how end-to-end tuning shapes the VAE's latent space to better support high-quality generation.
-                Notably, end-to-end tuning enriches the VAE latent space by incorporating more structural and semantic information directly during the joint optimization process with the diffusion model.
+                Notably, end-to-end tuning enriches the VAE latent space by incorporating more structural and semantic information over traditional VAEs (Flux-VAE, SDVAE) trained for reconstruction alone. Please also refer the original REPA-E<d-cite key="leng2025repa"></d-cite> paper for more details.
             </p>
 
             <h3 class="text">PCA Projections of VAE Latents</h3>
@@ -637,14 +637,14 @@
                     <figcaption>
                         <strong>PCA projection visualization.</strong>
                         Comparison of latent space structure between baseline FLUX-VAE and E2E-Tuned Flux-VAE.
-                        Colors represent the first 3 principal components, revealing spatial and semantic organization.
+                        Colors represent the first 3 principal components depicted as RGB for visualization. We observe that E2E tuned Flux-VAE shows more semantic and structural information in the latent space compared to baseline FLUX-VAE.
                     </figcaption>
                 </figure>
             </d-figure>
 
             <h3 class="text">Spatial Self-Similarity Analysis</h3>
             <p class="text">
-                We compute cosine similarity between patch tokens in the latent space to measure spatial structure.
+                We also analyze the cosine similarity between patch tokens in the latent space to measure spatial structure.
                 End-to-End Tuned VAEs show more coherent spatial patterns, indicating better capture of local and global image structure.
                 As shown in the similarity maps, end-to-end tuning embeds more meaningful structural and semantic relationships between patches, making the latent space more informative for the diffusion model to generate high-quality images.
             </p>
