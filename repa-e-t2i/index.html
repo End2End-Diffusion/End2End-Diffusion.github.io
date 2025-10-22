@@ -217,7 +217,7 @@
                 We use a small learning rate of 2×10<sup>-5</sup>, AdamW optimizer and 80 epochs for end-to-end tuning across all VAE families (FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>). We next refer the corresponding finetuned VAEs as E2E-FLUX-VAE<d-cite key="e2e-flux"></d-cite>, E2E-SD-3.5-VAE<d-cite key="e2e-sd3.5"></d-cite>, E2E-Qwen-Image-VAE<d-cite key="e2e-qwen-image"></d-cite> respectively.
             </p>
             <div class="config-box">
-                <p class="text"><strong>End-to-End VAE Tuning Configuration:</strong></p>
+                <p class="text"><strong>End-to-End Tuning Configuration for VAE:</strong></p>
                 <ul class="text">
                     <li><strong>VAE Models:</strong> FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite></li>
                     <li><strong>Dataset:</strong> ImageNet-256<d-cite key="imagenet"></d-cite></li>
@@ -347,6 +347,13 @@
                 </figure>
             </d-figure>
             
+            <div class="finding-box">
+                <ul>
+                    <li><strong>Key Finding:</strong> End-to-End VAEs tuned on just "ImageNet 256×256" lead to better trainingn performance for general text-to-image generation tasks.</li>
+                </ul>
+            </div>
+
+
             <h3 class="text">Comparison with REPA Representation Alignment</h3>
 
             <p class="text">
@@ -368,9 +375,15 @@
                 </figure>
             </d-figure>
 
+            <div class="finding-box">
+                <ul>
+                    <li><strong>Key Finding:</strong> End-to-End VAEs lead to faster T2I training over baseline REPA without need for any additional representation alignment losses.</li>
+                </ul>
+            </div>
+
             <h3 class="text">End-to-End VAEs Generalize to Higher Resolutions</h3>
 
-            <div class="config-box">
+            <!-- <div class="config-box">
                 <p class="text"><strong>T2I Training Config. at 512×512 resolution:</strong></p>
                 <ul class="text">
                     <li><strong>Initialization:</strong> Resumed from 500K checkpoint trained at 256×256 resolution</li>
@@ -378,10 +391,11 @@
                     <li><strong>Batch size:</strong> 448</li>
                     <li><strong>Training steps:</strong> 200K additional steps</li>
                 </ul>
-            </div>
+            </div> -->
 
             <p class="text">
-                We also analyze the generalization of end-to-end tuned VAEs to higher resolutions. We observe that despite being trained at 256×256 resolution on ImageNet<d-cite key="imagenet"></d-cite>, 
+                We also analyze the generalization of end-to-end tuned VAEs to higher resolutions. We resume training from the 500K checkpoint trained at 256×256 resolution and train for an additional 200K steps at 512×512 resolution with batch size 448.
+                We observe that despite being trained at 256×256 resolution on ImageNet<d-cite key="imagenet"></d-cite>, 
                 end-to-end tuned VAEs continue to outperform the original VAEs across all benchmarks even when trained at 512×512 resolution for T2I generation.
                 <!-- After resuming training at higher resolution (512×512), end-to-end tuned VAEs continue to outperform the original VAEs across all benchmarks. -->
                 <!-- These results confirm that the benefits of end-to-end tuning transfer effectively to higher-resolution generation. -->
@@ -407,11 +421,12 @@
 
         </div>
 
-        <hr>
+        <!-- <hr> -->
 
         <!-- Qualitative Comparison Section -->
         <div id='qualitative' class="spatial-structure-block">
-            <h1 class="text">Qualitative Comparison</h1>
+            <!-- <h1 class="text">Qualitative Comparison</h1> -->
+            <h3 class="text">Qualitative Comparisons</h3>
 
             <p class="text">
                 For qualitative visualization, we use the 200K-step checkpoint trained at 512×512 resolution.
@@ -465,9 +480,10 @@
                     </div>
 
                     <figcaption style="margin-top: 20px;">
-                        <strong>Qualitative comparison samples (500K + 200K steps, 512px resolution).</strong>
-                        Models trained with End-to-End Tuned VAEs show improved quality across diverse prompts compared to FLUX-VAE.
-                        Click images to zoom for detail inspection. Automatically cycles every 4 seconds.
+                        <strong>Qualitative comparison samples (200K steps, 512px resolution).</strong>
+                        Models trained with End-to-End Tuned VAEs show improved quality and prompt adherence across diverse prompts compared to FLUX-VAE.
+                        Click images to zoom for detail inspection. 
+                        <!-- Automatically cycles every 4 seconds. -->
                     </figcaption>
                 </figure>
             </d-figure>
