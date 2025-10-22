@@ -39,6 +39,14 @@
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
         <script defer src="./static/js/medium-zoom.min.js"></script>
         <script defer src="./static/js/zoom.js"></script>
+
+        <!-- Prism.js for syntax highlighting -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+
+        <!-- Tab switching for Quickstart -->
+        <script defer src="./static/js/tabs.js"></script>
     </head>
     <body>
         <div class="header-wrapper">
@@ -200,8 +208,284 @@
 
         <hr>
 
+        <!-- Quickstart Section -->
+        <div class="quickstart-section" id="quickstart">
+            <h1 class="text">Quickstart</h1>
+
+            <!-- Tab Buttons -->
+            <div class="tab-container">
+                <button class="tab-button" data-tab="tab-flux">E2E-FLUX-VAE</button>
+                <button class="tab-button" data-tab="tab-sd35">E2E-SD3.5-VAE</button>
+                <button class="tab-button" data-tab="tab-qwen">E2E-Qwen-Image-VAE</button>
+                <button class="tab-button" data-tab="tab-sdvae">E2E-SD-VAE</button>
+                <button class="tab-button" data-tab="tab-vavae">E2E-VA-VAE</button>
+                <button class="tab-button" data-tab="tab-invae">E2E-INVAE</button>
+            </div>
+
+            <!-- FLUX-VAE Tab Content -->
+            <div id="tab-flux" class="tab-content">
+                <div class="install-note">
+                    <strong>Installation:</strong> <code>pip install diffusers>=0.33.0 torch>=2.3.1</code>
+                </div>
+
+                <div class="quickstart-example">
+                    <h3>Quick Start</h3>
+                    <p>Loading the VAE is as easy as:</p>
+                    <pre><code class="language-python">from diffusers import AutoencoderKL
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-flux-vae").to("cuda")</code></pre>
+                </div>
+
+                <div class="quickstart-example">
+                    <h3>Complete Example</h3>
+                    <p>Full workflow for encoding and decoding images:</p>
+                    <pre><code class="language-python">from io import BytesIO
+import requests
+from diffusers import AutoencoderKL
+import numpy as np
+import torch
+from PIL import Image
+
+response = requests.get("https://raw.githubusercontent.com/End2End-Diffusion/fuse-dit/main/assets/example.png")
+device = "cuda"
+
+image = torch.from_numpy(
+    np.array(
+        Image.open(BytesIO(response.content))
+    )
+).permute(2, 0, 1).unsqueeze(0).to(torch.float32) / 127.5 - 1
+image = image.to(device)
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-flux-vae").to(device)
+
+with torch.no_grad():
+    latents = vae.encode(image).latent_dist.sample()
+    reconstructed = vae.decode(latents).sample</code></pre>
+                </div>
+            </div>
+
+            <!-- SD3.5-VAE Tab Content -->
+            <div id="tab-sd35" class="tab-content">
+                <div class="install-note">
+                    <strong>Installation:</strong> <code>pip install diffusers>=0.33.0 torch>=2.3.1</code>
+                </div>
+
+                <div class="quickstart-example">
+                    <h3>Quick Start</h3>
+                    <p>Loading the VAE is as easy as:</p>
+                    <pre><code class="language-python">from diffusers import AutoencoderKL
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-sd3.5-vae").to("cuda")</code></pre>
+                </div>
+
+                <div class="quickstart-example">
+                    <h3>Complete Example</h3>
+                    <p>Full workflow for encoding and decoding images:</p>
+                    <pre><code class="language-python">from io import BytesIO
+import requests
+from diffusers import AutoencoderKL
+import numpy as np
+import torch
+from PIL import Image
+
+response = requests.get("https://raw.githubusercontent.com/End2End-Diffusion/fuse-dit/main/assets/example.png")
+device = "cuda"
+
+image = torch.from_numpy(
+    np.array(
+        Image.open(BytesIO(response.content))
+    )
+).permute(2, 0, 1).unsqueeze(0).to(torch.float32) / 127.5 - 1
+image = image.to(device)
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-sd3.5-vae").to(device)
+
+with torch.no_grad():
+    latents = vae.encode(image).latent_dist.sample()
+    reconstructed = vae.decode(latents).sample</code></pre>
+                </div>
+            </div>
+
+            <!-- Qwen-Image-VAE Tab Content -->
+            <div id="tab-qwen" class="tab-content">
+                <div class="install-note">
+                    <strong>Installation:</strong> <code>pip install diffusers>=0.35.0 torch>=2.5.0</code>
+                </div>
+
+                <div class="quickstart-example">
+                    <h3>Quick Start</h3>
+                    <p>Loading the VAE is as easy as:</p>
+                    <pre><code class="language-python">from diffusers import AutoencoderKLQwenImage
+
+vae = AutoencoderKLQwenImage.from_pretrained("REPA-E/e2e-qwenimage-vae").to("cuda")</code></pre>
+                </div>
+
+                <div class="quickstart-example">
+                    <h3>Complete Example</h3>
+                    <p>Full workflow for encoding and decoding images (note the frame dimension handling):</p>
+                    <pre><code class="language-python">from io import BytesIO
+import requests
+from diffusers import AutoencoderKLQwenImage
+import numpy as np
+import torch
+from PIL import Image
+
+response = requests.get("https://raw.githubusercontent.com/End2End-Diffusion/fuse-dit/main/assets/example.png")
+device = "cuda"
+
+image = torch.from_numpy(
+    np.array(
+        Image.open(BytesIO(response.content))
+    )
+).permute(2, 0, 1).unsqueeze(0).to(torch.float32) / 127.5 - 1
+image = image.to(device)
+
+vae = AutoencoderKLQwenImage.from_pretrained("REPA-E/e2e-qwenimage-vae").to(device)
+
+# Add frame dimension (required for QwenImage VAE)
+image_ = image.unsqueeze(2)
+
+with torch.no_grad():
+    latents = vae.encode(image_).latent_dist.sample()
+    reconstructed = vae.decode(latents).sample
+
+# Remove frame dimension
+latents = latents.squeeze(2)
+reconstructed = reconstructed.squeeze(2)</code></pre>
+                </div>
+            </div>
+
+            <!-- SD-VAE Tab Content -->
+            <div id="tab-sdvae" class="tab-content">
+                <div class="install-note">
+                    <strong>Installation:</strong> <code>pip install diffusers>=0.33.0 torch>=2.3.1</code>
+                </div>
+
+                <div class="quickstart-example">
+                    <h3>Quick Start</h3>
+                    <p>Loading the VAE is as easy as:</p>
+                    <pre><code class="language-python">from diffusers import AutoencoderKL
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-sdvae-hf").to("cuda")</code></pre>
+                </div>
+
+                <div class="quickstart-example">
+                    <h3>Complete Example</h3>
+                    <p>Full workflow for encoding and decoding images (512×512 resolution):</p>
+                    <pre><code class="language-python">from io import BytesIO
+import requests
+from diffusers import AutoencoderKL
+import numpy as np
+import torch
+from PIL import Image
+
+response = requests.get("https://raw.githubusercontent.com/End2End-Diffusion/fuse-dit/main/assets/example.png")
+device = "cuda"
+
+image = torch.from_numpy(
+    np.array(
+        Image.open(BytesIO(response.content)).resize((512, 512))
+    )
+).permute(2, 0, 1).unsqueeze(0).to(torch.float32) / 127.5 - 1
+image = image.to(device)
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-sdvae-hf").to(device)
+
+with torch.no_grad():
+    latents = vae.encode(image).latent_dist.sample()
+    reconstructed = vae.decode(latents).sample</code></pre>
+                </div>
+            </div>
+
+            <!-- VA-VAE Tab Content -->
+            <div id="tab-vavae" class="tab-content">
+                <div class="install-note">
+                    <strong>Installation:</strong> <code>pip install diffusers>=0.33.0 torch>=2.3.1</code>
+                </div>
+
+                <div class="quickstart-example">
+                    <h3>Quick Start</h3>
+                    <p>Loading the VAE is as easy as:</p>
+                    <pre><code class="language-python">from diffusers import AutoencoderKL
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-vavae-hf").to("cuda")</code></pre>
+                </div>
+
+                <div class="quickstart-example">
+                    <h3>Complete Example</h3>
+                    <p>Full workflow for encoding and decoding images (512×512 resolution):</p>
+                    <pre><code class="language-python">from io import BytesIO
+import requests
+from diffusers import AutoencoderKL
+import numpy as np
+import torch
+from PIL import Image
+
+response = requests.get("https://raw.githubusercontent.com/End2End-Diffusion/fuse-dit/main/assets/example.png")
+device = "cuda"
+
+image = torch.from_numpy(
+    np.array(
+        Image.open(BytesIO(response.content)).resize((512, 512))
+    )
+).permute(2, 0, 1).unsqueeze(0).to(torch.float32) / 127.5 - 1
+image = image.to(device)
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-vavae-hf").to(device)
+
+with torch.no_grad():
+    latents = vae.encode(image).latent_dist.sample()
+    reconstructed = vae.decode(latents).sample</code></pre>
+                </div>
+            </div>
+
+            <!-- InVAE Tab Content -->
+            <div id="tab-invae" class="tab-content">
+                <div class="install-note">
+                    <strong>Installation:</strong> <code>pip install diffusers>=0.33.0 torch>=2.3.1</code>
+                </div>
+
+                <div class="quickstart-example">
+                    <h3>Quick Start</h3>
+                    <p>Loading the VAE is as easy as:</p>
+                    <pre><code class="language-python">from diffusers import AutoencoderKL
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-invae-hf").to("cuda")</code></pre>
+                </div>
+
+                <div class="quickstart-example">
+                    <h3>Complete Example</h3>
+                    <p>Full workflow for encoding and decoding images (512×512 resolution):</p>
+                    <pre><code class="language-python">from io import BytesIO
+import requests
+from diffusers import AutoencoderKL
+import numpy as np
+import torch
+from PIL import Image
+
+response = requests.get("https://raw.githubusercontent.com/End2End-Diffusion/fuse-dit/main/assets/example.png")
+device = "cuda"
+
+image = torch.from_numpy(
+    np.array(
+        Image.open(BytesIO(response.content)).resize((512, 512))
+    )
+).permute(2, 0, 1).unsqueeze(0).to(torch.float32) / 127.5 - 1
+image = image.to(device)
+
+vae = AutoencoderKL.from_pretrained("REPA-E/e2e-invae-hf").to(device)
+
+with torch.no_grad():
+    latents = vae.encode(image).latent_dist.sample()
+    reconstructed = vae.decode(latents).sample</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
         <!-- End-to-End VAE Training Section -->
-        <div class="method-block">
+        <div class="method-block" id="training">
             <h1 class="text">End-to-End VAE Training Recipe and T2I Setup</h1>
 
             <p class="text">

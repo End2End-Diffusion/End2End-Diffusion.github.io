@@ -333,3 +333,267 @@ d-figure figcaption {
     color: #333;
     font-weight: 600;
 }
+
+/* Quickstart Section Styles */
+.quickstart-section {
+    margin: 40px 0;
+    padding: 30px 0;
+}
+
+.quickstart-section h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* Tab Container */
+.tab-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+/* Tab Buttons */
+.tab-button {
+    padding: 12px 24px;
+    background-color: #f5f5f5;
+    border: 2px solid #ddd;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 600;
+    color: #666;
+    transition: all 0.3s ease;
+    border-bottom: none;
+    margin-bottom: -2px;
+}
+
+.tab-button:hover {
+    background-color: #e8e8e8;
+    color: #333;
+}
+
+.tab-button.active {
+    background-color: #508af6;
+    color: white;
+    border-color: #508af6;
+}
+
+/* Tab Content Panels */
+.tab-content {
+    display: none;
+    padding: 30px;
+    background-color: #fafbfc;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Code Examples in Quickstart */
+.quickstart-example {
+    margin-bottom: 25px;
+}
+
+.quickstart-example h3 {
+    color: #508af6;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.quickstart-example p {
+    color: #555;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+/* Code block container with copy button */
+.code-block-wrapper {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.quickstart-example pre {
+    background-color: #f6f8fa;
+    color: #24292f;
+    padding: 16px;
+    padding-right: 45px; /* Space for copy icon */
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.45;
+    position: relative;
+}
+
+.quickstart-example code {
+    background-color: transparent;
+    color: #24292f;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+}
+
+/* Copy icon button - minimal style like markdown */
+.copy-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    color: #57606a;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.copy-button:hover {
+    background-color: rgba(175, 184, 193, 0.2);
+    color: #24292f;
+}
+
+.copy-button:active {
+    background-color: rgba(175, 184, 193, 0.3);
+}
+
+.copy-button.copied {
+    color: #1a7f37;
+}
+
+/* Icon using Unicode characters */
+.copy-button::before {
+    content: '📋';
+    font-size: 16px;
+}
+
+.copy-button.copied::before {
+    content: '✓';
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Prism.js syntax highlighting customization - GitHub light theme */
+code[class*="language-"],
+pre[class*="language-"] {
+    color: #24292f;
+    background: #f6f8fa !important;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.45;
+    tab-size: 4;
+    hyphens: none;
+}
+
+code[class*="language-"] {
+    background: transparent !important;
+}
+
+/* Keywords (def, import, from, class, return, etc.) */
+.token.keyword {
+    color: #cf222e;
+}
+
+/* Strings */
+.token.string {
+    color: #0a3069;
+}
+
+/* Comments */
+.token.comment {
+    color: #6e7781;
+    font-style: italic;
+}
+
+/* Functions and method names */
+.token.function {
+    color: #8250df;
+}
+
+/* Class names */
+.token.class-name {
+    color: #953800;
+}
+
+/* Numbers */
+.token.number {
+    color: #0550ae;
+}
+
+/* Operators (=, +, -, etc.) */
+.token.operator {
+    color: #24292f;
+}
+
+/* Punctuation */
+.token.punctuation {
+    color: #24292f;
+}
+
+/* Built-in names */
+.token.builtin {
+    color: #0550ae;
+}
+
+/* Decorators */
+.token.decorator {
+    color: #8250df;
+}
+
+/* Installation Note */
+.install-note {
+    background-color: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.install-note strong {
+    color: #856404;
+}
+
+/* Responsive Design for Tabs */
+@media (max-width: 768px) {
+    .tab-button {
+        padding: 10px 16px;
+        font-size: 0.85em;
+    }
+
+    .tab-content {
+        padding: 20px;
+    }
+
+    .quickstart-example pre {
+        font-size: 0.8em;
+    }
+}
