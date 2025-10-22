@@ -489,15 +489,15 @@ blockquote {
     <div class="row">
         <div><span class="material-icons">event</span> [Oct 2025] 🚨 Released <a href="https://end2end-diffusion.github.io/repa-e-t2i/">REPA-E for T2I</a> 🚨 — a family of End-to-End Tuned VAEs:
             <ul style="margin-top: 8px; margin-bottom: 4px;">
-                <li>Family of end-to-end tuned VAEs:
+                <li><b>Family of end-to-end tuned VAEs</b>:
                     <ul style="margin-top: 4px; margin-bottom: 4px;">
                         <li>T2I VAEs: <a href="https://huggingface.co/REPA-E/e2e-flux-vae">FLUX-VAE</a>, <a href="https://huggingface.co/REPA-E/e2e-sd3.5-vae">SD-3.5-VAE</a>, <a href="https://huggingface.co/REPA-E/e2e-qwenimage-vae">Qwen-Image-VAE</a></li>
                         <li>ImageNet VAEs: <a href="https://huggingface.co/REPA-E/e2e-sdvae-hf">SD-VAE</a>, <a href="https://huggingface.co/REPA-E/e2e-invae-hf">IN-VAE</a>, <a href="https://huggingface.co/REPA-E/e2e-vavae-hf">VA-VAE</a></li>
                     </ul>
                 </li>
-                <li>End-to-end training generalizes to T2I: E2E-VAEs achieve better T2I generation quality across multiple resolutions (256×256, 512×512) compared to their standard VAE counterparts (FLUX-VAE, SD3.5-VAE, Qwen-Image-VAE), without requiring additional representation alignment losses</li>
-                <li>SOTA results on ImageNet 256×256: FID <b>1.12</b> with CFG and <b>1.69</b> without CFG</li>
-                <li>Improved latent space structure with enhanced semantic spatial details compared to standard VAEs (FLUX-VAE, SD3.5-VAE, Qwen-Image-VAE)</li>
+                <li><b>End-to-end training generalizes to T2I</b>: E2E-VAEs achieve better T2I generation quality across multiple resolutions (256×256, 512×512) compared to their standard VAE counterparts, without requiring additional representation alignment losses</li>
+                <li><b>SOTA results on ImageNet 256×256</b>: FID <b>1.12</b> with CFG and <b>1.69</b> without CFG</li>
+                <li><b>Improved latent space structure</b> with enhanced semantic spatial details compared to standard VAEs</li>
                 <li>All models available as <b>Hugging Face-compatible AutoencoderKL</b> checkpoints — load directly with <code>diffusers</code> API, no custom wrapper needed</li>
             </ul>
         </div>
