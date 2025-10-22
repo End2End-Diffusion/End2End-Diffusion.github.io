@@ -758,7 +758,7 @@ with torch.no_grad():
 
                         <!-- Counter and Controls -->
                         <div class="carousel-info" style="text-align: center; margin-top: 15px; display: flex; justify-content: center; align-items: center; gap: 20px;">
-                            <span id="carousel-counter" style="font-size: 1em; color: #333;">Image 1 / 4</span>
+                            <span id="carousel-counter" style="font-size: 1em; color: #333;">Image 1 / 8</span>
                             <button id="pause-btn" onclick="toggleAutoPlay()"
                                     style="background: #508af6; color: white; border: none;
                                            padding: 8px 16px; cursor: pointer; font-size: 0.9em; border-radius: 5px;">
@@ -779,7 +779,7 @@ with torch.no_grad():
             <!-- Carousel JavaScript -->
             <script>
                 let currentSlide = 0;
-                const totalSlides = 4;
+                const totalSlides = 8;
                 let autoPlayInterval;
                 let isPlaying = true;
 
