@@ -167,11 +167,15 @@
             Beyond T2I improvements, we show that end-to-end tuning enhances latent space structure and maintains strong ImageNet<d-cite key="imagenet"></d-cite> generalization.
         </p>
 
-        <div class="finding-box">
-            <ul>
-                <li><strong>Key Finding:</strong> End-to-End tuned VAEs lead to better T2I generation without need for any additional representation alignment losses.</li>
-            </ul>
-        </div>
+        <p class="text">
+            Through comprehensive evaluation across multiple scales, datasets, and resolutions, we reveal four key findings:
+            <ol class="text">
+                <li><strong><a href="#quantitative">&sect;Better T2I Performance</a></strong>: End-to-End tuned VAEs lead to better T2I generation without need for any additional representation alignment losses.</li>
+                <li><strong><a href="#quantitative">&sect;Resolution Generalization</a></strong>: End-to-End VAEs tuned on ImageNet 256×256 generalize for better T2I generation across different resolutions (256×256, 512×512).</li>
+                <li><strong><a href="#latent-analysis">&sect;Improved Latent Space Structure</a></strong>: End-to-End tuned VAEs show improved semantic spatial structure and details over FLUX-VAE, as evidenced by PCA projections and spatial self-similarity analysis.</li>
+                <li><strong><a href="#imagenet">&sect;ImageNet Generalization</a></strong>: End-to-End VAEs improve generation performance while maintaining reconstruction fidelity across all VAE families (FLUX, SD3.5, Qwen-Image).</li>
+            </ol>
+        </p>
 
         <!-- Jump to Sections -->
         <div class="icon-row">
@@ -638,7 +642,7 @@
 
             <d-figure id="fig-imagenet-convergence" style="margin-top: 30px; margin-bottom: 30px;">
                 <figure>
-                    <img data-zoomable="" draggable="false" src="static/img/e2e_vae_convergence.png" alt="ImageNet FID convergence" style="width: 100%;">
+                    <img data-zoomable="" draggable="false" src="static/img/e2e_convergence_fid.png" alt="ImageNet FID convergence" style="width: 100%;">
                     <figcaption>
                         <strong>ImageNet reconstruction quality (FID scores).</strong>
                         Comparison of Standard VAE vs E2E-tuned VAE across FLUX, Qwen, and SD3.5 architectures.
@@ -679,7 +683,7 @@
 
             <d-figure id="fig-imagenet-convergence" style="margin-top: 30px; margin-bottom: 30px;">
                 <figure>
-                    <img data-zoomable="" draggable="false" src="static/img/e2e_vae_convergence.png" alt="ImageNet FID convergence" style="width: 100%;">
+                    <img data-zoomable="" draggable="false" src="static/img/e2e_convergence_fid.png" alt="ImageNet FID convergence" style="width: 100%;">
                     <figcaption>
                         <strong>ImageNet reconstruction quality (FID scores).</strong>
                         Comparison of Standard VAE vs E2E-tuned VAE across FLUX, Qwen, and SD3.5 architectures.
