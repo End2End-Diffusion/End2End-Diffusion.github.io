@@ -1,619 +1,696 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>End-to-End Diffusion | Research Projects</title>
+    <link rel="icon" type="image/x-icon" href="imgs/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
 
-<script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Open Graph -->
+    <meta property="og:url" content="https://end2end-diffusion.github.io/" />
+    <meta property="og:image" content="https://end2end-diffusion.github.io/imgs/e2e-diffusion-home.png" />
+    <meta property="og:title" content="End-to-End Diffusion" />
+    <meta property="og:description" content="Advancing End-to-End Training for Diffusion Models" />
 
-<style type="text/css">
-body {
-    font-family: "Titillium Web", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-weight: 300;
-    font-size: 17px;
-    margin-left: auto;
-    margin-right: auto;
-}
+    <!-- Twitter -->
+    <meta name="twitter:url" content="https://end2end-diffusion.github.io/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://end2end-diffusion.github.io/imgs/e2e-diffusion-home.png" />
+    <meta name="twitter:title" content="End-to-End Diffusion" />
+    <meta name="twitter:description" content="Advancing End-to-End Training for Diffusion Models" />
 
-@media screen and (min-width: 980px){
-    body {
-        width: 980px;
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Set theme before page renders to prevent flash -->
+    <script>
+        (function() {
+            // Check localStorage first, then fall back to system preference
+            let theme = localStorage.getItem('theme');
+            if (!theme) {
+                // Auto-detect from system preference
+                theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <style>
+    :root {
+        /* Light mode colors */
+        --paper: #FAFAFA;
+        --ink: #ffffff;
+        --gray: #6B7280;
+        --light-gray: #444;
+        --text-primary: #141413;
+        --text-secondary: #6B7280;
+        --border-color: #666;
+        --card-border: #d1d5db;
+        --card-border-hover: #000;
+
+        --color-book-cloth:#cc785c;
+        --color-cactus:#bcd1ca;
+        --color-clay:#d97757;
+        --color-cloud-dark:#87867f;
+        --color-cloud-light:#d1cfc5;
+        --color-cloud-medium:#b0aea5;
+        --color-coral:#ebcece;
+        --color-dark:#0f0f0e;
+        --color-fig:#c46686;
+        --color-heather:#cbcadb;
+        --color-ivory-dark:#e8e6dc;
+        --color-ivory-light:#faf9f5;
+        --color-ivory-medium:#f0eee6;
+        --color-kraft:#d4a27f;
+        --color-light:#fff;
+        --color-manilla:#ebdbbc;
+        --color-manilla-light:#f1e6d0;
+        --color-oat:#e3dacc;
+        --color-olive:#788c5d;
+        --color-sky:#6a9bcc;
+        --color-slate-dark:#141413;
+        --color-slate-light:#5e5d59;
+        --color-slate-medium:#3d3d3a;
+        --color-green:#0E710E;
     }
-}
 
-h1 {
-    font-weight:300;
-    line-height: 1.15em;
-}
-
-h2 {
-    font-size: 1.75em;
-}
-a:link,a:visited {
-    color: #0E710E;
-    text-decoration: none;
-}
-a:hover {
-    color: #208799;
-}
-h1 {
-    text-align: center;
-}
-h2,h3 {
-    text-align: left;
-}
-
-h1 {
-    font-size: 40px;
-    font-weight: 500;
-}
-h2 {
-    font-weight: 400;
-    margin: 16px 0px 4px 0px;
-}
-h3 {
-    font-weight: 600;
-    margin: 16px 0px 4px 0px;
-}
-
-.paper-title {
-    padding: 1px 0px 1px 0px;
-}
-section {
-    margin: 32px 0px 32px 0px;
-    text-align: justify;
-    clear: both;
-}
-.col-5 {
-     width: 20%;
-     float: left;
-}
-.col-4 {
-     width: 25%;
-     float: left;
-}
-.col-3 {
-     width: 33%;
-     float: left;
-}
-.col-2 {
-     width: 50%;
-     float: left;
-}
-.col-1 {
-     width: 100%;
-     float: left;
-}
-
-.author-row, .affil-row {
-    font-size: 26px;
-}
-
-.author-row-new {
-    text-align: center;
-}
-
-.author-row-new a {
-    display: inline-block;
-    font-size: 20px;
-    padding: 4px;
-}
-
-.author-row-new sup {
-    color: #313436;
-    font-size: 12px;
-}
-
-.affiliations-new {
-    font-size: 18px;
-    text-align: center;
-    width: 80%;
-    margin: 0 auto;
-    margin-bottom: 20px;
-}
-
-.row {
-    margin: 16px 0px 16px 0px;
-}
-.authors {
-    font-size: 26px;
-}
-.affiliatons {
-    font-size: 18px;
-}
-.affil-row {
-    margin-top: 18px;
-}
-.teaser {
-    max-width: 100%;
-}
-.text-center {
-    text-align: center;  
-}
-.screenshot {
-    width: 256px;
-    border: 1px solid #ddd;
-}
-.screenshot-el {
-    margin-bottom: 16px;
-}
-hr {
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ddd;
-    margin: 0;
-}
-.material-icons {
-    vertical-align: -6px;
-}
-p {
-    line-height: 1.25em;
-}
-.caption {
-    font-size: 16px;
-    color: #666;
-    margin-top: 4px;
-    margin-bottom: 10px;
-}
-video {
-    display: block;
-    margin: auto;
-}
-figure {
-    display: block;
-    margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-#bibtex pre {
-    font-size: 14px;
-    background-color: #eee;
-    padding: 16px;
-}
-.green {
-    color: #0E710E;
-    font-weight: bold;
-}
-.orange {
-    color: #d35400;
-    font-weight: bold;
-}
-.flex-row {
-    display: flex;
-    flex-flow: row wrap;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
-.coming-soon {
-    position: absolute;
-    top: -15px;
-    right: -15px;
-}
-
-.paper-btn:hover {
-    color: #FF8563;
-    transform: translateY(-2px);
-}
-
-.paper-btn-parent {
-    display: flex;
-    justify-content: center;
-    margin: 16px 0px;
-    gap: 25px;
-    font-size: 20px;
-}
-
-.github-btn:hover {
-    color: #FF8563;
-    transform: translateY(-2px);
-}
-
-.hf-btn:hover {
-    color: #FF8563;
-    transform: translateY(-2px);
-}
-
-.container {
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 16px;
-    padding-right: 16px;
-}
-
-.venue {
-    font-size: 23px;
-}
-
-.topnav {
-    background-color: #EEEEEE;
-    overflow: hidden;
-}
-
-.topnav div {
-    max-width: 1070px;
-    margin: 0 auto;
-}
-
-.topnav a {
-    display: inline-block;
-    color: black;
-    text-align: center;
-    vertical-align: middle;
-    padding: 16px 16px;
-    text-decoration: none;
-    font-size: 18px;
-}
-
-.topnav img {
-    padding: 2px 0px;
-    width: 100%;
-    margin: 0.2em 0px 0.3em 0px;
-    vertical-align: middle;
-}
-
-pre {
-    font-size: 0.9em;
-    padding-left: 7px;
-    padding-right: 7px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    border-radius: 3px;
-    background-color: rgb(235, 235, 235);
-    overflow-x: auto;
-}
-
-.download-thumb {
-    display: flex;
-}
-
-@media only screen and (max-width: 620px) {
-    .download-thumb {
-        display: none;
+    [data-theme="dark"] {
+        /* Dark mode colors */
+        --paper: #0a0a0a;
+        --text-primary: #e8e6dc;
+        --text-secondary: #9ca3af;
+        --border-color: #444;
+        --card-border: #374151;
+        --card-border-hover: #fff;
     }
-}
 
-.paper-stuff {
-    width: 50%;
-    font-size: 20px;
-}
+     body {
+        background-color: var(--paper);
+        color: var(--text-primary);
+        font-family: "Inter", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        transition: background-color 0.3s ease, color 0.3s ease;
+     }
 
-@media only screen and (max-width: 620px) {
-    .paper-stuff {
+     html {
+        scroll-behavior: smooth;
+     }
+
+     .container {
+        max-width: 1200px;
+        width: 100%;
+        padding: 2rem;
+     }
+
+     header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 2rem;
+        min-height: 3rem;
+     }
+
+     header .logo {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: var(--text-primary);
+        text-decoration: none;
+     }
+
+     .theme-toggle {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-primary);
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease, color 0.3s ease;
+        position: relative;
+     }
+
+     .theme-toggle:hover {
+        transform: scale(1.1);
+     }
+
+     .theme-toggle i {
+        position: absolute;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+     }
+
+     .theme-toggle .fa-sun {
+        opacity: 1;
+        transform: rotate(0deg);
+     }
+
+     .theme-toggle .fa-moon {
+        opacity: 0;
+        transform: rotate(180deg);
+     }
+
+     [data-theme="dark"] .theme-toggle .fa-sun {
+        opacity: 0;
+        transform: rotate(180deg);
+     }
+
+     [data-theme="dark"] .theme-toggle .fa-moon {
+        opacity: 1;
+        transform: rotate(0deg);
+     }
+
+     .header-right {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+     }
+
+     .header-divider {
+        width: 1px;
+        height: 1.5rem;
+        background-color: var(--border-color);
+     }
+
+    .mission-statement {
+        border-top: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+        padding: 2rem 0;
+        margin-bottom: 1rem;
+        text-align: left;
+     }
+
+    main {
+        display: block;
+    }
+
+    .content-area {
         width: 100%;
     }
-}
-* {
-  box-sizing: border-box;
-}
+     .content-area h1 {
+        font-size: 2.5rem;
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+     }
 
-.column {
-  text-align: center;
-  float: left;
-  width: 16.666%;
-  padding: 5px;
-}
-.column3 {
-  text-align: center;
-  float: left;
-  width: 33.333%;
-  padding: 5px;
-}
-.border-right {
-    border-right: 1px solid black;
-}
-.border-bottom{
-    border-bottom: 1px solid black;
-}
+    .filters {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        margin-bottom: 0rem;
+        padding-bottom: 0rem;
+        gap: 1rem;
+    }
 
-/* Clearfix (clear floats) */
-.row::after {
-  content: "";
-  clear: both;
-  display: table;
-}
+     .filters .tabs a {
+        color: var(--gray);
+        text-decoration: none;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid transparent;
+        transition: color 0.2s, border-color 0.2s;
+        white-space: nowrap;
+     }
 
-.image-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.25fr;
-    gap: 10px;
-    width: 100%; 
-}
+     .filters .tabs a:hover {
+        color: var(--text-primary);
+     }
 
-.image-grid img {
-    width: 100%; 
-}
+     .filters .tabs a.active {
+        color: var(--text-primary);
+        border-bottom: 2px solid transparent;
+     }
 
-.image-grid img:first-child {
-    object-fit: contain;
-}
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 500px) {
-  .column {
-    width: 100%;
-  }
-}
-@media screen and (max-width: 500px) {
-  .column3 {
-    width: 100%;
-  }
-}
+     .tabs::-webkit-scrollbar {
+        display: none;
+     }
+     .tabs {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+     }
 
-.figure img {
-    width: 100%; 
-}
 
-blockquote {
-    background-color: rgba(40, 40, 40, 0.2);
-    padding: 0px;
-    margin: 2px 0;
-    border-radius: 10px;
-    padding-top: 1px;
-    padding-bottom: 1px;
-    padding-left: 5px;
-    padding-right: 5px;
-}
+     @media (max-width: 768px) {
+        .mission-statement h1 {
+            font-size: 1.5rem;
+        }
+     }
 
-/* Button styles */
-.publication-links {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 15px 0;
-}
+     .featured-banners {
+        margin-bottom: 3rem;
+        padding: 2rem 0;
+     }
 
-.link-block {
-    display: inline-block;
-    margin: 0 5px;
-}
+     .featured-card {
+        border-radius: 12px;
+        display: block;
+        height: clamp(18rem, 25vw, 24rem);
+        position: relative;
+        transition: all .3s cubic-bezier(.165,.84,.44,1);
+        overflow: hidden;
+        color: var(--text-primary);
+        text-decoration: none;
+     }
 
-.button.is-dark {
-    background-color: #363636;
-    color: white;
-    padding: 10px 15px;
-    font-size: 16px;
-    display: inline-flex;
-    align-items: center;
-    transition: background-color 0.3s, transform 0.2s;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-}
+     .featured-card img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        position: absolute;
+        transition: transform .3s cubic-bezier(.165,.84,.44,1);
+     }
 
-.button.is-dark:hover {
-    background-color: #292929;
-    transform: translateY(-2px);
-}
+     .featured-card:hover img {
+        transform: scale(1.1);
+     }
 
-.icon {
-    margin-right: 8px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
+     .featured-card .text-container {
+        bottom: 0;
+        left: 0;
+        padding: 24px;
+        position: absolute;
+        right: 0;
+     }
 
-.button.is-rounded {
-    background-color: #0E4E0E;
-    color: white;
-    padding: 10px 25px;
-    font-size: 16px;
-    display: inline-flex;
-    align-items: center;
-    transition: background-color 0.3s, transform 0.2s;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    border-radius: 25px;
-}
+    .featured-card .category-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+     }
 
-.button.is-rounded:hover {
-    background-color: #0A3D0A;
-    transform: translateY(-2px);
-}
+    .featured-card h3 {
+        font-size: 1.5rem;
+        margin-top: 0.5rem;
+        line-height: 1.3;
+    }
 
-</style>
+    .font-styrene {
+        font-family: "Inter", system-ui, sans-serif;
+    }
 
-<script type="text/javascript" src="../js/hidebib.js"></script>
-    <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,600,400italic,600italic,300,300italic' rel='stylesheet' type='text/css'>
-    <head>
-        <title>REPA-E: Unlocking VAE for End-to-End Tuning of Latent Diffusion Transformers</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta property="og:description" content="REPA-E: Unlocking VAE for End-to-End Tuning of Latent Diffusion Transformers"/>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link href="https://fonts.googleapis.com/css2?family=FontAwesome" rel="stylesheet">
-    </head>
+    .publication-card {
+        position: relative;
+    }
 
- <body>
-<div class="container">
-    <div class="paper-title">
-    <h1>
-        <span class="green">REPA-E</span>: Unlocking VAE for End-to-End Tuning of Latent Diffusion Transformers
-    </h1>
-    </div>
+    .publication-card::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 20%;
+        width: 4px;
+        height: 55%;
+        background: linear-gradient(to bottom, #0E710E, #4169E1);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
 
-    <div align="center">
-        <a href="https://scholar.google.com.au/citations?user=GQzvqS4AAAAJ" target="_blank">Xingjian&nbsp;Leng</a><sup>1*</sup> &ensp; <b>&middot;</b> &ensp;
-        <a href="https://1jsingh.github.io/" target="_blank">Jaskirat&nbsp;Singh</a><sup>1*</sup> &ensp; <b>&middot;</b> &ensp;
-        <a href="https://hou-yz.github.io/" target="_blank">Yunzhong&nbsp;Hou</a><sup>1</sup> &ensp;
-        <br>
-        <a href="https://people.csiro.au/X/Z/Zhenchang-Xing/" target="_blank">Zhenchang&nbsp;Xing</a><sup>2</sup>&ensp; <b>&middot;</b> &ensp;
-        <a href="https://www.sainingxie.com/" target="_blank">Saining&nbsp;Xie</a><sup>3</sup> &ensp; <b>&middot;</b> &ensp;
-        <a href="https://zheng-lab-anu.github.io/" target="_blank">Liang&nbsp;Zheng</a><sup>1</sup> &ensp;
-        <br>
-        <sup>1</sup> Australian National University &emsp; <sup>2</sup>Data61-CSIRO &emsp; <sup>3</sup>New York University &emsp; <br>
-        <sup>*</sup>Project Lead<br>
-      </div>
-    </center>
+    .publication-card:hover::before {
+        opacity: 1;
+    }
 
-        <div style="clear: both">
-            <div class="publication-links" style="margin-bottom: 30px;">
-                <span class="link-block">
-                    <a href="https://arxiv.org/abs/2504.10483" class="external-link button is-rounded" style="background-color: #0E4E0E; color: white;">
-                        <span class="icon">
-                            <i class="fas fa-file-alt"></i>
-                        </span>
-                        <span>Paper</span>
-                    </a>
-                </span>
-                <span class="link-block">
-                    <a href="https://github.com/End2End-Diffusion/REPA-E" class="external-link button is-rounded" style="background-color: #0E4E0E; color: white;">
-                        <span class="icon">
-                            <i class="fab fa-github"></i>
-                        </span>
-                        <span>Code</span>
-                    </a>
-                </span>
-                <span class="link-block">
-                    <a href="https://huggingface.co/REPA-E" class="external-link button is-rounded" style="background-color: #0E4E0E; color: white;">
-                        <span class="icon" style="margin-right: 8px;">
-                            🤗
-                        </span>
-                        <span>Model</span>
-                    </a>
-                </span>
+    .featured-title {
+        color: white;
+        font-size: 2.5rem !important;
+        font-weight: 700 !important;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.75) !important;
+    }
+
+    .line-height-relaxed {
+        line-height: 1.75;
+    }
+
+    .icon-small {
+        width: 20px;
+        height: 20px;
+    }
+
+    .bg-book-cloth {
+        background-color: var(--color-book-cloth);
+    }
+
+    .bg-cloud-light {
+        background-color: var(--color-cloud-light);
+    }
+
+    .bg-manilla {
+        background-color: var(--color-manilla);
+    }
+
+    .bg-sky {
+        background-color: var(--color-sky);
+    }
+
+    .bg-green {
+        background-color: var(--color-green);
+    }
+
+    /* Article card layout classes */
+    .article-container {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem 1rem;
+    }
+
+    @media (min-width: 768px) {
+        .article-container {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+        }
+    }
+
+    .article-category {
+        grid-column: span 1 / span 1;
+        order: 1;
+    }
+
+    @media (min-width: 768px) {
+        .article-category {
+            order: 0;
+        }
+    }
+
+    .article-title-cell {
+        grid-column: span 1 / span 1;
+        order: 3;
+    }
+
+    @media (min-width: 768px) {
+        .article-title-cell {
+            grid-column: span 4 / span 4;
+            order: 0;
+        }
+    }
+
+    .article-date {
+        grid-column: span 1 / span 1;
+        order: 2;
+    }
+
+    @media (min-width: 768px) {
+        .article-date {
+            order: 0;
+        }
+    }
+
+    .article-description {
+        grid-column: span 1 / span 1;
+        order: 4;
+    }
+
+    @media (min-width: 768px) {
+        .article-description {
+            grid-column: span 4 / span 4;
+            order: 0;
+        }
+    }
+
+    .category-label {
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 0.875rem;
+        color: var(--text-primary);
+        text-transform: capitalize;
+        display: block;
+    }
+
+    .date-label {
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        display: block;
+    }
+
+    .article-title {
+        font-size: 1rem;
+        font-family: "Inter", system-ui, sans-serif;
+        color: var(--text-primary);
+    }
+
+    .article-desc {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+    }
+
+    .publication-card {
+        border-bottom: 1px solid var(--card-border);
+        transition: border-color 0.3s ease;
+    }
+
+    .publication-card:hover {
+        border-color: var(--card-border-hover);
+    }
+
+    .contact-button {
+        background-color: var(--paper);
+        color: var(--text-primary);
+        border: 1px solid var(--text-primary);
+    }
+
+    .contact-button:hover {
+        background-color: var(--text-primary);
+        color: var(--paper);
+    }
+
+    </style>
+
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <a href="#" class="logo" style="font-size: 1.5rem;">End-to-End Diffusion</a>
+            <div class="header-right">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </button>
             </div>
+        </header>
+        <div class="mission-statement">
+            <h2 class="font-styrene text-4xl font-bold mb-4">Advancing End-to-End Training for Diffusion Models</h2>
+            <p class="text-base mt-4 line-height-relaxed" style="color: var(--text-secondary);">Our research focuses on enabling true end-to-end training of latent diffusion models, jointly optimizing both the VAE tokenizer and diffusion transformer. Through innovative representation alignment techniques, we unlock the potential for faster training, improved generation quality, and more adaptive latent spaces across diverse generative tasks.</p>
         </div>
-        <center>
-            <div class="figure">
-                <img src="assets/viz-results-v4.webp" alt="REPA-E: Unlocking VAE for End-to-End Tuning of Latent Diffusion Transformers" style="width: 100%;" loading="lazy">
-            </div>    
-        </center>
-    </div>
-    <section id="news">
-        <h2>News</h2>
-        <hr>
-        <div class="row">
-            <div><span class="material-icons"> event </span> [Apr 2025] Our paper, code, and pretrained models are now available on <a href="https://github.com/End2End-Diffusion/REPA-E">GitHub</a> and <a href="https://huggingface.co/REPA-E">HuggingFace</a>.</div>
-        </div>
-    </section>
 
-    <section>
-        <h2>Overview</h2>
-        <hr>
-        <p>
-            We address a fundamental question: <b><em style="color: green;">Can latent diffusion models and their VAE tokenizer be trained end-to-end?</em></b> While training both components jointly with standard diffusion loss is observed to be ineffective — often degrading final performance — we show that this limitation can be overcome using a simple representation-alignment (REPA) loss. Our proposed method, <b>REPA-E</b>, enables stable and effective joint training of both the VAE and the diffusion model, achieving state-of-the-art FID scores of <b>1.26</b> and <b>1.83</b> with and without classifier-free guidance on ImageNet 256×256.
-        </p>
-
-        <center>
-            <div class="figure">
-                <img src="assets/a-overview-v4.webp" alt="REPA-E Overview" style="max-width: 100%; height: auto;" loading="lazy">
+        <section class="featured-banners">
+            <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
+                <a href="repa-e" class="featured-card md:col-span-7 bg-green">
+                    <img src="imgs/repa-e-preview.png" alt="REPA-E" onerror="this.src='https://placehold.co/800x400/0E710E/ffffff?text=REPA-E'; this.onerror=null;">
+                    <div class="text-container">
+                        <h3 class="featured-title">REPA-E</h3>
+                    </div>
+                </a>
+                <a href="repa-e-t2i" class="featured-card md:col-span-3 bg-sky">
+                    <img src="imgs/repa-e-t2i-preview.png" alt="REPA-E-T2I" onerror="this.src='https://placehold.co/400x400/6a9bcc/ffffff?text=REPA-E-T2I'; this.onerror=null;">
+                    <div class="text-container">
+                        <h3 class="featured-title">REPA-E-T2I</h3>
+                    </div>
+                </a>
+                <a href="irepa" class="featured-card md:col-span-5 bg-manilla">
+                    <img src="imgs/irepa-preview.png" alt="iREPA" onerror="this.src='https://placehold.co/600x400/ebdbbc/ffffff?text=iREPA'; this.onerror=null;">
+                    <div class="text-container">
+                        <h3 class="featured-title">iREPA</h3>
+                    </div>
+                </a>
             </div>
-        </center>
+        </section>
 
-        Through extensive evaluations, we demonstrate that our end-to-end training approach <b>REPA-E</b> offers four key advantages:
-        <p>
-            <b>1. Accelerated Generation Performance:</b> REPA-E significantly speeds up diffusion training by over <b>17×</b> and <b>45×</b> compared to REPA and vanilla training recipes, respectively, while achieving superior quality.
-        </p>
+        <main>
+            <div class="content-area">
 
-        <p>
-            <b>2. Improved VAE Latent-Space Structure:</b> Joint tuning adaptively enhances latent space structure across different VAE architectures, addressing their specific limitations without explicit regularization.
-        </p>
+                <div class="text-center mb-8">
+                    <h2 class="font-styrene text-4xl font-bold">Publications & Resources</h2>
+                </div>
 
-        <p>
-            <b>3. Superior Drop-in VAE Replacements:</b> The resulting <b>E2E-VAE</b> serves as a <b>drop-in replacement</b> for existing VAEs (e.g., SD-VAE), improving convergence and generation quality across diverse LDM architectures.
-        </p>
-        
-        <p>
-            <b>4. Effective From-Scratch Training:</b> REPA-E enables joint training of both VAE and LDM from scratch, still achieving superior performance compared to traditional training approaches.
-        </p>
-    </section>
+                <div class="filters">
 
-    <section id="1-accelerated-performance">
-        <h2>1. End-to-End Training Leads to Accelerated Generation Performance</h2>
-        <hr>
+                    <div class="tabs flex flex-nowrap gap-x-6 overflow-x-auto" style="border-bottom: 1px solid var(--text-primary);">
+                    <a href="#" class="filter-btn active" data-filter="all">All</a>
+                        <a href="#" class="filter-btn" data-filter="publication">Publication</a>
+                        <a href="#" class="filter-btn" data-filter="model">Model</a>
+                        <a href="#" class="filter-btn" data-filter="code">Code</a>
+                    </div>
+                </div>
 
-        <ul>
-            <li><b>Better performance with fewer epochs:</b> REPA-E achieves gFID of <b>4.07</b> in just 80 epochs, significantly outperforming MaskDiT (<b>5.69</b> with 1600 epochs) and FasterDiT (<b>7.91</b> with 400 epochs)</li>
-            <li><b>Robust across architectures:</b> Performance improvements remain consistent across different model scales (SiT-B/L/XL) and VAE architectures (SD-VAE, IN-VAE, VA-VAE), demonstrating the method's versatility</li>
-            <li><b>Enhanced image quality across training:</b> Using identical noise and labels, REPA-E generates structurally superior images compared to REPA baseline at 50K, 100K, and 400K training iterations</li>
-        </ul>
+                <div class="article-list mt-6 space-y-0">
 
-        <center>
-            <div class="figure">
-                <img src="assets/repae-eval-combined.webp" alt="Combined" style="max-width: 95%; height: auto;" loading="lazy">
+                    <article data-category="publication" data-title="repa-e unlocking vae for end-to-end tuning of latent diffusion transformers publication">
+                        <a href="https://arxiv.org/abs/2504.10483" target="_blank" class="publication-card block">
+                            <div class="article-container">
+                                <div class="article-category">
+                                    <div class="flex items-center">
+                                        <div class="article-icon w-5 h-5 text-gray-700 mr-2 shrink-0">
+                                            <i class="fas fa-file-alt"></i>
+                                        </div>
+                                        <span class="category-label">Publication</span>
+                                    </div>
+                                </div>
+                                <div class="article-title-cell">
+                                    <h3 class="article-title">REPA-E: Unlocking VAE for End-to-End Tuning of Latent Diffusion Transformers</h3>
+                                </div>
+                                <div class="article-date">
+                                    <span class="date-label">Apr 2025</span>
+                                </div>
+                                <div class="article-description">
+                                    <p class="article-desc">Enabling stable and effective joint training of VAE and diffusion models with representation alignment</p>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+
+                    <article data-category="code" data-title="repa-e code release">
+                        <a href="https://github.com/End2End-Diffusion/REPA-E" target="_blank" class="publication-card block">
+                            <div class="article-container">
+                                <div class="article-category">
+                                    <div class="flex items-center">
+                                        <svg class="w-5 h-5 text-gray-700 mr-2 shrink-0" aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
+                                            <path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path>
+                                        </svg>
+                                        <span class="category-label">Code</span>
+                                    </div>
+                                </div>
+                                <div class="article-title-cell">
+                                    <h3 class="article-title">REPA-E Code</h3>
+                                </div>
+                                <div class="article-date">
+                                    <span class="date-label">Apr 2025</span>
+                                </div>
+                                <div class="article-description">
+                                    <p class="article-desc">Training and evaluation code for REPA-E models</p>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+
+                    <article data-category="model" data-title="repa-e model release">
+                        <a href="https://huggingface.co/REPA-E" target="_blank" class="publication-card block">
+                            <div class="article-container">
+                                <div class="article-category">
+                                    <div class="flex items-center">
+                                        <div class="article-icon w-5 h-5 text-gray-700 mr-2 shrink-0">
+                                            <span style="font-size: 1.25rem;">🤗</span>
+                                        </div>
+                                        <span class="category-label">Model</span>
+                                    </div>
+                                </div>
+                                <div class="article-title-cell">
+                                    <h3 class="article-title">REPA-E Models</h3>
+                                </div>
+                                <div class="article-date">
+                                    <span class="date-label">Apr 2025</span>
+                                </div>
+                                <div class="article-description">
+                                    <p class="article-desc">Pretrained models and E2E-VAE checkpoints on HuggingFace</p>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+
+                </div>
+
             </div>
-        </center>
 
-        <center>
-            <div class="figure">
-                <img src="assets/visual-scaling-v4.webp" alt="Qualitative comparison between REPA and REPA-E at different training iterations" style="max-width: 100%; height: auto;" loading="lazy">
-            </div>
-        </center>
-    </section>
+            <div class="contact-us-block py-12 md:py-16">
 
-    <section id="2-improved-latent-space">
-        <h2>2. End-to-End Training Improves VAE Latent-Space Structure</h2>
-        <hr>
-        <ul>
-            <li><b>Adaptive refinement without explicit regularization:</b> REPA-E automatically adapts to each VAE's unique latent space characteristics without requiring manual heuristic-based regularization</li>
-            <li><b>PCA visualization:</b> Using principal component analysis, we project VAE latents to RGB channels, revealing how end-to-end tuning with REPA-E improves latent representation quality</li>
-            <li><b>Architecture-specific benefits:</b></li>
-            <ul>
-                <li><b>SD-VAE enhancement:</b> Reduces high-frequency noise components for smoother latent representations</li>
-                <li><b>IN-VAE & VA-VAE enhancement:</b> Adds essential structural details to over-smoothed latent representations</li>
-            </ul>
-        </ul>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
+                    <div class="featured-card block" style="height: auto; min-height: 300px;">
+                        <img src="imgs/contact-visual.png" alt="End-to-End Diffusion Research" class="rounded-lg shadow-md w-full h-auto object-cover" onerror="this.src='https://placehold.co/600x400/0E710E/ffffff?text=End-to-End+Diffusion'; this.onerror=null;">
+                    </div>
 
-        <center>
-            <div class="figure">
-                <img src="assets/pca-analysis-v11.webp" alt="PCA Analysis of Latent Space" style="max-width: 90%; height: auto;" loading="lazy">
-            </div>
-        </center>
-    </section>
-
-    <section id="3-superior-drop-in-replacements">
-        <h2>3. End-to-End Tuned VAEs as Superior Drop-in Replacements</h2>
-        <hr>
-        <ul>
-            <li><b>Universal improvement:</b> E2E-VAE serves as a drop-in replacement for original VAEs, delivering superior performance across diverse diffusion architectures</li>
-            <li><b>State-of-the-art generation quality:</b> Achieves gFID of <b>1.26</b> (w/ CFG) and <b>1.83</b> (w/o CFG) when training with REPA for 800 epochs</li>
-            <li><b>Comprehensive performance superiority:</b> Achieves gFID of <b>3.46</b> with SiT-XL and REPA (vs. <b>4.88</b> with VA-VAE and <b>7.90</b> with SD-VAE) and <b>4.20</b> with DiT-XL (vs. <b>4.71</b> with VA-VAE and <b>12.29</b> with SD-VAE)</li>
-            <li><b>Architecture-robust performance:</b> E2E-VAE maintains strong generation quality across diffusion models with and without REPA (e.g., gFID <b>3.46</b> on SiT-XL w/ REPA and <b>4.20</b> on DiT-XL w REPA)</li>
-        </ul>
-
-        <center>
-            <div class="figure">
-                <img src="assets/e2e-vae-eval.webp" alt="Drop-in VAE Performance Comparison" style="max-width: 100%; height: auto;" loading="lazy">
-            </div>
-        </center>
-    </section>
-    
-    <section id="4-from-scratch-training">
-        <h2>4. Enables Effective From-Scratch Training</h2>
-        <hr>
-
-        <div style="display: flex; align-items: top; gap: 40px;">
-            <div style="flex: 1;">
-                <ul>
-                    <li><b>End-to-end training from scratch:</b> REPA-E can jointly train both VAE and LDM from scratch in an end-to-end manner, without requiring VAE pre-training</li>
-                    <li><b>Strong performance even without initialization:</b> While initializing the VAE with pretrained weights helps slightly improve results, from-scratch training still achieves gFID of <b>4.34</b> at 80 epochs, significantly outperforming REPA (<b>7.90</b>)</li>
-                </ul>
-            </div>
-
-            <div style="flex: 1; margin-top: 8px;">
-                <div class="figure">
-                    <img src="assets/repae-scratch-eval.webp" alt="From-Scratch Training Performance" style="width: 100%;" loading="lazy">
+                    <div class="flex flex-col justify-center text-left items-start">
+                        <h2 class="font-styrene text-4xl font-bold mb-6">Get in Touch</h2>
+                        <p class="text-base md:text-lg mb-8 line-height-relaxed" style="color: var(--text-secondary);">
+                            Interested in our research on end-to-end diffusion training? We welcome collaboration opportunities, questions about our methods, and discussions on advancing generative modeling.
+                        </p>
+                        <a href="https://github.com/End2End-Diffusion"
+                            class="contact-button font-styrene font-medium py-3 px-8 rounded-lg text-base transition-colors duration-300">
+                            Visit Our GitHub
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <section id="bibtex">
-        <h2>Citation</h2>
-        <hr>
-        <pre><code>@article{leng2025repae,
-  title={REPA-E: Unlocking VAE for End-to-End Tuning with Latent Diffusion Transformers},
-  author={Xingjian Leng and Jaskirat Singh and Yunzhong Hou and Zhenchang Xing and Saining Xie and Liang Zheng},
-  year={2025},
-  journal={arXiv preprint arXiv:2504.10483},
-}</code></pre>
-    </section>
+        </main>
 
-    <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #888; text-align: center;">
-        <p>We thank the <a href="https://github.com/sihyun-yu/REPA/tree/gh-pages" target="_blank">REPA project</a> for the website template. Last updated: April 2025.</p>
-    </footer>
+    </div>
 
-</div>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Dark mode toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        // Check for saved theme preference or auto-detect from system
+        let currentTheme = localStorage.getItem('theme');
+        if (!currentTheme) {
+            // Auto-detect from system preference
+            currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        htmlElement.setAttribute('data-theme', currentTheme);
+
+        // Toggle theme
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Listen for system theme changes (optional: auto-switch if user hasn't set preference)
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            // Only auto-switch if user hasn't manually set a preference
+            if (!localStorage.getItem('theme')) {
+                htmlElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+            }
+        });
+
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const articles = document.querySelectorAll('.article-list article');
+        let currentFilter = 'all';
+
+        function runFilters() {
+            articles.forEach(article => {
+                const category = article.getAttribute('data-category');
+
+                const categoryMatch = (currentFilter === 'all' || currentFilter === category);
+
+                if (categoryMatch) {
+                    article.style.display = 'block';
+                } else {
+                    article.style.display = 'none';
+                }
+            });
+        }
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentFilter = e.target.getAttribute('data-filter');
+
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+
+                runFilters();
+            });
+        });
+
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('error', function() {
+                if (!this.dataset.error) {
+                    this.dataset.error = true;
+                    const altText = this.alt ? encodeURIComponent(this.alt) : 'Image+Not+Found';
+                    this.src = `https://placehold.co/600x400/eeeeee/999999?text=${altText}`;
+                }
+            });
+        });
+    });
+    </script>
 </body>
 </html>
