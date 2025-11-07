@@ -1,0 +1,8 @@
+# reference projects
+ref_projects/
+ref_projects_pages/
+ref_projects/*
+/ref_projects/*
+/ref_projects_pages/*
+/ref_projects/
+/ref_projects_pages/
