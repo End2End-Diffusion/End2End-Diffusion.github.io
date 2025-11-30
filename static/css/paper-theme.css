@@ -1,0 +1,772 @@
+/* Paper Theme - Clean, Professional, Academic Styling
+ * A lighter, paper-like theme for research project pages
+ * Inspired by academic papers, Distill.pub, and modern research blogs
+ */
+
+/* ============================================
+   CSS VARIABLES - Paper Theme Palette
+   ============================================ */
+:root {
+    /* Paper-like backgrounds */
+    --paper-white: #FEFEFE;
+    --paper-cream: #FDFBF7;
+    --paper-light: #F9F7F3;
+    --paper-warm: #F5F3EF;
+
+    /* Text colors - softer than pure black */
+    --ink-primary: #1a1a1a;
+    --ink-secondary: #4a4a4a;
+    --ink-muted: #6b6b6b;
+    --ink-light: #8a8a8a;
+
+    /* Accent colors - subtle and professional */
+    --accent-primary: #2563eb;      /* Clean blue */
+    --accent-secondary: #3b82f6;    /* Lighter blue */
+    --accent-warm: #d97706;         /* Warm amber */
+    --accent-success: #059669;      /* Muted green */
+
+    /* Border colors */
+    --border-light: #e5e5e5;
+    --border-medium: #d4d4d4;
+    --border-dark: #a3a3a3;
+
+    /* Shadows - very subtle */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.03);
+
+    /* Typography */
+    --font-serif: 'Crimson Pro', 'Crimson Text', 'Georgia', 'Times New Roman', serif;
+    --font-sans: 'Inter', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+    /* Spacing scale */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 4rem;
+
+    /* Content widths */
+    --content-width: 720px;
+    --content-width-wide: 900px;
+    --content-width-full: 1200px;
+
+    /* Line heights */
+    --leading-tight: 1.25;
+    --leading-normal: 1.6;
+    --leading-relaxed: 1.75;
+}
+
+/* ============================================
+   TYPOGRAPHY - Academic Paper Style
+   ============================================ */
+
+/* Headings - Clean and hierarchical */
+.paper-h1, h1.paper {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: var(--leading-tight);
+    color: var(--ink-primary);
+    margin: var(--space-3xl) 0 var(--space-lg) 0;
+    letter-spacing: -0.02em;
+}
+
+.paper-h2, h2.paper {
+    font-family: var(--font-serif);
+    font-size: 1.875rem;
+    font-weight: 600;
+    line-height: var(--leading-tight);
+    color: var(--ink-primary);
+    margin: var(--space-2xl) 0 var(--space-md) 0;
+    letter-spacing: -0.01em;
+}
+
+.paper-h3, h3.paper {
+    font-family: var(--font-sans);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: var(--leading-tight);
+    color: var(--ink-primary);
+    margin: var(--space-xl) 0 var(--space-sm) 0;
+}
+
+.paper-h4, h4.paper {
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: var(--leading-tight);
+    color: var(--ink-secondary);
+    margin: var(--space-lg) 0 var(--space-sm) 0;
+}
+
+/* Body text */
+.paper-text, p.paper {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: var(--leading-relaxed);
+    color: var(--ink-secondary);
+    margin: 0 0 var(--space-lg) 0;
+}
+
+/* Small text */
+.paper-small {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: var(--leading-normal);
+    color: var(--ink-muted);
+}
+
+/* Caption text */
+.paper-caption {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    line-height: var(--leading-normal);
+    color: var(--ink-muted);
+    margin-top: var(--space-sm);
+}
+
+/* ============================================
+   KEY FINDINGS / CALLOUT BOXES
+   Academic paper style highlights
+   ============================================ */
+
+/* Main finding box - elegant with left border accent */
+.paper-finding {
+    background: linear-gradient(to right, var(--paper-light), var(--paper-white));
+    border-left: 3px solid var(--accent-primary);
+    border-radius: 0 6px 6px 0;
+    padding: var(--space-lg) var(--space-xl);
+    margin: var(--space-xl) 0;
+    position: relative;
+}
+
+.paper-finding::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid var(--border-light);
+    border-left: none;
+    border-radius: 0 6px 6px 0;
+    pointer-events: none;
+}
+
+.paper-finding-label {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.paper-finding-content {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: var(--leading-relaxed);
+    color: var(--ink-primary);
+}
+
+/* Numbered key takeaway boxes */
+.paper-takeaway {
+    display: flex;
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+    background: var(--paper-white);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    margin: var(--space-lg) 0;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.paper-takeaway:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.paper-takeaway-number {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    background: var(--accent-primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.paper-takeaway-content {
+    flex: 1;
+}
+
+.paper-takeaway-title {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--ink-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.paper-takeaway-text {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    line-height: var(--leading-normal);
+    color: var(--ink-secondary);
+    margin: 0;
+}
+
+/* Highlight box - for important quotes or statements */
+.paper-highlight {
+    background: var(--paper-cream);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: var(--space-xl);
+    margin: var(--space-xl) 0;
+    position: relative;
+}
+
+.paper-highlight blockquote {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    line-height: var(--leading-relaxed);
+    color: var(--ink-secondary);
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.paper-highlight cite {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-style: normal;
+    color: var(--ink-muted);
+    margin-top: var(--space-md);
+    text-align: right;
+}
+
+/* Note box - for supplementary information */
+.paper-note {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 6px;
+    padding: var(--space-md) var(--space-lg);
+    margin: var(--space-lg) 0;
+}
+
+.paper-note-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: var(--accent-primary);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-right: var(--space-sm);
+}
+
+.paper-note-content {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    line-height: var(--leading-normal);
+    color: var(--ink-secondary);
+}
+
+/* Warning/Important note */
+.paper-warning {
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    border-radius: 6px;
+    padding: var(--space-md) var(--space-lg);
+    margin: var(--space-lg) 0;
+}
+
+.paper-warning .paper-note-icon {
+    background: var(--accent-warm);
+}
+
+/* ============================================
+   SIDE NOTES / MARGIN NOTES
+   Academic paper style annotations
+   ============================================ */
+
+.paper-sidenote {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    line-height: var(--leading-normal);
+    color: var(--ink-muted);
+    margin: var(--space-sm) 0;
+    padding-left: var(--space-md);
+    border-left: 2px solid var(--border-light);
+}
+
+/* For desktop - actual margin placement */
+@media (min-width: 1200px) {
+    .paper-margin-note {
+        position: absolute;
+        right: -280px;
+        width: 240px;
+        font-family: var(--font-sans);
+        font-size: 0.8rem;
+        line-height: var(--leading-normal);
+        color: var(--ink-muted);
+        padding: var(--space-sm);
+        background: var(--paper-light);
+        border-radius: 4px;
+    }
+}
+
+/* ============================================
+   CITATIONS AND REFERENCES
+   ============================================ */
+
+.paper-cite {
+    font-family: var(--font-sans);
+    font-size: 0.85em;
+    color: var(--accent-primary);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--accent-primary);
+    transition: color 0.2s ease;
+}
+
+.paper-cite:hover {
+    color: var(--accent-secondary);
+}
+
+.paper-reference {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    line-height: var(--leading-relaxed);
+    color: var(--ink-secondary);
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.paper-reference:last-child {
+    border-bottom: none;
+}
+
+.paper-reference-number {
+    display: inline-block;
+    min-width: 2em;
+    color: var(--ink-muted);
+}
+
+/* ============================================
+   FIGURES AND CAPTIONS
+   ============================================ */
+
+.paper-figure {
+    margin: var(--space-2xl) 0;
+}
+
+.paper-figure img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.paper-figure figcaption {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    line-height: var(--leading-normal);
+    color: var(--ink-muted);
+    margin-top: var(--space-md);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--border-light);
+}
+
+.paper-figure figcaption strong {
+    color: var(--ink-secondary);
+}
+
+/* ============================================
+   CODE BLOCKS - Clean monospace
+   ============================================ */
+
+.paper-code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--paper-light);
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+    color: var(--ink-primary);
+}
+
+.paper-code-block {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    background: var(--paper-light);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    padding: var(--space-lg);
+    overflow-x: auto;
+    margin: var(--space-lg) 0;
+}
+
+/* ============================================
+   BUTTONS - Clean and minimal
+   ============================================ */
+
+.paper-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.paper-btn-primary {
+    background: var(--ink-primary);
+    color: white;
+    border: 1px solid var(--ink-primary);
+}
+
+.paper-btn-primary:hover {
+    background: var(--ink-secondary);
+    border-color: var(--ink-secondary);
+}
+
+.paper-btn-outline {
+    background: transparent;
+    color: var(--ink-primary);
+    border: 1px solid var(--border-medium);
+}
+
+.paper-btn-outline:hover {
+    background: var(--paper-light);
+    border-color: var(--ink-primary);
+}
+
+.paper-btn-ghost {
+    background: transparent;
+    color: var(--ink-secondary);
+    border: 1px solid transparent;
+}
+
+.paper-btn-ghost:hover {
+    background: var(--paper-light);
+    color: var(--ink-primary);
+}
+
+/* ============================================
+   TABLES - Clean academic style
+   ============================================ */
+
+.paper-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    margin: var(--space-xl) 0;
+}
+
+.paper-table th {
+    text-align: left;
+    font-weight: 600;
+    color: var(--ink-primary);
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 2px solid var(--ink-primary);
+}
+
+.paper-table td {
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-light);
+    color: var(--ink-secondary);
+}
+
+.paper-table tr:hover td {
+    background: var(--paper-light);
+}
+
+.paper-table caption {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    text-align: left;
+    margin-bottom: var(--space-sm);
+}
+
+/* ============================================
+   DIVIDERS AND SEPARATORS
+   ============================================ */
+
+.paper-divider {
+    border: none;
+    height: 1px;
+    background: var(--border-light);
+    margin: var(--space-2xl) 0;
+}
+
+.paper-divider-fancy {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border-medium), transparent);
+    margin: var(--space-2xl) 0;
+}
+
+/* ============================================
+   NAVIGATION - Clean breadcrumb style
+   ============================================ */
+
+.paper-nav {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid var(--border-light);
+    background: var(--paper-white);
+}
+
+.paper-nav a {
+    color: var(--ink-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.paper-nav a:hover {
+    color: var(--accent-primary);
+}
+
+.paper-nav-separator {
+    color: var(--ink-light);
+    margin: 0 var(--space-sm);
+}
+
+/* ============================================
+   HEADER STYLES - Light and professional
+   ============================================ */
+
+.paper-header {
+    background: linear-gradient(135deg, var(--paper-cream) 0%, var(--paper-white) 100%);
+    padding: var(--space-3xl) 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.paper-header-title {
+    font-family: var(--font-serif);
+    font-size: 2.75rem;
+    font-weight: 700;
+    line-height: var(--leading-tight);
+    color: var(--ink-primary);
+    margin-bottom: var(--space-md);
+    letter-spacing: -0.02em;
+}
+
+.paper-header-subtitle {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: var(--leading-tight);
+    color: var(--ink-secondary);
+    margin-bottom: var(--space-xl);
+}
+
+.paper-header-meta {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+}
+
+/* ============================================
+   AUTHOR BLOCK - Academic style
+   ============================================ */
+
+.paper-authors {
+    text-align: center;
+    padding: var(--space-xl) 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.paper-author {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--ink-primary);
+}
+
+.paper-author a {
+    color: var(--ink-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.paper-author a:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.paper-affiliation {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+    margin-top: var(--space-sm);
+}
+
+/* ============================================
+   ABSTRACT BOX
+   ============================================ */
+
+.paper-abstract {
+    background: var(--paper-light);
+    border-radius: 8px;
+    padding: var(--space-xl);
+    margin: var(--space-xl) 0;
+}
+
+.paper-abstract-label {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted);
+    margin-bottom: var(--space-md);
+}
+
+.paper-abstract-content {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: var(--leading-relaxed);
+    color: var(--ink-secondary);
+}
+
+/* ============================================
+   BIBTEX BOX
+   ============================================ */
+
+.paper-bibtex {
+    background: var(--paper-light);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    padding: var(--space-lg);
+    margin: var(--space-xl) 0;
+    position: relative;
+}
+
+.paper-bibtex pre {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--ink-secondary);
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.paper-bibtex-copy {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--paper-white);
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.paper-bibtex-copy:hover {
+    background: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+    :root {
+        --space-xl: 1.5rem;
+        --space-2xl: 2rem;
+        --space-3xl: 2.5rem;
+    }
+
+    .paper-h1, h1.paper {
+        font-size: 2rem;
+    }
+
+    .paper-h2, h2.paper {
+        font-size: 1.5rem;
+    }
+
+    .paper-header-title {
+        font-size: 2rem;
+    }
+
+    .paper-header-subtitle {
+        font-size: 1.25rem;
+    }
+
+    .paper-takeaway {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .paper-takeaway-number {
+        margin: 0 auto;
+    }
+}
+
+/* ============================================
+   DARK MODE SUPPORT (Optional)
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --paper-white: #1a1a1a;
+        --paper-cream: #1e1e1e;
+        --paper-light: #242424;
+        --paper-warm: #2a2a2a;
+
+        --ink-primary: #e5e5e5;
+        --ink-secondary: #b3b3b3;
+        --ink-muted: #8a8a8a;
+        --ink-light: #666666;
+
+        --border-light: #333333;
+        --border-medium: #444444;
+        --border-dark: #555555;
+    }
+}
+
+/* Explicit dark mode class */
+[data-theme="dark"] {
+    --paper-white: #1a1a1a;
+    --paper-cream: #1e1e1e;
+    --paper-light: #242424;
+    --paper-warm: #2a2a2a;
+
+    --ink-primary: #e5e5e5;
+    --ink-secondary: #b3b3b3;
+    --ink-muted: #8a8a8a;
+    --ink-light: #666666;
+
+    --border-light: #333333;
+    --border-medium: #444444;
+    --border-dark: #555555;
+}

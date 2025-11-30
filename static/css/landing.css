@@ -1,14 +1,16 @@
 :root {
-    /* Light mode colors */
+    /* Light mode colors - Paper theme */
     --paper: #FAFAFA;
     --ink: #ffffff;
     --gray: #6B7280;
     --light-gray: #444;
-    --text-primary: #141413;
-    --text-secondary: #6B7280;
-    --border-color: #666;
-    --card-border: #d1d5db;
-    --card-border-hover: #000;
+    --text-primary: #1a1a1a;
+    --text-secondary: #555;
+    --border-color: #e5e2dd;
+    --card-border: #e5e2dd;
+    --card-border-hover: #1a1a1a;
+    --accent-blue: #2563eb;
+    --accent-blue-hover: #1d4ed8;
 
     --color-book-cloth:#cc785c;
     --color-cactus:#bcd1ca;
@@ -43,6 +45,8 @@
     --border-color: #444;
     --card-border: #374151;
     --card-border-hover: #fff;
+    --accent-blue: #60a5fa;
+    --accent-blue-hover: #93c5fd;
 }
 
  body {
@@ -261,9 +265,10 @@ main {
     top: 20%;
     width: 4px;
     height: 55%;
-    background: linear-gradient(to bottom, #8A2BE2, #4169E1);
+    background: var(--accent-blue);
     opacity: 0;
     transition: opacity 0.3s ease;
+    border-radius: 2px;
 }
 
 .publication-card:hover::before {
@@ -407,4 +412,32 @@ main {
 .contact-button:hover {
     background-color: var(--text-primary);
     color: var(--paper);
+}
+
+/* Link styling */
+a {
+    color: var(--accent-blue);
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--accent-blue-hover);
+}
+
+/* Featured card link styling - override for cards */
+.featured-card,
+.publication-card a,
+.publication-card {
+    color: var(--text-primary);
+}
+
+/* Mission statement styling */
+.mission-statement h2 {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Article hover effect refinement */
+.publication-card:hover .article-title {
+    color: var(--accent-blue);
 }

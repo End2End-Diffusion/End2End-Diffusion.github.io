@@ -1,4 +1,18 @@
-/* Custom styles for iREPA project page */
+/* Custom styles for REPA-E-T2I project page */
+/* Layout provided by ../../../static/css/paper-layout.css */
+
+/* Override distill grid - use paper-layout content width */
+d-article {
+    display: block !important;
+    max-width: var(--layout-content-width, 1037px);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+d-article > * {
+    width: 100%;
+    max-width: 100%;
+}
 
 /* Jump to Sections - Icon Row (Cambrian style) */
 .icon-row {
@@ -17,23 +31,24 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: inherit;
+    color: #444;
     padding: 15px;
     margin: 10px;
-    border: 3px solid #508af6;
-    border-radius: 10px;
-    background-color: #d6eefb;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fff;
     flex: 1 1 150px;
     min-height: 110px;
     max-width: 180px;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     text-decoration: none;
 }
 
 .icon-link:hover {
-    background-color: #88c2fa;
+    background-color: #f8f8f8;
+    border-color: #2563eb;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(80, 138, 246, 0.3);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .icon-link .icon {
@@ -63,7 +78,7 @@
 }
 
 .click-hint strong {
-    color: #007bff;
+    color: #2563eb;
 }
 
 .click-hint img {
@@ -100,7 +115,7 @@
 
 .header-content .icon-item strong {
     font-weight: 600;
-    color: #F7CC4F;
+    color: #2563eb;
 }
 
 .header-content p {
@@ -270,12 +285,12 @@ d-figure figcaption {
 
 /* Finding box styling - minimalistic gray block for key findings */
 .finding-box {
-    background-color: rgba(240, 240, 240, 0.9); /* Soft gray background */
-    border: 1.2pt solid rgba(25, 25, 25, 0.6); /* Dark border */
-    border-radius: 10pt; /* Rounded corners */
-    padding: 2pt 10pt; /* Compact padding */
-    margin: 0.5em 0; /* Vertical spacing */
-    box-shadow: 2px 2px 4px rgba(128, 128, 128, 0.3); /* Subtle shadow */
+    background-color: rgba(240, 240, 240, 0.9);
+    border: 1.2pt solid rgba(25, 25, 25, 0.6);
+    border-radius: 10pt;
+    padding: 2pt 10pt;
+    margin: 0.5em 0;
+    box-shadow: 2px 2px 4px rgba(128, 128, 128, 0.3);
     box-sizing: border-box;
 }
 
@@ -296,12 +311,12 @@ d-figure figcaption {
 
 /* Configuration box styling - sidebar style with left accent */
 .config-box {
-    background-color: #fafbfc; /* Very light gray-blue background */
-    border-left: 4px solid #508af6; /* Blue accent bar on left */
+    background-color: #fafbfc;
+    border-left: 4px solid #508af6;
     border-radius: 4px;
     padding: 16px 20px;
     margin: 20px 0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Very subtle shadow */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .config-box p {
@@ -311,13 +326,13 @@ d-figure figcaption {
 }
 
 .config-box p strong {
-    color: #508af6; /* Match the accent color */
+    color: #508af6;
 }
 
 .config-box ul {
     margin: 0;
     padding-left: 20px;
-    list-style-type: none; /* Remove bullets for cleaner look */
+    list-style-type: none;
 }
 
 .config-box li {
@@ -448,7 +463,7 @@ d-figure figcaption {
     background-color: #f6f8fa;
     color: #24292f;
     padding: 16px;
-    padding-right: 45px; /* Space for copy icon */
+    padding-right: 45px;
     border: 1px solid #d0d7de;
     border-radius: 6px;
     overflow-x: auto;
@@ -608,4 +623,167 @@ code[class*="language-"] {
     .quickstart-example pre {
         font-size: 0.8em;
     }
+}
+
+/* ============================================
+   SIDENOTES - Academic paper style margin notes
+   ============================================ */
+
+/* Sidenote counter */
+body {
+    counter-reset: sidenote-counter;
+}
+
+/* Sidenote reference in text */
+.sidenote-ref {
+    counter-increment: sidenote-counter;
+    cursor: pointer;
+}
+
+.sidenote-ref::after {
+    content: counter(sidenote-counter);
+    font-size: 0.65em;
+    vertical-align: super;
+    color: #508af6;
+    font-weight: 600;
+    margin-left: 2px;
+}
+
+/* Sidenote content */
+.sidenote {
+    font-size: 0.85em;
+    line-height: 1.5;
+    color: #666;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-left: 3px solid #508af6;
+    margin: 12px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.sidenote::before {
+    content: counter(sidenote-counter) ". ";
+    font-weight: 600;
+    color: #508af6;
+}
+
+/* Desktop: sidenotes in margin */
+@media (min-width: 1200px) {
+    .sidenote {
+        position: absolute;
+        right: -280px;
+        width: 250px;
+        margin: 0;
+        background: transparent;
+        border-left: 2px solid #ddd;
+        padding: 0 0 0 12px;
+        border-radius: 0;
+    }
+
+    .sidenote::before {
+        content: counter(sidenote-counter) ". ";
+        font-weight: 600;
+        color: #888;
+    }
+}
+
+/* Author comment style sidenote (different from numbered) */
+.author-note {
+    font-size: 0.85em;
+    line-height: 1.5;
+    color: #666;
+    font-style: italic;
+    padding: 8px 12px;
+    background: #fff8e6;
+    border-left: 3px solid #f0ad4e;
+    margin: 12px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+@media (min-width: 1200px) {
+    .author-note {
+        position: absolute;
+        right: -280px;
+        width: 250px;
+        margin: 0;
+        background: transparent;
+        border-left: 2px solid #f0ad4e;
+        padding: 0 0 0 12px;
+        border-radius: 0;
+    }
+}
+
+/* ============================================
+   ENHANCED FINDING BOX - Paper style callout
+   ============================================ */
+
+/* Key finding highlight - with bookmark icon */
+.key-finding {
+    position: relative;
+    background: linear-gradient(to right, #f8f9fa 0%, #ffffff 100%);
+    border: 1px solid #e0e0e0;
+    border-left: 4px solid #2c5282;
+    border-radius: 0 8px 8px 0;
+    padding: 20px 24px 20px 20px;
+    margin: 24px 0;
+}
+
+.key-finding::before {
+    content: '🔖';
+    position: absolute;
+    top: -8px;
+    left: 12px;
+    font-size: 20px;
+}
+
+.key-finding-label {
+    font-size: 0.75em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #2c5282;
+    margin-bottom: 8px;
+}
+
+.key-finding-content {
+    font-size: 1.05em;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Quote-style highlight for important statements */
+.paper-quote {
+    position: relative;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin: 24px 0;
+    font-style: italic;
+}
+
+.paper-quote::before {
+    content: '"';
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    font-size: 48px;
+    color: #ddd;
+    font-family: Georgia, serif;
+    line-height: 1;
+}
+
+.paper-quote p {
+    margin: 0;
+    font-size: 1.1em;
+    line-height: 1.7;
+    color: #444;
+}
+
+.paper-quote cite {
+    display: block;
+    margin-top: 12px;
+    font-size: 0.9em;
+    font-style: normal;
+    color: #666;
+    text-align: right;
 }

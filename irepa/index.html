@@ -24,6 +24,11 @@
 
         <script defer="" src="./static/js/hider.js"></script>
 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="../static/css/paper-layout.css">
         <link rel="stylesheet" href="./static/css/style.css">
         <link rel="stylesheet" href="./static/css/custom.css">
         <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
@@ -41,18 +46,31 @@
         <script defer src="./static/js/zoom.js"></script>
     </head>
     <body>
-        <div style="background-color: #f8f8f8; border-bottom: 1px solid #ddd; padding: 15px 0; margin-bottom: 0;">
-            <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-                <a href="../index.html" style="color: #0E710E; text-decoration: none; font-size: 16px; font-weight: 500;">
-                    <i class="fas fa-arrow-left" style="margin-right: 8px;"></i>
-                    Back to End2End Diffusion
+
+        <!-- Sticky Table of Contents -->
+        <nav class="toc-container">
+            <h4>Contents</h4>
+            <ul>
+                <li><a href="#motivation">Global Matters Less</a></li>
+                <li><a href="#spatial-structure">Spatial Matters More</a></li>
+                <li><a href="#method">Accentuating What Matters</a></li>
+                <li><a href="#results">Results</a></li>
+                <li><a href="#conclusion">Conclusion</a></li>
+            </ul>
+        </nav>
+
+        <nav style="background-color: #fff; border-bottom: 1px solid #e5e5e5; padding: 12px 0;">
+            <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+                <a href="../index.html" style="color: #1a1a1a; text-decoration: none; font-size: 15px; font-weight: 500;">
+                    <i class="fas fa-arrow-left" style="margin-right: 8px; opacity: 0.5;"></i>
+                    End2End Diffusion
                 </a>
-                <span style="margin: 0 15px; color: #ccc;">|</span>
-                <a href="../repa-e/" style="color: #0E710E; text-decoration: none; font-size: 14px;">REPA-E</a>
-                <span style="margin: 0 8px; color: #ccc;">·</span>
-                <a href="../repa-e-t2i/" style="color: #0E710E; text-decoration: none; font-size: 14px;">REPA-E-T2I</a>
+                <div style="display: flex; gap: 20px;">
+                    <a href="../repa-e/" style="color: #666; text-decoration: none; font-size: 14px;">REPA-E</a>
+                    <a href="../repa-e-t2i/" style="color: #666; text-decoration: none; font-size: 14px;">REPA-E-T2I</a>
+                </div>
             </div>
-        </div>
+        </nav>
         <div class="header-wrapper">
             <div class="header-container" id="header-container">
                 <div class="header-content">
@@ -157,11 +175,31 @@
             </div>
         </div>
 
-        <p class="text">
-            Representation alignment (REPA) accelerates diffusion model training by distilling knowledge from pretrained vision encoders to intermediate diffusion features.
-            A fundamental question persists: what aspect of the target representation drives generation performance –
-            its <strong>global semantic information</strong> (measured by ImageNet-1K accuracy) or its <strong>spatial structure</strong> (pairwise similarity between patch tokens)?
-        </p>
+        <!-- Key Findings -->
+        <div class="key-findings">
+            <h4 class="key-findings-title">Key Findings</h4>
+            <div class="key-finding">
+                <span class="key-finding-number">1</span>
+                <p class="key-finding-text"><strong>Higher global information does not mean better REPA performance.</strong> Target representations with >60% higher ImageNet accuracy can underperform for generation.</p>
+            </div>
+            <div class="key-finding">
+                <span class="key-finding-number">2</span>
+                <p class="key-finding-text"><strong>Spatial structure shows higher correlation with generation quality.</strong> Spatial metrics achieve |r| > 0.85 correlation with FID, while ImageNet accuracy shows only |r| = 0.26.</p>
+            </div>
+            <div class="key-finding">
+                <span class="key-finding-number">3</span>
+                <p class="key-finding-text"><strong>Accentuating transfer of spatial information consistently improves convergence speed.</strong> Our simple method (iREPA) improves REPA across diverse encoders, model sizes, and training recipes.</p>
+            </div>
+        </div>
+
+        <div class="sidenote-container">
+            <p class="text">
+                Representation alignment (REPA) accelerates diffusion model training by distilling knowledge from pretrained vision encoders to intermediate diffusion features.
+                A fundamental question persists: what aspect of the target representation drives generation performance –
+                its <strong>global semantic information</strong> (measured by ImageNet-1K accuracy) or its <strong>spatial structure</strong> (pairwise similarity between patch tokens)?
+            </p>
+            <aside class="sidenote">REPA works by aligning intermediate diffusion features to external vision representations—but what property of those representations actually matters?</aside>
+        </div>
 
         <!-- REPA Quote Box -->
         <p class="text">
@@ -242,11 +280,14 @@
             </p>
 
             <h3 class="text">Trend 1: Recent Vision Encoders Show Inverse Patterns</h3>
-            <p class="text">
-                Recent vision encoders exhibit surprising inverse relationships between accuracy and generation quality.
-                PE-Core-G (1.88B params, 82.8% accuracy) performs worse than PE-Spatial-B (80M params, 53.1% accuracy) with FID 32.3 vs 21.0.
-                Similarly, WebSSL-1B (76.0% accuracy) underperforms PE-Spatial-B despite having 23% higher ImageNet accuracy, yielding FID 26.1 vs 21.0.
-            </p>
+            <div class="sidenote-container">
+                <p class="text">
+                    Recent vision encoders exhibit surprising inverse relationships between accuracy and generation quality.
+                    PE-Core-G (1.88B params, 82.8% accuracy) performs worse than PE-Spatial-B (80M params, 53.1% accuracy) with FID 32.3 vs 21.0.
+                    Similarly, WebSSL-1B (76.0% accuracy) underperforms PE-Spatial-B despite having 23% higher ImageNet accuracy, yielding FID 26.1 vs 21.0.
+                </p>
+                <aside class="sidenote">PE-Spatial models are explicitly trained to emphasize spatial structure—and this translates directly to better REPA performance.</aside>
+            </div>
 
             <d-figure id="fig-anecdotal" style="margin-top: 30px; margin-bottom: 30px;">
                 <figure style="display: flex; gap: 20px;">
@@ -275,12 +316,15 @@
             </p>
 
             <h3 class="text">Trend 4: Adding Global Information Actively Hurts Generation</h3>
-            <p class="text">
-                In controlled experiments mixing CLS tokens into patch representations (α ∈ [0, 0.5]),
-                linear probing accuracy improves from 70.7% to 78.5%.
-                Yet generation quality deteriorates significantly, with FID worsening from 19.2 to 25.4.
-                This proves that injecting global information actively harms generation performance.
-            </p>
+            <div class="sidenote-container">
+                <p class="text">
+                    In controlled experiments mixing CLS tokens into patch representations (α ∈ [0, 0.5]),
+                    linear probing accuracy improves from 70.7% to 78.5%.
+                    Yet generation quality deteriorates significantly, with FID worsening from 19.2 to 25.4.
+                    This proves that injecting global information actively harms generation performance.
+                </p>
+                <aside class="sidenote">This controlled experiment is key evidence: we can improve classification accuracy while hurting generation—proving they're decoupled.</aside>
+            </div>
 
             <d-figure id="fig-controlled" style="margin-top: 30px; margin-bottom: 30px;">
                 <figure>
@@ -311,9 +355,11 @@
                 </figcaption>
             </d-figure>
 
-            <p class="text" style="margin-top: 30px; font-style: italic;">
-                These trends cannot be explained by global accuracy. We next show that spatial structure provides a significantly better predictor of generation performance...
-            </p>
+            <div class="finding-box">
+                <ul>
+                    <li><strong>Finding 1:</strong> Higher global information (ImageNet accuracy) does not imply better REPA performance. Target representations with >60% higher accuracy can underperform for generation.</li>
+                </ul>
+            </div>
         </div>
 
         <hr>
@@ -323,10 +369,13 @@
             <h1 class="text">Spatial Structure Provides Better Signal</h1>
 
             <h3 class="text">Spatial structure correlates much higher with generation performance</h3>
-            <p class="text">
-                To quantify spatial structure, we measure the spatial self-similarity between patch tokens - essentially how similarity varies with spatial distance.
-                We perform large-scale correlation analysis across 27 diverse vision encoders.
-            </p>
+            <div class="sidenote-container">
+                <p class="text">
+                    To quantify spatial structure, we measure the spatial self-similarity between patch tokens - essentially how similarity varies with spatial distance.
+                    We perform large-scale correlation analysis across 27 diverse vision encoders.
+                </p>
+                <aside class="sidenote">We introduce simple metrics like LDS (Local Distance Similarity) that capture how token similarity varies with spatial proximity.</aside>
+            </div>
 
             <d-figure id="fig-correlation">
                 <figure>
@@ -391,6 +440,12 @@
                         </figcaption>
                     </figure>
                 </d-figure>
+            </div>
+
+            <div class="finding-box">
+                <ul>
+                    <li><strong>Finding 2:</strong> Spatial structure shows remarkably high correlation with generation quality (|r| > 0.85), while ImageNet accuracy shows poor correlation (|r| = 0.26).</li>
+                </ul>
             </div>
         </div>
 
@@ -469,6 +524,12 @@
                 Despite requiring less than 4 lines of code change, iREPA consistently improves convergence speed across diverse encoders (DINOv2, CLIP, WebSSL, PE-Core),
                 model sizes (SiT-B, SiT-L, SiT-XL), and training recipes including REPA-E and Meanflow with REPA.
             </p>
+
+            <div class="finding-box">
+                <ul>
+                    <li><strong>Finding 3:</strong> Accentuating transfer of spatial information from target representation to diffusion features consistently improves convergence speed across all tested settings.</li>
+                </ul>
+            </div>
         </div>
 
         <hr>
@@ -782,6 +843,25 @@
                 </p>
             </div>
 
+            <h3>References</h3>
+            <div style="font-size: 0.9em; line-height: 1.6; color: #444;">
+                <p style="margin-bottom: 8px; padding-left: 24px; text-indent: -24px;">
+                    [1] Yu, S., Sohn, K., Kim, S., & Shin, J. (2024). Representation alignment for generation: Training diffusion transformers is easier than you think. <em>arXiv preprint arXiv:2410.06940</em>.
+                </p>
+                <p style="margin-bottom: 8px; padding-left: 24px; text-indent: -24px;">
+                    [2] Peebles, W., & Xie, S. (2023). Scalable diffusion models with transformers. <em>ICCV</em>.
+                </p>
+                <p style="margin-bottom: 8px; padding-left: 24px; text-indent: -24px;">
+                    [3] Oquab, M., et al. (2023). DINOv2: Learning robust visual features without supervision. <em>arXiv preprint arXiv:2304.07193</em>.
+                </p>
+                <p style="margin-bottom: 8px; padding-left: 24px; text-indent: -24px;">
+                    [4] Ravi, N., et al. (2024). SAM 2: Segment anything in images and videos. <em>arXiv preprint arXiv:2408.00714</em>.
+                </p>
+                <p style="margin-bottom: 8px; padding-left: 24px; text-indent: -24px;">
+                    [5] Deng, J., Dong, W., Socher, R., Li, L.J., Li, K., & Fei-Fei, L. (2009). ImageNet: A large-scale hierarchical image database. <em>CVPR</em>.
+                </p>
+            </div>
+
             <d-footnote-list></d-footnote-list>
             <d-citation-list></d-citation-list>
         </d-appendix>
@@ -856,6 +936,49 @@
                     button.classList.remove('copied');
                 }, 2000);
             }
+        </script>
+
+        <!-- TOC scroll highlighting and visibility -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tocContainer = document.querySelector('.toc-container');
+            const tocLinks = document.querySelectorAll('.toc-container a');
+            const sections = ['motivation', 'spatial-structure', 'method', 'results', 'conclusion'];
+            const headerWrapper = document.querySelector('.header-wrapper');
+
+            function updateTOC() {
+                const scrollPos = window.scrollY;
+                const headerBottom = headerWrapper ? headerWrapper.offsetTop + headerWrapper.offsetHeight : 400;
+
+                // Show/hide TOC based on scroll position (hide in hero section)
+                if (scrollPos > headerBottom - 100) {
+                    tocContainer.classList.add('visible');
+                } else {
+                    tocContainer.classList.remove('visible');
+                }
+
+                // Update active link
+                let current = '';
+                const scrollPosForActive = scrollPos + 150;
+
+                sections.forEach(id => {
+                    const section = document.getElementById(id);
+                    if (section && scrollPosForActive >= section.offsetTop) {
+                        current = id;
+                    }
+                });
+
+                tocLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateTOC);
+            updateTOC();
+        });
         </script>
     </body>
 </html>
