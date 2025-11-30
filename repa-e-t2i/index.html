@@ -2,8 +2,7 @@
 <html lang="en">
     <head>
         <title>REPA-E for T2I: Family of end-to-end tuned VAEs for supercharging T2I diffusion transformers</title>
-        <link rel="icon" type="image/svg+xml" href="./static/img/icons/favicon.svg">
-        <link rel="alternate icon" href="./static/img/icons/jellyfish.ico">
+        <link rel="icon" type="image/png" href="../static/img/kitty.png">
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -54,6 +53,19 @@
         <script defer src="./static/js/tabs.js"></script>
     </head>
     <body>
+        <!-- Sticky Table of Contents -->
+        <nav class="toc-container">
+            <h4>Contents</h4>
+            <ul>
+                <li><a href="#quickstart">Quickstart</a></li>
+                <li><a href="#training">Training Recipe</a></li>
+                <li><a href="#quantitative">T2I Results</a></li>
+                <li><a href="#latent-analysis">Latent Analysis</a></li>
+                <li><a href="#imagenet">ImageNet</a></li>
+                <li><a href="#conclusion">Conclusion</a></li>
+            </ul>
+        </nav>
+
         <nav style="background-color: #fff; border-bottom: 1px solid #e5e5e5; padding: 12px 0;">
             <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
                 <a href="../index.html" style="color: #1a1a1a; text-decoration: none; font-size: 15px; font-weight: 500;">
@@ -186,9 +198,14 @@
 
         <hr style="width: 60%; margin: 20px auto; border: none; border-top: 1px solid #d0d0d0;">
 
+        <div class="sidenote-container">
+            <p class="text">
+                We present REPA-E for T2I, a family of End-to-End Tuned VAEs for supercharging text-to-image generation training.
+                End-to-end VAEs show superior performance across all benchmarks (COCO30k<d-cite key="coco30k"></d-cite>, DPG-Bench<d-cite key="dpgbench"></d-cite>, GenAI-Bench<d-cite key="genaibench"></d-cite>, GenEval<d-cite key="geneval"></d-cite>, MJHQ30k<d-cite key="mjhq30k"></d-cite>) without need for any additional representation alignment losses!
+            </p>
+            <aside class="sidenote">End-to-end tuned VAEs improve T2I generation without needing REPA's representation alignment losses during training.</aside>
+        </div>
         <p class="text">
-            We present REPA-E for T2I, a family of End-to-End Tuned VAEs for supercharging text-to-image generation training.
-            End-to-end VAEs show superior performance across all benchmarks (COCO30k<d-cite key="coco30k"></d-cite>, DPG-Bench<d-cite key="dpgbench"></d-cite>, GenAI-Bench<d-cite key="genaibench"></d-cite>, GenEval<d-cite key="geneval"></d-cite>, MJHQ30k<d-cite key="mjhq30k"></d-cite>) without need for any additional representation alignment losses!
             <!-- Beyond T2I improvements, we show that end-to-end tuning enhances latent space structure and maintains strong ImageNet<d-cite key="imagenet"></d-cite> generalization. -->
         <!-- </p>
 
@@ -509,13 +526,16 @@ with torch.no_grad():
         <div class="method-block" id="training">
             <h1 class="text">End-to-End VAE Training Recipe and T2I Setup</h1>
 
-            <p class="text">
-                We perform end-to-end tuning on ImageNet 256×256 <d-cite key="imagenet"></d-cite> to obtain end-to-end tuned encoders for popular VAE families like FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>. 
-                We then compare the performance of obtained end-to-end tuned VAEs with the standard VAEs (e.g, Flux-VAE) for text-to-image (T2I) generation tasks.
-                <!-- Before moving on to text-to-image generation tasks, we first perform end-to-end tuning to VAEs.
-                We use the official REPA-E<d-cite key="leng2025repa"></d-cite> implementation with the same hyperparameter as the original paper, except for the learning rate.
-                Since we are fine-tuning already high-quality VAEs (FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>), we opt for a smaller learning rate at 2×10<sup>-5</sup>. -->
-            </p>
+            <div class="sidenote-container">
+                <p class="text">
+                    We perform end-to-end tuning on ImageNet 256×256 <d-cite key="imagenet"></d-cite> to obtain end-to-end tuned encoders for popular VAE families like FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>.
+                    We then compare the performance of obtained end-to-end tuned VAEs with the standard VAEs (e.g, Flux-VAE) for text-to-image (T2I) generation tasks.
+                    <!-- Before moving on to text-to-image generation tasks, we first perform end-to-end tuning to VAEs.
+                    We use the official REPA-E<d-cite key="leng2025repa"></d-cite> implementation with the same hyperparameter as the original paper, except for the learning rate.
+                    Since we are fine-tuning already high-quality VAEs (FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>), we opt for a smaller learning rate at 2×10<sup>-5</sup>. -->
+                </p>
+                <aside class="sidenote">The key insight is that VAEs optimized only for reconstruction may not produce optimal latent spaces for generation.</aside>
+            </div>
             
             <p class="text">
                 <strong>End-to-End VAE Tuning on ImageNet 256×256.</strong> We follow the same training recipe as the original REPA-E<d-cite key="leng2025repa"></d-cite> paper, for end-to-end tuning on ImageNet 256×256.
@@ -616,10 +636,13 @@ with torch.no_grad():
                 </ul>
             </div> -->
 
-            <p class="text">
-                We compare training with original VAEs (FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>) against their end-to-end tuned counterparts across multiple evaluation benchmarks.
-                End-to-End Tuned VAEs consistently achieve better performance across all metrics, with improvements particularly pronounced on vision-centric benchmarks like MJHQ-30K<d-cite key="mjhq30k"></d-cite> and GenEval<d-cite key="geneval"></d-cite>.
-            </p>
+            <div class="sidenote-container">
+                <p class="text">
+                    We compare training with original VAEs (FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>) against their end-to-end tuned counterparts across multiple evaluation benchmarks.
+                    End-to-End Tuned VAEs consistently achieve better performance across all metrics, with improvements particularly pronounced on vision-centric benchmarks like MJHQ-30K<d-cite key="mjhq30k"></d-cite> and GenEval<d-cite key="geneval"></d-cite>.
+                </p>
+                <aside class="sidenote">MJHQ-30K focuses on visual quality while GenEval measures compositional understanding.</aside>
+            </div>
 
             <d-figure id="fig-convergence-100k" style="margin-top: 30px; margin-bottom: 30px;">
                 <figure>
@@ -1266,6 +1289,49 @@ with torch.no_grad():
                     button.classList.remove('copied');
                 }, 2000);
             }
+        </script>
+
+        <!-- TOC scroll highlighting and visibility -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tocContainer = document.querySelector('.toc-container');
+            const tocLinks = document.querySelectorAll('.toc-container a');
+            const sections = ['quickstart', 'training', 'quantitative', 'latent-analysis', 'imagenet', 'conclusion'];
+            const headerWrapper = document.querySelector('.header-wrapper');
+
+            function updateTOC() {
+                const scrollPos = window.scrollY;
+                const headerBottom = headerWrapper ? headerWrapper.offsetTop + headerWrapper.offsetHeight : 400;
+
+                // Show/hide TOC based on scroll position
+                if (scrollPos > headerBottom - 100) {
+                    tocContainer.classList.add('visible');
+                } else {
+                    tocContainer.classList.remove('visible');
+                }
+
+                // Update active link
+                let current = '';
+                const scrollPosForActive = scrollPos + 150;
+
+                sections.forEach(id => {
+                    const section = document.getElementById(id);
+                    if (section && scrollPosForActive >= section.offsetTop) {
+                        current = id;
+                    }
+                });
+
+                tocLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateTOC);
+            updateTOC();
+        });
         </script>
     </body>
 </html>
