@@ -136,10 +136,9 @@
             <ul>
                 <li><a href="#quickstart">Quickstart</a></li>
                 <li><a href="#overview">Overview</a></li>
-                <li><a href="#accelerated-performance">Accelerated Performance</a></li>
-                <li><a href="#improved-latent-space">Improved Latent Space</a></li>
-                <li><a href="#drop-in-replacements">Drop-in Replacements</a></li>
-                <li><a href="#from-scratch">From-Scratch Training</a></li>
+                <li><a href="#accelerated-performance">E2E Leads to Faster Training</a></li>
+                <li><a href="#improved-latent-space">E2E Leads to Improved Latent Space</a></li>
+                <li><a href="#drop-in-replacements">E2E VAEs are Better than Regular VAEs</a></li>
                 <li><a href="#conclusion">Conclusion</a></li>
             </ul>
         </nav>
@@ -570,10 +569,9 @@ with torch.no_grad():
             </p>
 
             <ol class="text">
-                <li><strong><a href="#accelerated-performance">Accelerated Generation Performance</a></strong>: REPA-E significantly speeds up diffusion training by over 17× and 45× compared to REPA and vanilla training recipes, respectively.</li>
-                <li><strong><a href="#improved-latent-space">Improved VAE Latent-Space Structure</a></strong>: Joint tuning adaptively enhances latent space structure across different VAE architectures.</li>
-                <li><strong><a href="#drop-in-replacements">Superior Drop-in VAE Replacements</a></strong>: The resulting E2E-VAE serves as a drop-in replacement, improving convergence and generation quality across diverse LDM architectures.</li>
-                <li><strong><a href="#from-scratch">Effective From-Scratch Training</a></strong>: REPA-E enables joint training of both VAE and LDM from scratch, achieving superior performance.</li>
+                <li><strong><a href="#accelerated-performance">E2E Leads to Faster Training</a></strong>: REPA-E significantly speeds up diffusion training by over 17× and 45× compared to REPA and vanilla training recipes, respectively.</li>
+                <li><strong><a href="#improved-latent-space">E2E Leads to Improved Latent Space</a></strong>: Joint tuning adaptively enhances latent space structure across different VAE architectures.</li>
+                <li><strong><a href="#drop-in-replacements">E2E VAEs are Better than Regular VAEs</a></strong>: The resulting E2E-VAE serves as a drop-in replacement, improving convergence and generation quality across diverse LDM architectures. REPA-E also enables joint training of both VAE and LDM from scratch.</li>
             </ol>
 
             <div class="finding-box">
@@ -587,7 +585,7 @@ with torch.no_grad():
 
         <!-- Accelerated Performance Section -->
         <div id="accelerated-performance" class="results-block">
-            <h1 class="text">1. Accelerated Generation Performance</h1>
+            <h1 class="text">1. E2E Leads to Faster Training</h1>
 
             <div class="sidenote-container">
                 <p class="text">
@@ -856,7 +854,7 @@ with torch.no_grad():
 
         <!-- Improved Latent Space Section -->
         <div id="improved-latent-space" class="results-block">
-            <h1 class="text">2. Improved VAE Latent-Space Structure</h1>
+            <h1 class="text">2. E2E Leads to Improved Latent Space</h1>
 
             <div class="sidenote-container">
                 <p class="text">
@@ -896,7 +894,7 @@ with torch.no_grad():
 
         <!-- Drop-in Replacements Section -->
         <div id="drop-in-replacements" class="results-block">
-            <h1 class="text">3. Superior Drop-in VAE Replacements</h1>
+            <h1 class="text">3. E2E VAEs are Better than Regular VAEs</h1>
 
             <div class="sidenote-container">
                 <p class="text">
@@ -922,25 +920,12 @@ with torch.no_grad():
                 </figure>
             </d-figure>
 
-            <div class="finding-box">
-                <ul>
-                    <li><strong>Finding 3:</strong> E2E-VAE serves as a universal drop-in replacement, achieving SOTA FID of 1.12 (w/ CFG) and 1.69 (w/o CFG) across diverse diffusion architectures.</li>
-                </ul>
-            </div>
-        </div>
+            <!-- From-Scratch Training Subsection -->
+            <h3 class="text" id="from-scratch">From-Scratch Training</h3>
 
-        <hr>
-
-        <!-- From-Scratch Training Section -->
-        <div id="from-scratch" class="results-block">
-            <h1 class="text">4. Effective From-Scratch Training</h1>
-
-            <div class="sidenote-container">
-                <p class="text">
-                    REPA-E enables effective joint training of both VAE and LDM from scratch, eliminating the need for separate VAE pre-training while still achieving superior performance compared to traditional approaches.
-                </p>
-                <aside class="sidenote">From-scratch training opens new possibilities for joint architecture optimization and task-specific VAE design.</aside>
-            </div>
+            <p class="text">
+                REPA-E enables effective joint training of both VAE and LDM from scratch, eliminating the need for separate VAE pre-training while still achieving superior performance compared to traditional approaches.
+            </p>
 
             <ul class="text">
                 <li><strong>End-to-end training from scratch:</strong> REPA-E can jointly train both VAE and LDM from scratch in an end-to-end manner, without requiring VAE pre-training</li>
@@ -1049,7 +1034,7 @@ with torch.no_grad():
 
             <div class="finding-box">
                 <ul>
-                    <li><strong>Finding 4:</strong> REPA-E enables effective from-scratch joint training of VAE and LDM, achieving gFID 4.34 vs REPA's 7.90 at 80 epochs without requiring VAE pre-training.</li>
+                    <li><strong>Finding 3:</strong> E2E-VAE serves as a universal drop-in replacement, achieving SOTA FID of 1.12 (w/ CFG) and 1.69 (w/o CFG) across diverse diffusion architectures.</li>
                 </ul>
             </div>
         </div>
@@ -1068,7 +1053,6 @@ with torch.no_grad():
                 <li>End-to-end training with REPA loss achieves <strong>17× speedup</strong> over REPA and <strong>45× speedup</strong> over vanilla training</li>
                 <li>Joint training adaptively improves VAE latent space structure across different architectures</li>
                 <li>E2E-VAE serves as a superior drop-in replacement, achieving <strong>SOTA FID of 1.12</strong> on ImageNet 256×256</li>
-                <li>The approach enables effective from-scratch training without requiring separate VAE pre-training</li>
             </ol>
 
             <p class="text">
@@ -1164,7 +1148,7 @@ function fallbackCopy(text, btn) {
 document.addEventListener('DOMContentLoaded', function() {
     const tocContainer = document.querySelector('.toc-container');
     const tocLinks = document.querySelectorAll('.toc-container a');
-    const sections = ['quickstart', 'overview', 'accelerated-performance', 'improved-latent-space', 'drop-in-replacements', 'from-scratch', 'conclusion'];
+    const sections = ['quickstart', 'overview', 'accelerated-performance', 'improved-latent-space', 'drop-in-replacements', 'conclusion'];
 
     function updateTOC() {
         const scrollPos = window.scrollY;
