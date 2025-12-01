@@ -10,7 +10,7 @@
     <!-- Open Graph -->
     <meta property="og:url" content="https://end2end-diffusion.github.io/" />
     <meta property="og:title" content="End2End Diffusion" />
-    <meta property="og:description" content="Advancing Visual Representation Learning Through End-to-End Diffusion Models" />
+    <meta property="og:description" content="Advancing Visual Representation and Generation Through End-to-End Training" />
     <meta property="og:image" content="https://end2end-diffusion.github.io/repa-e/assets/a-overview-v4.webp" />
     <meta property="og:type" content="website" />
 
@@ -18,7 +18,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://end2end-diffusion.github.io/" />
     <meta name="twitter:title" content="End2End Diffusion" />
-    <meta name="twitter:description" content="Advancing Visual Representation Learning Through End-to-End Diffusion Models" />
+    <meta name="twitter:description" content="Advancing Visual Representation and Generation Through End-to-End Training" />
     <meta name="twitter:image" content="https://end2end-diffusion.github.io/repa-e/assets/a-overview-v4.webp" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -59,20 +59,20 @@
             </div>
         </header>
         <div class="mission-statement">
-            <h2 class="font-styrene text-4xl font-bold mb-4">Advancing Visual Representation Learning Through End-to-End Diffusion Models</h2>
-            <p class="text-base mt-4 line-height-relaxed" style="color: var(--text-secondary);">We explore how end-to-end diffusion models can learn powerful visual representations without requiring pre-trained encoders. Our research demonstrates that jointly learning the encoder and decoder leads to better generalization, improved efficiency, and more robust visual understanding across diverse tasks.</p>
+            <h2 class="font-styrene text-4xl font-bold mb-4">Advancing Visual Representation and Generation Through End-to-End Training</h2>
+            <p class="text-base mt-4 line-height-relaxed" style="color: var(--text-secondary);">End-to-end training is the keystone of modern deep learning. However, diffusion training remains two-stage: stage 1 for representation (VAE/RAE) and stage 2 for generation (DiT/SiT/JiT). Our mission is to enable end-to-end training for both visual representation and generation: allowing both representations and generative models to be advanced together in an end-to-end manner.</p>
         </div>
 
         <section class="featured-banners">
             <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                 <a href="repa-e/" class="featured-card md:col-span-6 bg-book-cloth">
-                    <img src="repa-e/assets/a-overview-v4.webp" alt="REPA-E" onerror="this.src='https://placehold.co/800x400/cc785c/ffffff?text=REPA-E'; this.onerror=null;">
+                    <img src="repa-e/assets/viz-results-v4.webp" alt="REPA-E" onerror="this.src='https://placehold.co/800x400/cc785c/ffffff?text=REPA-E'; this.onerror=null;">
                     <div class="text-container">
                         <h3 class="featured-title">REPA-E</h3>
                     </div>
                 </a>
                 <a href="repa-e-t2i/" class="featured-card md:col-span-4 bg-cloud-light">
-                    <img src="repa-e-t2i/hero-v1.png" alt="REPA-E-T2I" onerror="this.src='https://placehold.co/400x400/d1cfc5/ffffff?text=REPA-E-T2I'; this.onerror=null;">
+                    <img src="repa-e-t2i/e2e-v2.png" alt="REPA-E-T2I" onerror="this.src='https://placehold.co/400x400/d1cfc5/ffffff?text=REPA-E-T2I'; this.onerror=null;">
                     <div class="text-container">
                         <h3 class="featured-title">REPA-E for T2I</h3>
                     </div>
@@ -80,7 +80,7 @@
                 <a href="irepa/" class="featured-card md:col-span-10 bg-manilla">
                     <img src="irepa/hero-v5.png" alt="iREPA" onerror="this.src='https://placehold.co/1200x400/ebdbbc/ffffff?text=iREPA'; this.onerror=null;">
                     <div class="text-container">
-                        <h3 class="featured-title">iREPA: What Matters for Representation Alignment</h3>
+                        <h3 class="featured-title">What Matters for Representation Alignment</h3>
                     </div>
                 </a>
             </div>
@@ -197,6 +197,30 @@
                                 </div>
                                 <div class="article-description">
                                     <p class="article-desc">Training and evaluation code for REPA-E models</p>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+
+                    <article data-category="model" data-title="e2e-vaes family of end-to-end tuned vaes">
+                        <a href="https://huggingface.co/REPA-E" target="_blank" class="publication-card block">
+                            <div class="article-container">
+                                <div class="article-category">
+                                    <div class="flex items-center">
+                                        <div class="article-icon w-5 h-5 text-gray-700 mr-2 shrink-0">
+                                            <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face logo" class="icon-small">
+                                        </div>
+                                        <span class="category-label">Model</span>
+                                    </div>
+                                </div>
+                                <div class="article-title-cell">
+                                    <h3 class="article-title">E2E-VAEs</h3>
+                                </div>
+                                <div class="article-date">
+                                    <span class="date-label">2025</span>
+                                </div>
+                                <div class="article-description">
+                                    <p class="article-desc">Family of end-to-end models for supercharging T2I training</p>
                                 </div>
                             </div>
                         </a>
