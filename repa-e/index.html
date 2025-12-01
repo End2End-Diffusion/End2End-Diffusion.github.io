@@ -603,7 +603,7 @@ with torch.no_grad():
             <!-- Table 1: Main Comparison -->
             <div class="table-container" style="margin: 30px auto; max-width: 700px;">
                 <table class="data-table" style="width: 100%; font-size: 0.9em;">
-                    <caption style="margin-bottom: 10px;">Comparison of methods with and without end-to-end tuning</caption>
+                    <caption style="margin-bottom: 10px; color: #555;">Comparison of methods with and without end-to-end tuning</caption>
                     <thead>
                         <tr>
                             <th style="text-align: left;">Method</th>
@@ -703,7 +703,7 @@ with torch.no_grad():
             <!-- Table 2: Diff. Model Comparison -->
             <div class="table-container" style="margin: 30px auto; max-width: 700px;">
                 <table class="data-table" style="width: 100%; font-size: 0.9em;">
-                    <caption style="margin-bottom: 10px;">Scalability across diffusion model sizes</caption>
+                    <caption style="margin-bottom: 10px; color: #555;">Scalability across diffusion model sizes</caption>
                     <thead>
                         <tr>
                             <th style="text-align: left;">Diff. Model</th>
@@ -770,7 +770,7 @@ with torch.no_grad():
             <!-- Table 3: Autoencoder Comparison -->
             <div class="table-container" style="margin: 30px auto; max-width: 700px;">
                 <table class="data-table" style="width: 100%; font-size: 0.9em;">
-                    <caption style="margin-bottom: 10px;">Generalization across different VAE architectures</caption>
+                    <caption style="margin-bottom: 10px; color: #555;">Generalization across different VAE architectures</caption>
                     <thead>
                         <tr>
                             <th style="text-align: left;">Autoencoder</th>
@@ -910,14 +910,112 @@ with torch.no_grad():
                 <li><strong>Architecture-robust performance:</strong> E2E-VAE maintains strong generation quality across diffusion models with and without REPA</li>
             </ul>
 
-            <d-figure id="fig-dropin">
+            <!-- <d-figure id="fig-dropin">
                 <figure>
                     <img data-zoomable="" draggable="false" src="assets/e2e-vae-eval.webp" alt="Drop-in VAE Performance Comparison">
                     <figcaption>
                         <strong>E2E-VAE as drop-in replacement.</strong> Comparison showing E2E-VAE delivers consistent improvements across different diffusion architectures.
                     </figcaption>
                 </figure>
-            </d-figure>
+            </d-figure> -->
+            <div class="table-container" style="margin: 30px auto; max-width: 600px;">
+                <table class="data-table" style="width: 100%; font-size: 0.9em;">
+                    <caption style="margin-bottom: 10px; color: #555;">
+                        <strong>E2E-VAE as drop-in replacement.</strong> Comparison showing E2E-VAE delivers consistent improvements across different diffusion architectures.
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th style="text-align: left;">VAE</th>
+                            <th style="text-align: left;">Diffusion model</th>
+                            <th style="text-align: center;">REPA</th>
+                            <th style="text-align: center;">gFID-50K</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: left;">SD-VAE [39]</td>
+                            <td style="text-align: left;">DiT-XL [34]</td>
+                            <td style="text-align: center;">&#10007;</td>
+                            <td style="text-align: center;">19.82</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">VA-VAE [48]</td>
+                            <td style="text-align: left;">DiT-XL [34]</td>
+                            <td style="text-align: center;">&#10007;</td>
+                            <td style="text-align: center;"><strong>6.74</strong></td>
+                        </tr>
+                        <tr class="highlight-green">
+                            <td style="text-align: left;"><strong>E2E-VAE (Ours)</strong></td>
+                            <td style="text-align: left;">DiT-XL [34]</td>
+                            <td style="text-align: center;">&#10007;</td>
+                            <td style="text-align: center;">6.75</td>
+                        </tr>
+                        <tr class="highlight-gray">
+                            <td colspan="4"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">SD-VAE [39]</td>
+                            <td style="text-align: left;">SiT-XL [30]</td>
+                            <td style="text-align: center;">&#10007;</td>
+                            <td style="text-align: center;">17.20</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">VA-VAE [48]</td>
+                            <td style="text-align: left;">SiT-XL [30]</td>
+                            <td style="text-align: center;">&#10007;</td>
+                            <td style="text-align: center;">5.93</td>
+                        </tr>
+                        <tr class="highlight-green">
+                            <td style="text-align: left;"><strong>E2E-VAE (Ours)</strong></td>
+                            <td style="text-align: left;">SiT-XL [30]</td>
+                            <td style="text-align: center;">&#10007;</td>
+                            <td style="text-align: center;"><strong>5.26</strong></td>
+                        </tr>
+                        <tr class="highlight-gray">
+                            <td colspan="4"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">SD-VAE [39]</td>
+                            <td style="text-align: left;">DiT-XL [34]</td>
+                            <td style="text-align: center;">&#10003;</td>
+                            <td style="text-align: center;">12.29</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">VA-VAE [48]</td>
+                            <td style="text-align: left;">DiT-XL [34]</td>
+                            <td style="text-align: center;">&#10003;</td>
+                            <td style="text-align: center;">4.71</td>
+                        </tr>
+                        <tr class="highlight-green">
+                            <td style="text-align: left;"><strong>E2E-VAE (Ours)</strong></td>
+                            <td style="text-align: left;">DiT-XL [34]</td>
+                            <td style="text-align: center;">&#10003;</td>
+                            <td style="text-align: center;"><strong>4.20</strong></td>
+                        </tr>
+                        <tr class="highlight-gray">
+                            <td colspan="4"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">SD-VAE [39]</td>
+                            <td style="text-align: left;">SiT-XL [30]</td>
+                            <td style="text-align: center;">&#10003;</td>
+                            <td style="text-align: center;">7.90</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">VA-VAE [48]</td>
+                            <td style="text-align: left;">SiT-XL [30]</td>
+                            <td style="text-align: center;">&#10003;</td>
+                            <td style="text-align: center;">4.88</td>
+                        </tr>
+                        <tr class="highlight-green">
+                            <td style="text-align: left;"><strong>E2E-VAE (Ours)</strong></td>
+                            <td style="text-align: left;">SiT-XL [30]</td>
+                            <td style="text-align: center;">&#10003;</td>
+                            <td style="text-align: center;"><strong>3.46</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <!-- From-Scratch Training Subsection -->
             <h3 class="text" id="from-scratch">From-Scratch Training</h3>
@@ -934,7 +1032,7 @@ with torch.no_grad():
             <!-- From-Scratch Training Table -->
             <div style="margin: 30px auto; max-width: 600px;">
                 <table class="data-table" style="width: 100%; font-size: 0.9em;">
-                    <caption style="margin-bottom: 10px;">From-scratch training results. REPA-E enables effective joint training without VAE pre-training.</caption>
+                    <caption style="margin-bottom: 10px; color: #555;">From-scratch training results. REPA-E enables effective joint training without VAE pre-training.</caption>
                     <thead>
                         <tr>
                             <th style="text-align: left;">Method</th>
