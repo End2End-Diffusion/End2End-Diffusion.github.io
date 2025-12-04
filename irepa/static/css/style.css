@@ -1,10 +1,4 @@
-body {
-  font-family: 'Bitstream Charter', 'Charter', Georgia, serif;
-  font-size: 18px;
-  line-height: 1.75;
-  background-color: #ffffff;
-  color: #1a1a1a;
-}
+/* Font, colors, and base styles inherited from paper-layout.css */
 
 .header-wrapper {
     /* Light paper-like header with subtle warm gradient */

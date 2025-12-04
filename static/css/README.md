@@ -70,10 +70,18 @@ Customize these in your project CSS if needed:
 
 ```css
 :root {
+    /* Layout */
     --layout-toc-width: 180px;
-    --layout-content-width: 1037px;
+    --layout-content-width: 864px;
     --layout-sidenote-width: 220px;
     --layout-gap: 40px;
+
+    /* Typography */
+    --font-serif: 'Bitstream Charter', 'Charter', Georgia, serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --text-base: 18px;
+
+    /* Colors */
     --bg-page: #ffffff;
     --text-primary: #1a1a1a;
     --text-muted: #666;
@@ -81,6 +89,8 @@ Customize these in your project CSS if needed:
     --border-light: #e5e5e5;
 }
 ```
+
+**Font**: The template uses Bitstream Charter / Charter - a classic academic serif font (system font, no external loading required).
 
 ---
 
