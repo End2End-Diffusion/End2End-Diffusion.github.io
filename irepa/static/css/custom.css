@@ -360,7 +360,7 @@ html {
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: #333;
+        color: #1a1a1a;
         margin: 0 0 12px 0;
     }
 
@@ -375,7 +375,7 @@ html {
     }
 
     .toc-container a {
-        color: #444;
+        color: #1a1a1a;
         text-decoration: none;
         transition: color 0.2s ease;
     }
