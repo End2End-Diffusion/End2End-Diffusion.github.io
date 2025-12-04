@@ -221,6 +221,82 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 ```
 
+### Listen to Article Button
+
+Text-to-speech button using the browser's Web Speech API (no external dependencies):
+
+```html
+<button class="listen-button" id="listen-btn">
+    <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    <span class="listen-text">Listen to article</span>
+</button>
+```
+
+**Required JavaScript** (add before closing `</body>` tag):
+
+```javascript
+// Listen to Article - Text-to-Speech
+(function() {
+    const btn = document.getElementById('listen-btn');
+    if (!btn || !('speechSynthesis' in window)) {
+        if (btn) btn.style.display = 'none';
+        return;
+    }
+
+    const synth = window.speechSynthesis;
+    let utterance = null;
+    let isPlaying = false;
+
+    // Get article text (adjust selector as needed)
+    function getArticleText() {
+        const article = document.querySelector('d-article') || document.querySelector('.paper-content') || document.querySelector('article');
+        if (!article) return '';
+
+        // Clone and remove elements we don't want read
+        const clone = article.cloneNode(true);
+        clone.querySelectorAll('script, style, .toc-container, .sidenote, figcaption, .citation').forEach(el => el.remove());
+        return clone.textContent.replace(/\s+/g, ' ').trim();
+    }
+
+    btn.addEventListener('click', function() {
+        if (isPlaying) {
+            synth.cancel();
+            isPlaying = false;
+            btn.classList.remove('playing');
+            btn.querySelector('.listen-text').textContent = 'Listen to article';
+        } else {
+            const text = getArticleText();
+            if (!text) return;
+
+            utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 1.0;
+            utterance.pitch = 1.0;
+
+            // Try to use a good voice
+            const voices = synth.getVoices();
+            const preferred = voices.find(v => v.name.includes('Samantha') || v.name.includes('Google') || v.name.includes('Natural'));
+            if (preferred) utterance.voice = preferred;
+
+            utterance.onend = function() {
+                isPlaying = false;
+                btn.classList.remove('playing');
+                btn.querySelector('.listen-text').textContent = 'Listen to article';
+            };
+
+            synth.speak(utterance);
+            isPlaying = true;
+            btn.classList.add('playing');
+            btn.querySelector('.listen-text').textContent = 'Stop';
+        }
+    });
+})();
+```
+
+**Placement**: Put the button after the byline/author info section, before the main content.
+
+**Note**: Voice quality depends on the user's browser and operating system. Works offline, no API costs.
+
 ---
 
 ## Design Principles

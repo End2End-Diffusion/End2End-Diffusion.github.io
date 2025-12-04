@@ -171,6 +171,31 @@
                 <p style="text-align: center; margin-bottom: 0;">
                     <span class="author-note"><sup>*</sup>Done during internship at Adobe Research</span>
                 </p>
+
+                <!-- Audio Player -->
+                <div style="margin-top: 20px;">
+                    <div class="audio-player" id="audio-player">
+                        <button class="audio-player-btn" id="audio-play-btn">
+                            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        </button>
+                        <div class="audio-player-progress">
+                            <div class="audio-player-bar" id="audio-bar">
+                                <div class="audio-player-bar-fill" id="audio-bar-fill"></div>
+                            </div>
+                            <div class="audio-player-time">
+                                <span id="audio-current">0:00</span>
+                                <span id="audio-duration">--:--</span>
+                            </div>
+                        </div>
+                        <div class="audio-player-controls">
+                            <button class="audio-player-speed" id="audio-speed">1x</button>
+                            <button class="audio-player-share" id="audio-share" title="Share">
+                                <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -978,6 +1003,159 @@
             window.addEventListener('scroll', updateTOC);
             updateTOC();
         });
+        </script>
+
+        <!-- Audio Player - Text-to-Speech -->
+        <script>
+        (function() {
+            const player = document.getElementById('audio-player');
+            const playBtn = document.getElementById('audio-play-btn');
+            const speedBtn = document.getElementById('audio-speed');
+            const shareBtn = document.getElementById('audio-share');
+            const barFill = document.getElementById('audio-bar-fill');
+            const bar = document.getElementById('audio-bar');
+            const currentTime = document.getElementById('audio-current');
+            const durationEl = document.getElementById('audio-duration');
+
+            if (!player || !('speechSynthesis' in window)) {
+                if (player) player.style.display = 'none';
+                return;
+            }
+
+            const synth = window.speechSynthesis;
+            let utterance = null;
+            let isPlaying = false;
+            let speed = 1.0;
+            const speeds = [0.5, 0.75, 1, 1.25, 1.5, 2];
+            let speedIndex = 2;
+            let startTime = 0;
+            let estimatedDuration = 0;
+            let progressInterval = null;
+
+            // Get article text
+            function getArticleText() {
+                const article = document.querySelector('d-article');
+                if (!article) return '';
+                const clone = article.cloneNode(true);
+                clone.querySelectorAll('script, style, .toc-container, .sidenote, figcaption, .citation, .byline, .key-findings, .finding-box, .button-container, .icon-row, .audio-player').forEach(el => el.remove());
+                return clone.textContent.replace(/\s+/g, ' ').trim();
+            }
+
+            // Format time as m:ss
+            function formatTime(seconds) {
+                const m = Math.floor(seconds / 60);
+                const s = Math.floor(seconds % 60);
+                return m + ':' + (s < 10 ? '0' : '') + s;
+            }
+
+            // Estimate reading duration (average 150 words per minute at 1x)
+            function estimateDuration(text, rate) {
+                const words = text.split(/\s+/).length;
+                return (words / 150) * 60 / rate;
+            }
+
+            // Update progress bar
+            function updateProgress() {
+                if (!isPlaying) return;
+                const elapsed = (Date.now() - startTime) / 1000;
+                const progress = Math.min((elapsed / estimatedDuration) * 100, 100);
+                barFill.style.width = progress + '%';
+                currentTime.textContent = formatTime(elapsed);
+            }
+
+            // Play button
+            playBtn.addEventListener('click', function() {
+                if (isPlaying) {
+                    synth.cancel();
+                    isPlaying = false;
+                    player.classList.remove('playing');
+                    clearInterval(progressInterval);
+                    barFill.style.width = '0%';
+                    currentTime.textContent = '0:00';
+                } else {
+                    const text = getArticleText();
+                    if (!text) return;
+
+                    utterance = new SpeechSynthesisUtterance(text);
+                    utterance.rate = speed;
+                    utterance.pitch = 1.0;
+
+                    // Try to use a good voice
+                    const voices = synth.getVoices();
+                    const preferred = voices.find(v => v.name.includes('Samantha') || v.name.includes('Google') || v.name.includes('Natural'));
+                    if (preferred) utterance.voice = preferred;
+
+                    estimatedDuration = estimateDuration(text, speed);
+                    durationEl.textContent = formatTime(estimatedDuration);
+
+                    utterance.onend = function() {
+                        isPlaying = false;
+                        player.classList.remove('playing');
+                        clearInterval(progressInterval);
+                        barFill.style.width = '100%';
+                    };
+
+                    synth.speak(utterance);
+                    isPlaying = true;
+                    player.classList.add('playing');
+                    startTime = Date.now();
+                    progressInterval = setInterval(updateProgress, 100);
+                }
+            });
+
+            // Speed control
+            speedBtn.addEventListener('click', function() {
+                speedIndex = (speedIndex + 1) % speeds.length;
+                speed = speeds[speedIndex];
+                speedBtn.textContent = speed + 'x';
+
+                // If playing, restart with new speed
+                if (isPlaying) {
+                    const elapsed = (Date.now() - startTime) / 1000;
+                    synth.cancel();
+
+                    const text = getArticleText();
+                    utterance = new SpeechSynthesisUtterance(text);
+                    utterance.rate = speed;
+
+                    const voices = synth.getVoices();
+                    const preferred = voices.find(v => v.name.includes('Samantha') || v.name.includes('Google') || v.name.includes('Natural'));
+                    if (preferred) utterance.voice = preferred;
+
+                    estimatedDuration = estimateDuration(text, speed);
+                    durationEl.textContent = formatTime(estimatedDuration);
+
+                    utterance.onend = function() {
+                        isPlaying = false;
+                        player.classList.remove('playing');
+                        clearInterval(progressInterval);
+                        barFill.style.width = '100%';
+                    };
+
+                    synth.speak(utterance);
+                    startTime = Date.now();
+                }
+            });
+
+            // Share button
+            shareBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: document.title,
+                        url: window.location.href
+                    });
+                } else {
+                    navigator.clipboard.writeText(window.location.href);
+                    shareBtn.title = 'Link copied!';
+                    setTimeout(() => { shareBtn.title = 'Share'; }, 2000);
+                }
+            });
+
+            // Initialize voices
+            if (synth.onvoiceschanged !== undefined) {
+                synth.onvoiceschanged = () => synth.getVoices();
+            }
+        })();
         </script>
     </body>
 </html>
