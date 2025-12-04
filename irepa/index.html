@@ -77,10 +77,10 @@
                     <h2>Global Information or <em>Spatial Structure</em>?</h2>
 
                     <p>
-                        Representation alignment guides diffusion model training by distilling knowledge from pretrained vision encoders.
+                        Representation matters for generation.
                         But what truly drives its effectiveness: <em>global semantic information</em> or <em>spatial structure</em>?
                         Prevailing wisdom says global information.
-                        Through large-scale empirical analysis we reveal that 
+                        We reveal that surprising findings:
                         <!-- Prevailing wisdom holds that performance of a target representation for generation is heavily tied to its global information. -->
                         <!-- We challenge this notion through large-scale empirical analysis across 27 vision encoders and different model scales. -->
                         <!-- Through large-scale analysis across 27 vision encoders, we reveal that -->
@@ -92,15 +92,15 @@
                     <div class="icon-container">
                         <div class="icon-item">
                             <img src="./static/img/icons/accuracy.svg" alt="Accuracy Icon">
-                            <div><strong>Global Information Matters Less</strong>: Target representations with >60% higher ImageNet-1K accuracy (measure of global information) can underperform for generation.</div>
+                            <div><strong>Global Information Matters Less</strong>: Higher global semantic information (e.g., ImageNet accuracy) does not mean better generation with representation alignment.</div>
                         </div>
                         <div class="icon-item">
                             <img src="./static/img/icons/spatial.svg" alt="Spatial Structure Icon">
-                            <div><strong>Spatial Structure Matters More</strong>: Spatial structure shows remarkably high correlation (|r| = 0.852) with generation FID, while ImageNet accuracy shows poor correlation (|r| = 0.26).</div>
+                            <div><strong>Spatial Structure Matters More</strong>: Spatial structure shows much higher correlation with generation FID than global accuracy.</div>
                         </div>
                         <div class="icon-item">
                             <img src="./static/img/icons/irepa.svg" alt="iREPA Icon">
-                            <div><strong>Accentuating <em>what</em> Matters</strong>: Accentuating transfer of spatial features from target representation to diffusion features consistently improves convergence across all diverse training settings.</div>
+                            <div><strong>Accentuating <em>what</em> Matters</strong>: Accentuating transfer of spatial features from target representation to diffusion features consistently improves convergence across diverse training settings (REPA, REPA-E, MeanFlow, JiT).</div>
                         </div>
                         <!-- <div class="icon-item">
                             <img src="./static/img/icons/accuracy.svg" alt="Accuracy Icon">
