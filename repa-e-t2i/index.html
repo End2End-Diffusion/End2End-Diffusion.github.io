@@ -80,55 +80,62 @@
         </nav>
         <div class="header-wrapper">
             <div class="header-container" id="header-container">
-                <div class="header-content">
+                <!-- Title section - full width, centered -->
+                <div class="header-title">
                     <h1 style="margin-top: 0px">REPA-E <em>for</em> T2I</h1>
                     <h2>Family of end-to-end tuned VAEs for <em>supercharging</em><br>T2I diffusion transformers</h2>
-
-                    <p>
+                    <blockquote style="border-left: 3px solid #2563eb; padding-left: 1em; margin: 1em auto; max-width: 800px; font-style: italic; color: #444;">
                         We present REPA-E for T2I, a family of End-to-End Tuned VAEs for supercharging text-to-image generation training.
-                        <strong>End-to-end VAEs show superior performance over their original counterparts</strong> across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) without need for any additional representation alignment losses.
-                    </p>
+                        <strong style="color: #2563eb;">End-to-end VAEs show superior performance over their original counterparts</strong> across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) without need for any additional representation alignment losses.
+                    </blockquote>
 
-                    <!-- Key Points Icon Container -->
-                    <div class="icon-container">
-                        <div class="icon-item">
-                            <img src="./static/img/icons/accuracy.svg" alt="Performance Icon">
-                            <div><strong>Better T2I Performance</strong>: Consistent improvements over baseline VAEs across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) with end-to-end tuned VAEs.</div>
-                        </div>
-                        <div class="icon-item">
-                            <img src="./static/img/icons/spatial.svg" alt="Quality Icon">
-                            <div><strong>Family of End-to-End Tuned VAEs</strong>: We release a family of end-to-end tuned VAEs across different families (FLUX-VAE, SD3.5-VAE, Qwen-Image-VAE) for supercharging text-to-image generation training.</div>
-                        </div>
-                        <div class="icon-item">
-                            <img src="./static/img/icons/irepa.svg" alt="Generalization Icon">
-                            <div><strong>Better Latent Space Structure</strong>: End-to-end tuned VAEs show better latent space structure compared to their original counterparts which are mostly optimized for reconstruction.</div>
-                        </div>
-                    </div>
-
-                    <div class="button-container">
-                        <a href="https://arxiv.org/abs/2504.10483" class="button paper-link" target="_blank">
-                            <span class="icon is-small">
-                                <i class="ai ai-arxiv"></i>
-                            </span>
-                            REPA-E Paper
-                        </a>
-                        <a href="https://github.com/End2End-Diffusion/REPA-E" class="button" target="_blank">
-                            <span class="icon is-small">
-                                <i class="fab fa-github"></i>
-                            </span>
-                            <span>Code</span>
-                        </a>
-                        <a href="https://huggingface.co/REPA-E" class="button" target="_blank">
-                            <span class="icon is-small">
-                                <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face logo" style="height: 1em;">
-                            </span>
-                            <span>Models</span>
-                        </a>
-                    </div>
+                    <hr style="border: none; border-top: 1px solid #e5e5e5; margin: 1.5em auto; max-width: 600px;">
                 </div>
-                <div class="header-image">
-                    <!-- Hero image -->
-                    <img draggable="false" src="repa-e-t2i-v7.png" alt="End-to-End Training: VAE + Diffusion Transformer" class="teaser-image">
+
+                <!-- Two-column section: key points left, hero image right -->
+                <div class="header-columns">
+                    <div class="header-content">
+                        <!-- Key Points Icon Container -->
+                        <div class="icon-container">
+                            <div class="icon-item">
+                                <img src="./static/img/icons/accuracy.svg" alt="Performance Icon">
+                                <div><strong>Better T2I Performance</strong>: Consistent improvements over baseline VAEs across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) with end-to-end tuned VAEs.</div>
+                            </div>
+                            <div class="icon-item">
+                                <img src="./static/img/icons/spatial.svg" alt="Quality Icon">
+                                <div><strong>Family of End-to-End Tuned VAEs</strong>: We release a family of end-to-end tuned VAEs across different families (FLUX-VAE, SD3.5-VAE, Qwen-Image-VAE) for supercharging text-to-image generation training.</div>
+                            </div>
+                            <div class="icon-item">
+                                <img src="./static/img/icons/irepa.svg" alt="Generalization Icon">
+                                <div><strong>Better Latent Space Structure</strong>: End-to-end tuned VAEs show better latent space structure compared to their original counterparts which are mostly optimized for reconstruction.</div>
+                            </div>
+                        </div>
+
+                        <div class="button-container">
+                            <a href="https://arxiv.org/abs/2504.10483" class="button paper-link" target="_blank">
+                                <span class="icon is-small">
+                                    <i class="ai ai-arxiv"></i>
+                                </span>
+                                REPA-E Paper
+                            </a>
+                            <a href="https://github.com/End2End-Diffusion/REPA-E" class="button" target="_blank">
+                                <span class="icon is-small">
+                                    <i class="fab fa-github"></i>
+                                </span>
+                                <span>Code</span>
+                            </a>
+                            <a href="https://huggingface.co/REPA-E" class="button" target="_blank">
+                                <span class="icon is-small">
+                                    <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face logo" style="height: 1em;">
+                                </span>
+                                <span>Models</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="header-image">
+                        <!-- Hero image -->
+                        <img draggable="false" src="repa-e-t2i-v7.png" alt="End-to-End Training: VAE + Diffusion Transformer" class="teaser-image">
+                    </div>
                 </div>
             </div>
         </div>

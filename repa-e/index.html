@@ -158,54 +158,61 @@
 
         <div class="header-wrapper">
             <div class="header-container" id="header-container">
-                <div class="header-content">
+                <!-- Title section - full width, centered -->
+                <div class="header-title">
                     <h1 style="margin-top: 0px">REPA-E: Unlocking VAE for</h1>
                     <h2>End-to-End Tuning of <em>Latent Diffusion Transformers</em></h2>
-
-                    <p>
+                    <blockquote style="border-left: 3px solid #2563eb; padding-left: 1em; margin: 1em auto; max-width: 800px; font-style: italic; color: #444;">
                         We show that latent diffusion models and their VAE tokenizer can be effectively trained end-to-end using a simple representation-alignment (REPA) loss.
-                        REPA-E achieves state-of-the-art FID scores of <strong>1.12</strong> and <strong>1.69</strong> with and without classifier-free guidance on ImageNet 256×256.
-                    </p>
+                        <strong style="color: #2563eb;">REPA-E achieves state-of-the-art FID scores of 1.12 and 1.69</strong> with and without classifier-free guidance on ImageNet 256×256.
+                    </blockquote>
 
-                    <!-- Key Points Icon Container -->
-                    <div class="icon-container">
-                        <div class="icon-item">
-                            <img src="./static/img/icons/speed.svg" alt="Speed Icon">
-                            <div><strong>17× Faster Training</strong>: REPA-E significantly accelerates diffusion training compared to REPA and 45× faster than vanilla training.</div>
-                        </div>
-                        <div class="icon-item">
-                            <img src="./static/img/icons/quality.svg" alt="Quality Icon">
-                            <div><strong>SOTA Generation Quality</strong>: Achieves FID 1.12 (w/ CFG) and 1.69 (w/o CFG) on ImageNet 256×256.</div>
-                        </div>
-                        <div class="icon-item">
-                            <img src="./static/img/icons/dropin.svg" alt="Drop-in Icon">
-                            <div><strong>Drop-in VAE Replacements</strong>: E2E-VAE serves as a superior drop-in replacement across diverse diffusion architectures.</div>
-                        </div>
-                    </div>
-
-                    <div class="button-container">
-                        <a href="https://arxiv.org/abs/2504.10483" class="button paper-link" target="_blank">
-                            <span class="icon is-small">
-                                <i class="ai ai-arxiv"></i>
-                            </span>
-                            arXiv
-                        </a>
-                        <a href="https://github.com/End2End-Diffusion/REPA-E" class="button" target="_blank">
-                            <span class="icon is-small">
-                                <i class="fab fa-github"></i>
-                            </span>
-                            <span>Code</span>
-                        </a>
-                        <a href="https://huggingface.co/REPA-E" class="button" target="_blank">
-                            <span class="icon is-small">
-                                <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face logo" style="height: 1em;">
-                            </span>
-                            <span>Models</span>
-                        </a>
-                    </div>
+                    <hr style="border: none; border-top: 1px solid #e5e5e5; margin: 1.5em auto; max-width: 600px;">
                 </div>
-                <div class="header-image">
-                    <img draggable="false" data-zoomable="" src="assets/viz-results-v4.webp" alt="REPA-E Results Visualization" class="teaser-image">
+
+                <!-- Two-column section: key points left, hero image right -->
+                <div class="header-columns">
+                    <div class="header-content">
+                        <!-- Key Points Icon Container -->
+                        <div class="icon-container">
+                            <div class="icon-item">
+                                <img src="./static/img/icons/speed.svg" alt="Speed Icon">
+                                <div><strong>17× Faster Training</strong>: REPA-E significantly accelerates diffusion training compared to REPA and 45× faster than vanilla training.</div>
+                            </div>
+                            <div class="icon-item">
+                                <img src="./static/img/icons/quality.svg" alt="Quality Icon">
+                                <div><strong>SOTA Generation Quality</strong>: Achieves FID 1.12 (w/ CFG) and 1.69 (w/o CFG) on ImageNet 256×256.</div>
+                            </div>
+                            <div class="icon-item">
+                                <img src="./static/img/icons/dropin.svg" alt="Drop-in Icon">
+                                <div><strong>Drop-in VAE Replacements</strong>: E2E-VAE serves as a superior drop-in replacement across diverse diffusion architectures.</div>
+                            </div>
+                        </div>
+
+                        <div class="button-container">
+                            <a href="https://arxiv.org/abs/2504.10483" class="button paper-link" target="_blank">
+                                <span class="icon is-small">
+                                    <i class="ai ai-arxiv"></i>
+                                </span>
+                                arXiv
+                            </a>
+                            <a href="https://github.com/End2End-Diffusion/REPA-E" class="button" target="_blank">
+                                <span class="icon is-small">
+                                    <i class="fab fa-github"></i>
+                                </span>
+                                <span>Code</span>
+                            </a>
+                            <a href="https://huggingface.co/REPA-E" class="button" target="_blank">
+                                <span class="icon is-small">
+                                    <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face logo" style="height: 1em;">
+                                </span>
+                                <span>Models</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="header-image">
+                        <img draggable="false" data-zoomable="" src="assets/viz-results-v4.webp" alt="REPA-E Results Visualization" class="teaser-image">
+                    </div>
                 </div>
             </div>
         </div>

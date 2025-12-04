@@ -8,13 +8,54 @@
 
 .header-container {
   color: #1a1a1a;
-  text-align: center;
   padding: 20px;
   opacity: 1.0;
   z-index: 1000;
   position: relative;
-  max-width: 1600px;
+  max-width: 1200px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Title section - full width, centered */
+.header-title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.header-title h1 {
+  font-size: 2.2em;
+  margin-bottom: 0.3em;
+  line-height: 1.2;
+  color: #1a1a1a;
+}
+
+.header-title h2 {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.2;
+  color: #333;
+}
+
+.header-title p {
+  font-size: 1.1rem;
+  color: #444;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Two-column layout for key points and hero image */
+.header-columns {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .header-columns {
+    flex-direction: column;
+  }
 }
 
 
@@ -93,23 +134,14 @@
 .header-content {
     color: #444;
     text-align: left;
+    flex: 1;
 }
 
-.header-content h1 {
-    font-size: 1.5em;
-    margin-bottom: 0.5em;
-    line-height: 1.2;
-    color: #1a1a1a;
-}
-
-.header-content h2 {
-    margin-bottom: 0.5em;
-    line-height: 1.2;
-    color: #333;
-}
-
-.header-container p {
-    font-size: 1.2rem;
+.header-image {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media (max-width: 768px) {
