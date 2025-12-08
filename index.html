@@ -31,11 +31,10 @@
     <!-- Set theme before page renders to prevent flash -->
     <script>
         (function() {
-            // Check localStorage first, then fall back to system preference
+            // Check localStorage first, then fall back to dark mode as default
             let theme = localStorage.getItem('theme');
             if (!theme) {
-                // Auto-detect from system preference
-                theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                theme = 'dark';
             }
             document.documentElement.setAttribute('data-theme', theme);
         })();
@@ -60,7 +59,7 @@
         </header>
         <div class="mission-statement">
             <h2 class="font-styrene text-4xl font-bold mb-4">Advancing Visual Representation and Generation Through End-to-End Training</h2>
-            <p class="text-base mt-4 line-height-relaxed" style="color: var(--text-secondary);">End-to-end training is the keystone of modern deep learning. However, diffusion training remains two-stage: stage 1 for representation (VAE/RAE) and stage 2 for generation (DiT/SiT/JiT). Our mission is to enable end-to-end training for both visual representation and generation: allowing both representations and generative models to be advanced together in an end-to-end manner.</p>
+            <p class="text-base mt-4 line-height-relaxed" style="color: var(--text-secondary);">End-to-end training is the keystone of modern deep learning. However, diffusion training remains two-stage: stage 1 for representation (VAE/RAE) and stage 2 for generation (DiT/SiT/JiT). Our mission is to enable end-to-end training for both visual representation and generation: allowing both representations and generation to be advanced together in an end-to-end manner.</p>
         </div>
 
         <section class="featured-banners">
@@ -242,7 +241,7 @@
                         <p class="text-base md:text-lg mb-8 line-height-relaxed" style="color: var(--text-secondary);">
                             If you are interested in our research on end-to-end diffusion models and visual representation learning, we would love to hear from you. Whether you want to collaborate, discuss our work, or explore new research directions, feel free to reach out.
                         </p>
-                        <a href="mailto:contact@end2end-diffusion.org"
+                        <a href="mailto:jaskirat.singh@anu.edu.au"
                             class="contact-button font-styrene font-medium py-3 px-8 rounded-lg text-base transition-colors duration-300">
                             Contact Us
                         </a>
