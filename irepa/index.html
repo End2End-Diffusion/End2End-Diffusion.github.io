@@ -163,29 +163,15 @@
                     <span class="author-note"><sup>*</sup>Done during internship at Adobe Research</span>
                 </p>
 
-                <!-- Audio Player -->
-                <div style="margin-top: 20px;">
-                    <div class="audio-player" id="audio-player">
-                        <button class="audio-player-btn" id="audio-play-btn">
-                            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                            <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-                        </button>
-                        <div class="audio-player-progress">
-                            <div class="audio-player-bar" id="audio-bar">
-                                <div class="audio-player-bar-fill" id="audio-bar-fill"></div>
-                            </div>
-                            <div class="audio-player-time">
-                                <span id="audio-current">0:00</span>
-                                <span id="audio-duration">--:--</span>
-                            </div>
-                        </div>
-                        <div class="audio-player-controls">
-                            <button class="audio-player-speed" id="audio-speed">1x</button>
-                            <button class="audio-player-share" id="audio-share" title="Share">
-                                <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>
-                            </button>
-                        </div>
-                    </div>
+                <!-- Video -->
+                <div style="margin-top: 25px; text-align: center;">
+                    <video
+                        controls
+                        style="max-width: 100%; width: 720px; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);"
+                    >
+                        <source src="static/videos/irepa-final-v1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
             </div>
         </div>
