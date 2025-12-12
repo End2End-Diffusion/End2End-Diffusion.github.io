@@ -107,7 +107,7 @@
                         </div>
 
                         <div class="button-container">
-                            <a href="https://arxiv.org/abs/coming-soon" class="button paper-link" target="_blank">
+                            <a href="https://arxiv.org/abs/2512.10794" class="button paper-link" target="_blank">
                                 <span class="icon is-small">
                                     <i class="ai ai-arxiv"></i>
                                 </span>
@@ -527,6 +527,21 @@
                 model sizes (SiT-B, SiT-L, SiT-XL), and training recipes including REPA-E and Meanflow with REPA.
             </p>
 
+            <!-- iREPA Code Snippet -->
+            <div style="margin: 30px auto; max-width: 680px;">
+                <div style="background: #1e1e1e; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.15);">
+                    <div style="background: #2d2d2d; padding: 10px 16px; font-size: 0.85em; color: #e0e0e0; font-weight: 500;">
+                        iREPA: 3 lines of code to make REPA better
+                    </div>
+                    <pre style="margin: 0; padding: 16px; overflow-x: auto; font-size: 0.9em; line-height: 1.5;"><code style="color: #d4d4d4; font-family: 'Consolas', 'Monaco', monospace;"><span style="color: #6a9955;"># 1. Conv projection instead of MLP</span>
+<span style="color: #9cdcfe;">proj_layer</span> <span style="color: #d4d4d4;">=</span> <span style="color: #4ec9b0;">nn</span><span style="color: #d4d4d4;">.</span><span style="color: #dcdcaa;">Conv2d</span><span style="color: #d4d4d4;">(</span><span style="color: #9cdcfe;">D_in</span><span style="color: #d4d4d4;">,</span> <span style="color: #9cdcfe;">D_out</span><span style="color: #d4d4d4;">,</span> <span style="color: #9cdcfe;">kernel_size</span><span style="color: #d4d4d4;">=</span><span style="color: #b5cea8;">3</span><span style="color: #d4d4d4;">,</span> <span style="color: #9cdcfe;">padding</span><span style="color: #d4d4d4;">=</span><span style="color: #b5cea8;">1</span><span style="color: #d4d4d4;">)</span>
+
+<span style="color: #6a9955;"># 2. Spatial normalization on encoder features [B, T, D]</span>
+<span style="color: #9cdcfe;">x</span> <span style="color: #d4d4d4;">=</span> <span style="color: #9cdcfe;">x</span> <span style="color: #d4d4d4;">-</span> <span style="color: #9cdcfe;">gamma</span> <span style="color: #d4d4d4;">*</span> <span style="color: #9cdcfe;">x</span><span style="color: #d4d4d4;">.</span><span style="color: #dcdcaa;">mean</span><span style="color: #d4d4d4;">(</span><span style="color: #9cdcfe;">dim</span><span style="color: #d4d4d4;">=</span><span style="color: #b5cea8;">1</span><span style="color: #d4d4d4;">,</span> <span style="color: #9cdcfe;">keepdim</span><span style="color: #d4d4d4;">=</span><span style="color: #569cd6;">True</span><span style="color: #d4d4d4;">)</span>
+<span style="color: #9cdcfe;">x</span> <span style="color: #d4d4d4;">=</span> <span style="color: #9cdcfe;">x</span> <span style="color: #d4d4d4;">/</span> <span style="color: #d4d4d4;">(</span><span style="color: #9cdcfe;">x</span><span style="color: #d4d4d4;">.</span><span style="color: #dcdcaa;">std</span><span style="color: #d4d4d4;">(</span><span style="color: #9cdcfe;">dim</span><span style="color: #d4d4d4;">=</span><span style="color: #b5cea8;">1</span><span style="color: #d4d4d4;">,</span> <span style="color: #9cdcfe;">keepdim</span><span style="color: #d4d4d4;">=</span><span style="color: #569cd6;">True</span><span style="color: #d4d4d4;">)</span> <span style="color: #d4d4d4;">+</span> <span style="color: #b5cea8;">1e-6</span><span style="color: #d4d4d4;">)</span></code></pre>
+                </div>
+            </div>
+
             <div class="finding-box">
                 <ul>
                     <li><strong>Finding 3:</strong> Accentuating transfer of spatial information from target representation to diffusion features consistently improves convergence speed across all tested settings.</li>
@@ -837,9 +852,9 @@
                 ">📋 Copy</button>
                 <p class="bibtex" id="bibtex-content">
                     @article{singh2025irepa,<br>
-                    &nbsp;&nbsp;title={{What matters for Representation Alignment: Global Information or Spatial Structure?}},<br>
+                    &nbsp;&nbsp;title={{What Matters for Representation Alignment: Global Information or Spatial Structure?}},<br>
                     &nbsp;&nbsp;author={Singh, Jaskirat and Leng, Xingjian and Wu, Zongze and Zheng, Liang and Zhang, Richard and Shechtman, Eli and Xie, Saining},<br>
-                    &nbsp;&nbsp;journal={arXiv preprint},<br>
+                    &nbsp;&nbsp;journal={arXiv preprint arXiv:2512.10794},<br>
                     &nbsp;&nbsp;year={2025}<br>
                     }
                 </p>
