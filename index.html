@@ -47,9 +47,10 @@
 
     <div class="container">
         <header>
-            <a href="index.html" class="logo" style="font-size: 1.5rem;">End2End Diffusion</a>
+            <nav aria-label="Main navigation">
+                <a href="index.html" class="logo" style="font-size: 1.5rem;">End2End Diffusion</a>
+            </nav>
             <div class="header-right">
-                <a href="#" class="logo"></a>
                 <div class="header-divider"></div>
                 <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
                     <i class="fas fa-sun"></i>
@@ -57,12 +58,12 @@
                 </button>
             </div>
         </header>
-        <div class="mission-statement">
-            <h2 class="font-styrene text-4xl font-bold mb-4">Advancing Visual Representation and Generation Through End-to-End Training</h2>
+        <section class="mission-statement" aria-labelledby="mission-heading">
+            <h2 id="mission-heading" class="font-styrene text-4xl font-bold mb-4">Advancing Visual Representation and Generation Through End-to-End Training</h2>
             <p class="text-base mt-4 line-height-relaxed" style="color: var(--text-secondary);">End-to-end training is the keystone of modern deep learning. However, diffusion training remains two-stage: stage 1 for representation (VAE/RAE) and stage 2 for generation (DiT/SiT/JiT). Our mission is to enable end-to-end training for both visual representation and generation: allowing both representations and generation to be advanced together in an end-to-end manner.</p>
-        </div>
+        </section>
 
-        <section class="featured-banners">
+        <section class="featured-banners" aria-label="Featured research projects">
             <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                 <a href="repa-e/" class="featured-card md:col-span-6 bg-book-cloth">
                     <img src="repa-e/assets/viz-results-v4.webp" alt="REPA-E" onerror="this.src='https://placehold.co/800x400/cc785c/ffffff?text=REPA-E'; this.onerror=null;">
@@ -88,11 +89,11 @@
         <main>
             <div class="content-area">
 
-                <div class="text-center mb-8">
-                    <h2 class="font-styrene text-4xl font-bold">Discover Our Research</h2>
-                </div>
+                <section class="text-center mb-8" aria-labelledby="research-heading">
+                    <h2 id="research-heading" class="font-styrene text-4xl font-bold">Discover Our Research</h2>
+                </section>
 
-                <div class="filters">
+                <div class="filters" role="tablist" aria-label="Filter research by category">
 
                     <div class="tabs flex flex-nowrap gap-x-6 overflow-x-auto" style="border-bottom: 1px solid var(--text-primary);">
                     <a href="#" class="filter-btn active" data-filter="all">All</a>
@@ -229,7 +230,7 @@
 
             </div>
 
-            <div class="contact-us-block py-12 md:py-16">
+            <section class="contact-us-block py-12 md:py-16" aria-labelledby="contact-heading">
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
                     <div class="featured-card block">
@@ -237,7 +238,7 @@
                     </div>
 
                     <div class="flex flex-col justify-center text-left items-start">
-                        <h2 class="font-styrene text-4xl font-bold mb-6">Let's Connect</h2>
+                        <h2 id="contact-heading" class="font-styrene text-4xl font-bold mb-6">Let's Connect</h2>
                         <p class="text-base md:text-lg mb-8 line-height-relaxed" style="color: var(--text-secondary);">
                             If you are interested in our research on end-to-end diffusion models and visual representation learning, we would love to hear from you. Whether you want to collaborate, discuss our work, or explore new research directions, feel free to reach out.
                         </p>
@@ -247,9 +248,13 @@
                         </a>
                     </div>
                 </div>
-            </div>
+            </section>
 
         </main>
+
+        <footer class="site-footer">
+            <p>&copy; 2025 End2End Diffusion. All rights reserved.</p>
+        </footer>
 
     </div>
 

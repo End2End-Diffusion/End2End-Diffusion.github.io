@@ -441,3 +441,23 @@ a:hover {
 .publication-card:hover .article-title {
     color: var(--accent-blue);
 }
+
+/* Footer styling */
+.site-footer {
+    border-top: 1px solid var(--border-color);
+    padding: 2rem 0;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.site-footer p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Nav styling within header */
+header nav {
+    display: flex;
+    align-items: center;
+}
