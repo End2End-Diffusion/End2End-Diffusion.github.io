@@ -52,7 +52,9 @@
  body {
     background-color: var(--paper);
     color: var(--text-primary);
-    font-family: "Inter", sans-serif;
+    font-family: "Lora", Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
     margin: 0;
     padding: 0;
     display: flex;
@@ -251,7 +253,7 @@ main {
 }
 
 .font-styrene {
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: "Lora", Georgia, serif;
 }
 
 .publication-card {
@@ -369,7 +371,7 @@ main {
 }
 
 .category-label {
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: "Lora", Georgia, serif;
     font-size: 0.875rem;
     color: var(--text-primary);
     text-transform: capitalize;
@@ -377,7 +379,7 @@ main {
 }
 
 .date-label {
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: "Lora", Georgia, serif;
     font-size: 0.875rem;
     color: var(--text-secondary);
     display: block;
@@ -385,7 +387,7 @@ main {
 
 .article-title {
     font-size: 1rem;
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: "Lora", Georgia, serif;
     color: var(--text-primary);
 }
 
