@@ -1,25 +1,5 @@
 /* Font, colors, and base styles inherited from paper-layout.css */
 
-.header-wrapper {
-    position: relative;
-    border-bottom: 1px solid #e5e2dd;
-}
-
-.header-wrapper::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('../../../static/img/hero_image.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.3;
-    z-index: 0;
-}
-
 .header-container {
   color: #1a1a1a;
   padding: 20px;

@@ -51,6 +51,27 @@ body {
     padding: var(--space-xl) var(--space-lg);
 }
 
+/* Header wrapper with hero background */
+.header-wrapper {
+    position: relative;
+    border-bottom: 1px solid #e5e2dd;
+}
+
+.header-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../img/hero_image.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    z-index: 0;
+}
+
 .paper-header-inner {
     max-width: 1200px;
     margin: 0 auto;
