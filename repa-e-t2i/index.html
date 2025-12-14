@@ -560,14 +560,14 @@ with torch.no_grad():
                     We perform end-to-end tuning on ImageNet 256×256 <d-cite key="imagenet"></d-cite> to obtain end-to-end tuned encoders for popular VAE families like FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>.
                     We then compare the performance of obtained end-to-end tuned VAEs with the standard VAEs (e.g, Flux-VAE) for text-to-image (T2I) generation tasks.
                     <!-- Before moving on to text-to-image generation tasks, we first perform end-to-end tuning to VAEs.
-                    We use the official REPA-E<d-cite key="leng2025repa"></d-cite> implementation with the same hyperparameter as the original paper, except for the learning rate.
+                    We use the official REPA-E<d-cite key="leng2025repae"></d-cite> implementation with the same hyperparameter as the original paper, except for the learning rate.
                     Since we are fine-tuning already high-quality VAEs (FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>), we opt for a smaller learning rate at 2×10<sup>-5</sup>. -->
                 </p>
                 <aside class="sidenote">The key insight is that VAEs optimized only for reconstruction may not produce optimal latent spaces for generation.</aside>
             </div>
             
             <p class="text">
-                <strong>End-to-End VAE Tuning on ImageNet 256×256.</strong> We follow the same training recipe as the original REPA-E<d-cite key="leng2025repa"></d-cite> paper, for end-to-end tuning on ImageNet 256×256.
+                <strong>End-to-End VAE Tuning on ImageNet 256×256.</strong> We follow the same training recipe as the original REPA-E<d-cite key="leng2025repae"></d-cite> paper, for end-to-end tuning on ImageNet 256×256.
                 We use a small learning rate of 2×10<sup>-5</sup>, AdamW optimizer and 80 epochs for end-to-end tuning across all VAE families (FLUX-VAE<d-cite key="flux"></d-cite>, SD-3.5-VAE<d-cite key="sd3.5"></d-cite>, Qwen-Image-VAE<d-cite key="qwen-image"></d-cite>). We next refer the corresponding finetuned VAEs as E2E-FLUX-VAE, E2E-SD-3.5-VAE, E2E-Qwen-Image-VAE respectively.
             </p>
             <div class="config-box">
@@ -721,7 +721,7 @@ with torch.no_grad():
             <p class="text">
                 To understand the effectiveness of end-to-end tuning, we compare three approaches at 100K training steps:
                 (1) FLUX-VAE baseline without modifications,
-                (2) FLUX-VAE with REPA<d-cite key="leng2025repa"></d-cite> representation alignment losses added during T2I training, and
+                (2) FLUX-VAE with REPA<d-cite key="yu2024repa"></d-cite> representation alignment losses added during T2I training, and
                 (3) E2E-FLUX-VAE (ours) with end-to-end tuning but without additional alignment losses.
                 The results demonstrate that end-to-end tuning outperforms both the baseline and REPA-enhanced approaches across all benchmarks, achieving superior performance without requiring auxiliary alignment objectives.
             </p>
@@ -1009,7 +1009,7 @@ with torch.no_grad():
             <p class="text">
                 To understand what makes End-to-End Tuned VAEs effective, we analyze the learned latent representations through PCA projections and spatial similarity analysis.
                 These visualizations reveal how end-to-end tuning shapes the VAE's latent space to better support high-quality generation.
-                Notably, end-to-end tuning enriches the VAE latent space by incorporating more structural and semantic information over traditional VAEs (Flux-VAE, SDVAE) trained for reconstruction alone. Please also refer the original REPA-E<d-cite key="leng2025repa"></d-cite> paper for more details.
+                Notably, end-to-end tuning enriches the VAE latent space by incorporating more structural and semantic information over traditional VAEs (Flux-VAE, SDVAE) trained for reconstruction alone. Please also refer the original REPA-E<d-cite key="leng2025repae"></d-cite> paper for more details.
             </p>
 
             <h3 class="text">PCA Projections of VAE Latents</h3>

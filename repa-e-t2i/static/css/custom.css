@@ -802,7 +802,7 @@ html {
     font-family: inherit;
 }
 
-/* Desktop: sidenotes in right margin */
+/* Desktop: sidenotes in right margin, pushed far right */
 @media (min-width: 1200px) {
     d-article {
         overflow: visible !important;
@@ -814,7 +814,7 @@ html {
 
     .sidenote {
         position: absolute;
-        right: calc(-1 * (var(--layout-sidenote-width, 220px) + var(--layout-gap, 40px)));
+        right: calc(-1 * (var(--layout-sidenote-width, 220px) + var(--layout-side-gap, 256px)));
         top: 0;
         width: var(--layout-sidenote-width, 220px);
         margin: 0;
@@ -841,13 +841,14 @@ html {
     .toc-container {
         display: block;
         position: fixed;
-        left: max(20px, calc(50% - var(--layout-content-width, 720px)/2 - var(--layout-toc-width, 180px) - var(--layout-gap, 40px)));
+        left: calc(50% - var(--layout-content-width, 720px)/2 - var(--layout-toc-width, 180px) - var(--layout-side-gap, 256px));
         top: 120px;
         width: var(--layout-toc-width, 180px);
         font-size: 0.85em;
         line-height: 1.5;
         opacity: 0;
         transition: opacity 0.3s ease;
+        z-index: 100;
     }
 
     .toc-container.visible {

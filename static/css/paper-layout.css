@@ -4,11 +4,19 @@
 
 /* === CSS CUSTOM PROPERTIES === */
 :root {
-    /* Layout Dimensions */
-    --layout-toc-width: 180px;
-    --layout-content-width: 864px;  /* 720px * 1.2 */
-    --layout-sidenote-width: 220px;
-    --layout-gap: 40px;
+    /* Layout Dimensions (reduced by 1.2x) */
+    --layout-toc-width: 150px;
+    --layout-content-width: 720px;
+    --layout-sidenote-width: 183px;
+    --layout-gap: 33px;
+
+    /*
+     * Side Column Gap - Distance between main content and TOC/sidenotes
+     * Adjust this value to change spacing symmetrically on both sides
+     * - TOC will be positioned: (content left edge) - toc-width - this gap
+     * - Sidenotes will be positioned: (content right edge) + this gap
+     */
+    --layout-side-gap: 256px;
 
     /* Colors */
     --bg-page: #ffffff;
@@ -77,36 +85,27 @@ body {
     margin: 0 auto;
 }
 
-/* === 3-COLUMN GRID LAYOUT === */
+/* === CENTERED CONTENT LAYOUT (TOC & Sidenotes are fixed) === */
 .paper-layout {
-    display: grid;
-    grid-template-columns:
-        var(--layout-toc-width)
-        var(--layout-gap)
-        minmax(0, var(--layout-content-width))
-        var(--layout-gap)
-        var(--layout-sidenote-width);
-    max-width: calc(
-        var(--layout-toc-width) +
-        var(--layout-content-width) +
-        var(--layout-sidenote-width) +
-        var(--layout-gap) * 2
-    );
+    display: block;
+    max-width: var(--layout-content-width);
     margin: 0 auto;
     padding: var(--space-xl) var(--space-md);
 }
 
-/* === TABLE OF CONTENTS (Left Column) === */
+/* === TABLE OF CONTENTS (Fixed Left Edge) === */
 .paper-toc {
-    grid-column: 1;
-    position: sticky;
+    position: fixed;
+    left: var(--space-md);
     top: 120px;
+    width: var(--layout-toc-width);
     height: fit-content;
     max-height: calc(100vh - 140px);
     overflow-y: auto;
     font-family: var(--font-sans);
     font-size: 0.85rem;
     line-height: 1.5;
+    z-index: 100;
 }
 
 .paper-toc h4 {
@@ -145,10 +144,10 @@ body {
     font-weight: 500;
 }
 
-/* === MAIN CONTENT (Center Column) === */
+/* === MAIN CONTENT (Centered) === */
 .paper-content {
-    grid-column: 3;
-    min-width: 0; /* Prevent grid blowout */
+    width: 100%;
+    min-width: 0;
 }
 
 /* All direct children use full width of content column */
@@ -231,26 +230,25 @@ body {
     border-radius: 0 4px 4px 0;
 }
 
-/* Desktop: sidenotes in right margin */
+/* Desktop: sidenotes fixed at right edge */
 @media (min-width: 1200px) {
     .sidenote {
-        position: absolute;
-        right: calc(-1 * (var(--layout-sidenote-width) + var(--layout-gap)));
-        top: 0;
+        position: fixed;
+        right: var(--space-md);
+        top: 120px;
         width: var(--layout-sidenote-width);
+        max-height: calc(100vh - 160px);
+        overflow-y: auto;
         margin: 0;
         padding: 0 0 0 var(--space-md);
         background: none;
         border-left: 1px solid var(--border-light);
         border-radius: 0;
+        z-index: 100;
     }
 }
 
-/* === SIDENOTES COLUMN (Right - empty placeholder) === */
-.paper-sidenotes {
-    grid-column: 5;
-    /* This column exists to reserve space; sidenotes float into it */
-}
+/* .paper-sidenotes placeholder no longer needed - sidenotes are fixed positioned */
 
 /* === RESPONSIVE DESIGN === */
 
@@ -269,10 +267,6 @@ body {
 
     .paper-content {
         width: 100%;
-    }
-
-    .paper-sidenotes {
-        display: none;
     }
 
     /* Sidenotes become inline blocks */
