@@ -286,14 +286,22 @@
             </div>
 
             <d-figure id="fig-anecdotal" style="margin-top: 30px; margin-bottom: 30px;">
-                <figure style="display: flex; gap: 20px;">
-                    <img data-zoomable="" draggable="false" src="static/img/spatial-pe-v3.png" alt="PE-G vs PE-Spatial-B comparison" style="width: 48%;">
-                    <img data-zoomable="" draggable="false" src="static/img/spatial-webssl-v3.png" alt="WebSSL-1B vs PE-Spatial-B comparison" style="width: 48%;">
-                </figure>
+                <div class="image-tabs">
+                    <div class="image-tab-buttons">
+                        <button class="image-tab-button active" onclick="switchImageTab(this, 'tab-pe')">PE-G vs PE-Spatial-B</button>
+                        <button class="image-tab-button" onclick="switchImageTab(this, 'tab-webssl')">WebSSL-1B vs PE-Spatial-B</button>
+                    </div>
+                    <div id="tab-pe" class="image-tab-content active">
+                        <img data-zoomable="" draggable="false" src="static/img/spatial-pe-v3.png" alt="PE-G vs PE-Spatial-B comparison">
+                    </div>
+                    <div id="tab-webssl" class="image-tab-content">
+                        <img data-zoomable="" draggable="false" src="static/img/spatial-webssl-v3.png" alt="WebSSL-1B vs PE-Spatial-B comparison">
+                    </div>
+                </div>
                 <figcaption>
                     <strong>Vision encoders with higher accuracy can have worse generation.</strong>
-                    Left: PE-G (82.8% acc) vs PE-Spatial-B (53.1% acc) - despite higher validation accuracy, PE-G shows worse generation quality.
-                    Right: WebSSL-1B (76.0% acc) vs PE-Spatial-B (53.1% acc) - similarly, WebSSL-1B has better global performance but worse generation.
+                    PE-G (82.8% acc) vs PE-Spatial-B (53.1% acc) - despite higher validation accuracy, PE-G shows worse generation quality.
+                    WebSSL-1B (76.0% acc) vs PE-Spatial-B (53.1% acc) - similarly, WebSSL-1B has better global performance but worse generation.
                     Spatial self-similarity provides a better predictor of generation quality. All results at 100K using SiT-XL/2 and REPA.
                 </figcaption>
             </d-figure>
@@ -1143,6 +1151,30 @@
                 synth.onvoiceschanged = () => synth.getVoices();
             }
         })();
+        </script>
+
+        <script>
+        // Image tab switching functionality
+        function switchImageTab(button, tabId) {
+            // Get the parent image-tabs container
+            var container = button.closest('.image-tabs');
+
+            // Hide all tab contents in this container
+            var contents = container.querySelectorAll('.image-tab-content');
+            contents.forEach(function(content) {
+                content.classList.remove('active');
+            });
+
+            // Remove active from all buttons in this container
+            var buttons = container.querySelectorAll('.image-tab-button');
+            buttons.forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab and activate button
+            document.getElementById(tabId).classList.add('active');
+            button.classList.add('active');
+        }
         </script>
     </body>
 </html>

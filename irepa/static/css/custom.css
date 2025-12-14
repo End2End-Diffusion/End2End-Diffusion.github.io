@@ -390,3 +390,54 @@ html {
         font-weight: 500;
     }
 }
+
+/* ============================================
+   IMAGE TABS / CAROUSEL
+   ============================================ */
+
+.image-tabs {
+    margin: 30px 0;
+}
+
+.image-tab-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.image-tab-button {
+    padding: 8px 16px;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 6px 6px 0 0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+    transition: all 0.2s ease;
+}
+
+.image-tab-button:hover {
+    background: #e8e8e8;
+}
+
+.image-tab-button.active {
+    background: var(--accent, #2563eb);
+    color: white;
+    border-color: var(--accent, #2563eb);
+}
+
+.image-tab-content {
+    display: none;
+}
+
+.image-tab-content.active {
+    display: block;
+}
+
+.image-tab-content img {
+    width: 100%;
+    border-radius: 4px;
+}
