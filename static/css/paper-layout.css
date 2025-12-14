@@ -78,6 +78,7 @@ body {
     background-repeat: no-repeat;
     opacity: 0;
     z-index: 0;
+    pointer-events: none;
 }
 
 .paper-header-inner {
@@ -621,5 +622,202 @@ body {
 
     .audio-player-controls {
         margin-left: auto;
+    }
+}
+
+/* === CENTRAL HEADER TEMPLATE === */
+.central-header {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.central-header .title-section h1 {
+    font-size: 2.2rem;
+    margin: 0;
+    line-height: 1.3;
+    color: var(--text-primary);
+}
+
+.central-header .title-section h2 {
+    font-size: 1.6rem;
+    margin: 0.3em 0 0 0;
+    line-height: 1.3;
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+/* Authors - right after title */
+.central-header .authors {
+    margin: 20px 0;
+    font-size: 1rem;
+    line-height: 1.8;
+    position: relative;
+    z-index: 10;
+}
+
+.central-header .authors a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    z-index: 10;
+}
+
+.central-header .authors a:hover {
+    text-decoration: underline;
+}
+
+.central-header .affiliations {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+.central-header .author-note {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* TL;DR blockquote style */
+.central-header .tldr-section {
+    margin: 25px auto;
+    max-width: 800px;
+    text-align: left;
+    padding: 15px 20px;
+    border-left: 4px solid var(--accent);
+    background: #f8f9fa;
+}
+
+.central-header .tldr-section p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
+.central-header .tldr-section strong {
+    color: var(--accent);
+}
+
+.central-header .tldr-section .tldr-label {
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-right: 6px;
+}
+
+/* Key points + image two column */
+.central-header .hero-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin: 30px auto;
+    max-width: 1000px;
+    text-align: left;
+    align-items: start;
+}
+
+.central-header .key-points {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.central-header .key-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.central-header .key-point-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.central-header .key-point-text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+
+.central-header .key-point-text strong {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.central-header .hero-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.central-header .hero-media img,
+.central-header .hero-media video {
+    max-width: 100%;
+}
+
+/* Button container */
+.central-header .button-row {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 10;
+}
+
+.central-header .button-row a {
+    position: relative;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #fef3cd;
+    color: #1a1a1a;
+    border: 1.5px solid #dfc36a;
+    border-radius: 50px;
+    padding: 8px 18px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.central-header .button-row a:hover {
+    background-color: #fce8a6;
+    border-color: #c9a84a;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .central-header .title-section h1 {
+        font-size: 1.6rem;
+    }
+
+    .central-header .title-section h2 {
+        font-size: 1.2rem;
+    }
+
+    .central-header .tldr-section {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .central-header .hero-section {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .central-header .hero-media {
+        order: -1;
     }
 }

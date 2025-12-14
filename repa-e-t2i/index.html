@@ -79,152 +79,74 @@
             </div>
         </nav>
         <div class="header-wrapper">
-            <div class="header-container" id="header-container">
-                <!-- Title section - full width, centered -->
-                <div class="header-title">
-                    <h1 style="margin-top: 0px">REPA-E <em>for</em> T2I</h1>
-                    <h2>Family of end-to-end tuned VAEs for <em>supercharging</em><br>T2I diffusion transformers</h2>
-                    <blockquote style="border-left: 3px solid #949393; padding-left: 1em; margin: 1em auto; max-width: 800px; font-style: italic; color: #444; border-radius: 4px;">
-                        We present REPA-E for T2I, a family of End-to-End Tuned VAEs for supercharging text-to-image generation training.
-                        <strong style="color: #2563eb;">End-to-end VAEs show superior performance over their original counterparts</strong> across all benchmarks 
-                        <!-- (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k)  -->
-                        without need for any additional representation alignment losses.
-                    </blockquote>
-
-                    <!-- <hr style="border: none; border-top: 1px solid #e5e5e5; margin: 1.5em auto; max-width: 600px;"> -->
+            <div class="central-header">
+                <!-- Title -->
+                <div class="title-section">
+                    <h1>REPA-E <em>for</em> T2I</h1>
+                    <h2>Family of end-to-end tuned VAEs for <em>supercharging</em> T2I diffusion transformers</h2>
                 </div>
 
-                <!-- Two-column section: key points left, hero image right -->
-                <div class="header-columns">
-                    <div class="header-content">
-                        <!-- Key Points Icon Container -->
-                        <div class="icon-container">
-                            <div class="icon-item">
-                                <img src="./static/img/icons/accuracy.svg" alt="Performance Icon">
-                                <div><strong>Better T2I Performance</strong>: Consistent improvements over baseline VAEs across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k) with end-to-end tuned VAEs.</div>
-                            </div>
-                            <div class="icon-item">
-                                <img src="./static/img/icons/spatial.svg" alt="Quality Icon">
-                                <div><strong>Family of End-to-End Tuned VAEs</strong>: We release a family of end-to-end tuned VAEs across different families (FLUX-VAE, SD3.5-VAE, Qwen-Image-VAE) for supercharging text-to-image generation training.</div>
-                            </div>
-                            <div class="icon-item">
-                                <img src="./static/img/icons/irepa.svg" alt="Generalization Icon">
-                                <div><strong>Better Latent Space Structure</strong>: End-to-end tuned VAEs show better latent space structure compared to their original counterparts which are mostly optimized for reconstruction.</div>
-                            </div>
+                <!-- Authors with collaboration -->
+                <div class="authors">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px;">
+                        <img src="./static/img/logos/repa-e-logo.png" alt="REPA-E" style="height: 40px;">
+                        <span style="color: #6c757d; font-size: 1.2em;">🤝</span>
+                        <img src="./static/img/logos/canva-logo.png" alt="Canva" style="height: 40px;">
+                    </div>
+                    <strong style="color: #555; font-size: 0.9em;">REPA-E Team:</strong>
+                    <a href="https://scholar.google.com.au/citations?user=GQzvqS4AAAAJ" target="_blank">Xingjian Leng</a><sup>*</sup>,
+                    <a href="https://1jsingh.github.io/" target="_blank">Jaskirat Singh</a><sup>*</sup>,
+                    <a href="https://hou-yz.github.io/" target="_blank">Yunzhong Hou</a>,
+                    <a href="https://people.csiro.au/X/Z/Zhenchang-Xing/" target="_blank">Zhenchang Xing</a>,
+                    <a href="https://www.sainingxie.com/" target="_blank">Saining Xie</a>,
+                    <a href="https://zheng-lab-anu.github.io/" target="_blank">Liang Zheng</a>
+                    <br>
+                    <strong style="color: #555; font-size: 0.9em;">Canva Team:</strong>
+                    <a href="https://rynmurdock.github.io/" target="_blank">Ryan Murdock</a>,
+                    <a href="https://www.ethansmith2000.com/" target="_blank">Ethan Smith</a>,
+                    <a href="https://xiaoyang-rebecca.github.io/cv/" target="_blank">Rebecca Li</a>
+                </div>
+
+                <!-- TL;DR -->
+                <div class="tldr-section">
+                    <p><span class="tldr-label">TL;DR:</span> We present REPA-E for T2I, a family of End-to-End Tuned VAEs for supercharging text-to-image generation training. <strong>End-to-end VAEs show superior performance over their original counterparts</strong> across all benchmarks without need for any additional representation alignment losses.</p>
+                </div>
+
+                <!-- Key points + Hero image -->
+                <div class="hero-section">
+                    <div class="key-points">
+                        <div class="key-point">
+                            <img class="key-point-icon" src="./static/img/icons/accuracy.svg" alt="Performance Icon">
+                            <div class="key-point-text"><strong>Better T2I Performance</strong>: Consistent improvements over baseline VAEs across all benchmarks (COCO30k, DPG-Bench, GenAI-Bench, GenEval, MJHQ30k).</div>
+                        </div>
+                        <div class="key-point">
+                            <img class="key-point-icon" src="./static/img/icons/spatial.svg" alt="Quality Icon">
+                            <div class="key-point-text"><strong>Family of End-to-End Tuned VAEs</strong>: E2E-tuned VAEs for FLUX-VAE, SD3.5-VAE, Qwen-Image-VAE for supercharging T2I training.</div>
+                        </div>
+                        <div class="key-point">
+                            <img class="key-point-icon" src="./static/img/icons/irepa.svg" alt="Generalization Icon">
+                            <div class="key-point-text"><strong>Better Latent Space Structure</strong>: End-to-end tuned VAEs show better latent space structure compared to VAEs optimized only for reconstruction.</div>
                         </div>
 
-                        <div class="button-container">
+                        <div class="button-row">
                             <a href="https://arxiv.org/abs/2504.10483" class="button paper-link" target="_blank">
-                                <span class="icon is-small">
-                                    <i class="ai ai-arxiv"></i>
-                                </span>
-                                REPA-E Paper
+                                <span class="icon is-small"><i class="ai ai-arxiv"></i></span> REPA-E Paper
                             </a>
                             <a href="https://github.com/End2End-Diffusion/REPA-E" class="button" target="_blank">
-                                <span class="icon is-small">
-                                    <i class="fab fa-github"></i>
-                                </span>
-                                <span>Code</span>
+                                <span class="icon is-small"><i class="fab fa-github"></i></span> Code
                             </a>
                             <a href="https://huggingface.co/REPA-E" class="button" target="_blank">
-                                <span class="icon is-small">
-                                    <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face logo" style="height: 1em;">
-                                </span>
-                                <span>Models</span>
+                                <span class="icon is-small"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HF" style="height: 1em;"></span> Models
                             </a>
                         </div>
                     </div>
-                    <div class="header-image">
-                        <!-- Hero image -->
-                        <img draggable="false" src="repa-e-t2i-v7.png" alt="End-to-End Training: VAE + Diffusion Transformer" class="teaser-image">
+                    <div class="hero-media">
+                        <img draggable="false" src="repa-e-t2i-v7.png" alt="End-to-End Training: VAE + Diffusion Transformer">
                     </div>
                 </div>
             </div>
         </div>
     <d-article>
-        <!-- <div class="byline">
-            <div class="byline-container">
-                <p align="center">
-                    <a href="https://scholar.google.com.au/citations?user=GQzvqS4AAAAJ" target="_blank">Xingjian&nbsp;Leng</a><sup>1,2*</sup> &ensp; <b>&middot;</b> &ensp;
-                    <a href="https://1jsingh.github.io/" target="_blank">Jaskirat&nbsp;Singh</a><sup>1</sup> &ensp; <b>&middot;</b> &ensp;
-                    <a href="https://rynmurdock.github.io/" target="_blank">Ryan&nbsp;Murdock</a><sup>2</sup> &ensp; <b>&middot;</b> &ensp;
-                    <a href="https://www.ethansmith2000.com/" target="_blank">Ethan&nbsp;Smith</a><sup>2</sup> &ensp; <b>&middot;</b> &ensp;
-                    <a href="https://xiaoyang-rebecca.github.io/cv/" target="_blank">Rebecca&nbsp;Li</a><sup>2</sup> &ensp; <b>&middot;</b> &ensp;
-                    <a href="https://www.sainingxie.com/" target="_blank">Saining&nbsp;Xie</a><sup>3</sup>&ensp; <b>&middot;</b> &ensp;
-                    <a href="https://zheng-lab-anu.github.io/" target="_blank">Liang&nbsp;Zheng</a><sup>1</sup>&ensp;
-                </p>
-                <p align="center">
-                    <sup>1</sup> Australian National University &emsp; <sup>2</sup>Canva &emsp; <sup>3</sup>New York University &emsp; <br>
-                    <sub><sup>*</sup>Done during internship at Canva &emsp;</sub>
-                </p>
-            </div>
-        </div> -->
-
-        <!-- Collaboration Heading -->
-        <div style="text-align: center; margin: 40px 0 40px 0;">
-            <!-- Logo and collaboration line (largest) -->
-            <div style="display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        gap: 20px;
-                        margin-bottom: 15px;">
-                <img src="./static/img/logos/repa-e-logo.png" alt="REPA-E"
-                     style="height: 60px;">
-                <h2 style="color: #6c757d;
-                           font-weight: 300;
-                           margin: 0;
-                           font-size: 1.8em;
-                           letter-spacing: 1px;
-                           font-family: 'Georgia', 'Times New Roman', serif;">
-                    <a href="https://github.com/End2End-Diffusion/REPA-E" target="_blank" style="color: #6c757d; text-decoration: none;">REPA-E</a> <span style="filter: grayscale(100%);">🤝</span> <a href="https://x.com/canva" target="_blank" style="color: #6c757d; text-decoration: none;">Canva</a>
-                </h2>
-                <img src="./static/img/logos/canva-logo.png" alt="Canva"
-                     style="height: 60px;">
-            </div>
-
-            <!-- "presents" line (smaller) -->
-            <p style="color: #6c757d;
-                      font-weight: 300;
-                      margin: 10px 0;
-                      font-size: 1.1em;
-                      letter-spacing: 0.5px;
-                      font-family: 'Georgia', 'Times New Roman', serif;">
-                presents
-            </p>
-
-            <!-- Subtitle line (medium) -->
-            <p style="color: #6c757d;
-                      font-weight: 400;
-                      margin: 10px 0 0 0;
-                      font-size: 1.2em;
-                      letter-spacing: 0.3px;
-                      line-height: 1.4;
-                      white-space: nowrap;
-                      font-family: 'Georgia', 'Times New Roman', serif;">
-                Family of end-to-end tuned VAEs for supercharging T2I diffusion transformers
-            </p>
-
-            <!-- Team Members -->
-            <p style="color: #6c757d;
-                      font-weight: 400;
-                      margin: 15px 0 5px 0;
-                      font-size: 0.95em;
-                      line-height: 1.8;">
-                <strong style="color: #555;">REPA-E Team:</strong>
-                <a href="https://scholar.google.com.au/citations?user=GQzvqS4AAAAJ" target="_blank" style="color: #6c757d;">Xingjian Leng<sup>*</sup></a>,
-                <a href="https://1jsingh.github.io/" target="_blank" style="color: #6c757d;">Jaskirat Singh<sup>*</sup></a>,
-                <a href="https://hou-yz.github.io/" target="_blank" style="color: #6c757d;">Yunzhong Hou</a>,
-                <a href="https://people.csiro.au/X/Z/Zhenchang-Xing/" target="_blank" style="color: #6c757d;">Zhenchang Xing</a>,
-                <a href="https://www.sainingxie.com/" target="_blank" style="color: #6c757d;">Saining Xie</a>,
-                <a href="https://zheng-lab-anu.github.io/" target="_blank" style="color: #6c757d;">Liang Zheng</a>
-                <br>
-                <strong style="color: #555;">Canva Team:</strong>
-                <a href="https://rynmurdock.github.io/" target="_blank" style="color: #6c757d;">Ryan Murdock</a>,
-                <a href="https://www.ethansmith2000.com/" target="_blank" style="color: #6c757d;">Ethan Smith</a>,
-                <a href="https://xiaoyang-rebecca.github.io/cv/" target="_blank" style="color: #6c757d;">Rebecca Li</a>
-            </p>
-        </div>
-
         <hr style="width: 60%; margin: 20px auto; border: none; border-top: 1px solid #d0d0d0;">
 
         <div class="sidenote-container">

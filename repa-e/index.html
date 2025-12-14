@@ -157,89 +157,68 @@
         </nav>
 
         <div class="header-wrapper">
-            <div class="header-container" id="header-container">
-                <!-- Title section - full width, centered -->
-                <div class="header-title">
-                    <h1 style="margin-top: 0px">REPA-E: Unlocking VAE for</h1>
+            <div class="central-header">
+                <!-- Title -->
+                <div class="title-section">
+                    <h1>REPA-E: Unlocking VAE for</h1>
                     <h2>End-to-End Tuning of <em>Latent Diffusion Transformers</em></h2>
-                    <blockquote style="border-left: 3px solid #949393; padding-left: 1em; margin: 1em auto; max-width: 800px; font-style: italic; color: #444; ">
-                        We show that latent diffusion models and their VAE tokenizer can be effectively trained end-to-end using a simple representation-alignment (REPA) loss.
-                        <strong style="color: #2563eb;">REPA-E achieves state-of-the-art FID scores of 1.12 and 1.69</strong> with and without classifier-free guidance on ImageNet 256×256.
-                    </blockquote>
-
-                    <hr style="border: none; border-top: 1px solid #e5e5e5; margin: 1.5em auto; max-width: 600px;">
                 </div>
 
-                <!-- Two-column section: key points left, hero image right -->
-                <div class="header-columns">
-                    <div class="header-content">
-                        <!-- Key Points Icon Container -->
-                        <div class="icon-container">
-                            <div class="icon-item">
-                                <img src="./static/img/icons/speed.svg" alt="Speed Icon">
-                                <div><strong>17× Faster Training</strong>: REPA-E significantly accelerates diffusion training compared to REPA and 45× faster than vanilla training.</div>
-                            </div>
-                            <div class="icon-item">
-                                <img src="./static/img/icons/quality.svg" alt="Quality Icon">
-                                <div><strong>SOTA Generation Quality</strong>: Achieves FID 1.12 (w/ CFG) and 1.69 (w/o CFG) on ImageNet 256×256.</div>
-                            </div>
-                            <div class="icon-item">
-                                <img src="./static/img/icons/dropin.svg" alt="Drop-in Icon">
-                                <div><strong>Drop-in VAE Replacements</strong>: E2E-VAE serves as a superior drop-in replacement across diverse diffusion architectures.</div>
-                            </div>
+                <!-- Authors -->
+                <div class="authors">
+                    <a href="https://scholar.google.com.au/citations?user=GQzvqS4AAAAJ" target="_blank">Xingjian Leng</a><sup>1*</sup> &emsp;
+                    <a href="https://1jsingh.github.io/" target="_blank">Jaskirat Singh</a><sup>1*</sup> &emsp;
+                    <a href="https://hou-yz.github.io/" target="_blank">Yunzhong Hou</a><sup>1</sup> &emsp;
+                    <a href="https://people.csiro.au/X/Z/Zhenchang-Xing/" target="_blank">Zhenchang Xing</a><sup>2</sup> &emsp;
+                    <a href="https://www.sainingxie.com/" target="_blank">Saining Xie</a><sup>3</sup> &emsp;
+                    <a href="https://zheng-lab-anu.github.io/" target="_blank">Liang Zheng</a><sup>1</sup>
+                    <div class="affiliations">
+                        <sup>1</sup>ANU &emsp; <sup>2</sup>Data61-CSIRO &emsp; <sup>3</sup>New York University
+                    </div>
+                    <div class="author-note"><sup>*</sup>Equal Contribution</div>
+                </div>
+
+                <!-- TL;DR -->
+                <div class="tldr-section">
+                    <p><span class="tldr-label">TL;DR:</span> We show that latent diffusion models and their VAE tokenizer can be effectively trained end-to-end using a simple representation-alignment (REPA) loss. <strong>REPA-E achieves state-of-the-art FID scores of 1.12 and 1.69</strong> with and without classifier-free guidance on ImageNet 256×256.</p>
+                </div>
+
+                <!-- Key points + Hero image -->
+                <div class="hero-section">
+                    <div class="key-points">
+                        <div class="key-point">
+                            <img class="key-point-icon" src="./static/img/icons/speed.svg" alt="Speed Icon">
+                            <div class="key-point-text"><strong>17× Faster Training</strong>: REPA-E significantly accelerates diffusion training compared to REPA and 45× faster than vanilla training.</div>
+                        </div>
+                        <div class="key-point">
+                            <img class="key-point-icon" src="./static/img/icons/quality.svg" alt="Quality Icon">
+                            <div class="key-point-text"><strong>SOTA Generation Quality</strong>: Achieves FID 1.12 (w/ CFG) and 1.69 (w/o CFG) on ImageNet 256×256.</div>
+                        </div>
+                        <div class="key-point">
+                            <img class="key-point-icon" src="./static/img/icons/dropin.svg" alt="Drop-in Icon">
+                            <div class="key-point-text"><strong>Drop-in VAE Replacements</strong>: E2E-VAE serves as a superior drop-in replacement across diverse diffusion architectures.</div>
                         </div>
 
-                        <div class="button-container">
+                        <div class="button-row">
                             <a href="https://arxiv.org/abs/2504.10483" class="button paper-link" target="_blank">
-                                <span class="icon is-small">
-                                    <i class="ai ai-arxiv"></i>
-                                </span>
-                                arXiv
+                                <span class="icon is-small"><i class="ai ai-arxiv"></i></span> arXiv
                             </a>
                             <a href="https://github.com/End2End-Diffusion/REPA-E" class="button" target="_blank">
-                                <span class="icon is-small">
-                                    <i class="fab fa-github"></i>
-                                </span>
-                                <span>Code</span>
+                                <span class="icon is-small"><i class="fab fa-github"></i></span> Code
                             </a>
                             <a href="https://huggingface.co/REPA-E" class="button" target="_blank">
-                                <span class="icon is-small">
-                                    <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face logo" style="height: 1em;">
-                                </span>
-                                <span>Models</span>
+                                <span class="icon is-small"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HF" style="height: 1em;"></span> Models
                             </a>
                         </div>
                     </div>
-                    <div class="header-image">
-                        <img draggable="false" data-zoomable="" src="assets/viz-results-v4.webp" alt="REPA-E Results Visualization" class="teaser-image">
+                    <div class="hero-media">
+                        <img draggable="false" data-zoomable="" src="assets/viz-results-v4.webp" alt="REPA-E Results Visualization">
                     </div>
                 </div>
             </div>
         </div>
 
     <d-article>
-        <div class="byline">
-            <div class="byline-container">
-                <p>
-                    <a href="https://scholar.google.com.au/citations?user=GQzvqS4AAAAJ" class="author-link" target="_blank">Xingjian Leng<sup>1*</sup></a> &emsp;
-                    <a href="https://1jsingh.github.io/" class="author-link" target="_blank">Jaskirat Singh<sup>1*</sup></a> &emsp;
-                    <a href="https://hou-yz.github.io/" class="author-link" target="_blank">Yunzhong Hou<sup>1</sup></a> &emsp;
-                    <br>
-                    <a href="https://people.csiro.au/X/Z/Zhenchang-Xing/" class="author-link" target="_blank">Zhenchang Xing<sup>2</sup></a> &emsp;
-                    <a href="https://www.sainingxie.com/" class="author-link" target="_blank">Saining Xie<sup>3</sup></a> &emsp;
-                    <a href="https://zheng-lab-anu.github.io/" class="author-link" target="_blank">Liang Zheng<sup>1</sup></a>
-                </p>
-                <p style="text-align: center;">
-                    <span class="affiliation-link"><sup>1</sup>ANU</span> &emsp;
-                    <span class="affiliation-link"><sup>2</sup>Data61-CSIRO</span> &emsp;
-                    <span class="affiliation-link"><sup>3</sup>New York University</span>
-                </p>
-                <p style="text-align: center; margin-bottom: 0;">
-                    <span class="author-note"><sup>*</sup>Equal Contribution</span>
-                </p>
-            </div>
-        </div>
-
         <!-- Key Findings -->
         <div class="key-findings">
             <h4 class="key-findings-title">Key Findings</h4>
@@ -1165,7 +1144,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateTOC() {
         const scrollPos = window.scrollY;
-        const header = document.getElementById('header-container');
+        const header = document.querySelector('.header-wrapper');
         const headerBottom = header ? header.offsetTop + header.offsetHeight : 0;
 
         // Show/hide TOC based on scroll position
