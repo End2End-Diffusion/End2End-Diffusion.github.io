@@ -1291,5 +1291,23 @@ with torch.no_grad():
             updateTOC();
         });
         </script>
+
+        <script>
+        // Match hero image height to key-points column
+        function adjustHeroImageHeight() {
+            const keyPoints = document.querySelector('.central-header .key-points');
+            const heroImg = document.querySelector('.central-header .hero-media img');
+            if (keyPoints && heroImg) {
+                const keyPointsHeight = keyPoints.offsetHeight;
+                if (heroImg.naturalHeight > keyPointsHeight) {
+                    heroImg.style.maxHeight = keyPointsHeight + 'px';
+                } else {
+                    heroImg.style.maxHeight = '';
+                }
+            }
+        }
+        window.addEventListener('load', adjustHeroImageHeight);
+        window.addEventListener('resize', adjustHeroImageHeight);
+        </script>
     </body>
 </html>

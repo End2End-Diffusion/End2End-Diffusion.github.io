@@ -712,13 +712,20 @@ body {
 
 /* Key points + image two column */
 .central-header .hero-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: 40px;
     margin: 30px auto;
     max-width: 1000px;
     text-align: left;
-    align-items: start;
+    align-items: flex-start;
+}
+
+.central-header .hero-section > .key-points {
+    flex: 1;
+}
+
+.central-header .hero-section > .hero-media {
+    flex: 1;
 }
 
 .central-header .key-points {
@@ -753,13 +760,15 @@ body {
 
 .central-header .hero-media {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
 }
 
 .central-header .hero-media img,
 .central-header .hero-media video {
     max-width: 100%;
+    height: auto;
+    transition: max-height 0.2s ease;
 }
 
 /* Button container */
