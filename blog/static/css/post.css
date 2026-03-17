@@ -340,10 +340,13 @@ body.post-page ::selection {
 
 /* === CONTENT LAYOUT === */
 .post-layout {
-    position: relative;
     max-width: var(--post-content-width);
     margin: 0 auto;
     padding: var(--post-gap-2xl) var(--post-gap-lg);
+}
+
+body.post-page {
+    overflow-x: hidden;
 }
 
 /* === TABLE OF CONTENTS (Fixed Left) === */
@@ -355,7 +358,7 @@ body.post-page ::selection {
     .post-toc {
         display: block;
         position: fixed;
-        left: max(16px, calc((100vw - var(--post-content-width)) / 2 - var(--post-toc-width) - 80px));
+        left: max(24px, calc(50% - var(--post-content-width) / 2 - var(--post-toc-width) - 60px));
         top: 80px;
         width: var(--post-toc-width);
         max-height: calc(100vh - 120px);
@@ -569,15 +572,15 @@ body.post-page ::selection {
     font-size: 0.75rem;
 }
 
-/* Desktop: right margin placement */
-@media (min-width: 1200px) {
+/* Desktop: right margin sidenotes — only when viewport has room */
+@media (min-width: 1100px) {
     .post-content {
         position: relative;
     }
 
     .sidenote {
         position: absolute;
-        right: calc(-1 * var(--post-sidenote-width) - 40px);
+        right: calc(-1 * var(--post-sidenote-width) - 32px);
         width: var(--post-sidenote-width);
         margin: 0;
         padding: 0;
