@@ -136,6 +136,20 @@
     gap: 1.5rem;
  }
 
+ .header-nav-link {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: color 0.2s ease;
+ }
+
+ .header-nav-link:hover {
+    color: var(--text-primary);
+ }
+
  .header-divider {
     width: 1px;
     height: 1.5rem;

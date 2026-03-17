@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | End2End Diffusion</title>
+    <link rel="icon" type="image/png" href="../static/img/kitty.png">
+
+    <!-- Open Graph -->
+    <meta property="og:url" content="https://end2end-diffusion.github.io/blog/" />
+    <meta property="og:title" content="Blog — End2End Diffusion" />
+    <meta property="og:description" content="Research notes, hypotheses, and findings on end-to-end diffusion training." />
+    <meta property="og:type" content="website" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Theme init — prevent flash -->
+    <script>
+        (function() {
+            let theme = localStorage.getItem('theme');
+            if (!theme) theme = 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <!-- Styles: landing.css for variables/base, then listing-specific -->
+    <link rel="stylesheet" href="../static/css/landing.css">
+    <link rel="stylesheet" href="static/css/blog-listing.css">
+</head>
+<body class="blog-listing">
+
+    <div class="container">
+
+        <!-- Header -->
+        <header class="blog-header">
+            <div class="blog-header-left">
+                <a href="../index.html" class="logo">End2End Diffusion</a>
+                <span class="header-sep">/</span>
+                <span class="header-section-label">Blog</span>
+            </div>
+            <div class="header-right">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Intro -->
+        <section class="blog-intro">
+            <h1>Research Log</h1>
+            <p>Notes, hypotheses, and findings from our work on end-to-end diffusion training and visual representation learning.</p>
+        </section>
+
+        <!-- Series Filters -->
+        <div class="series-filters" role="tablist" aria-label="Filter posts by series">
+            <button class="series-pill active" data-series="all" role="tab" aria-selected="true">All</button>
+            <button class="series-pill" data-series="noumena" role="tab" aria-selected="false">Noumena</button>
+            <button class="series-pill" data-series="scaling-laws" role="tab" aria-selected="false">Scaling Laws</button>
+            <button class="series-pill" data-series="representation" role="tab" aria-selected="false">Representation</button>
+        </div>
+
+        <!-- Post List -->
+        <ol class="post-list">
+
+            <li data-series="noumena">
+                <a href="posts/noumena/" class="post-card">
+                    <div class="post-meta">
+                        <span class="post-number">#0004</span>
+                        <span class="meta-dot">&bull;</span>
+                        <span class="status-badge status-badge--research">research</span>
+                        <time class="post-date" datetime="2026-03-17">Mar 17, 2026</time>
+                    </div>
+                    <h2 class="post-title">On the Geometry of Latent Token Spaces in End-to-End VAEs</h2>
+                    <p class="post-subtitle">Investigating how pseudo-token embeddings organize spatial structure during joint encoder-decoder training.</p>
+                    <span class="post-series-tag">Noumena</span>
+                </a>
+            </li>
+
+            <li data-series="scaling-laws">
+                <a href="#" class="post-card">
+                    <div class="post-meta">
+                        <span class="post-number">#0003</span>
+                        <span class="meta-dot">&bull;</span>
+                        <span class="status-badge status-badge--hypothesis">hypothesis</span>
+                        <time class="post-date" datetime="2026-03-10">Mar 10, 2026</time>
+                    </div>
+                    <h2 class="post-title">Compute-Optimal Scaling for End-to-End Diffusion: A Hypothesis</h2>
+                    <p class="post-subtitle">Early observations suggest a distinct scaling regime when the VAE and DiT are co-trained. Are Chinchilla-style laws applicable here?</p>
+                    <span class="post-series-tag">Scaling Laws</span>
+                </a>
+            </li>
+
+            <li data-series="representation">
+                <a href="#" class="post-card">
+                    <div class="post-meta">
+                        <span class="post-number">#0002</span>
+                        <span class="meta-dot">&bull;</span>
+                        <span class="status-badge status-badge--result">result</span>
+                        <time class="post-date" datetime="2026-02-28">Feb 28, 2026</time>
+                    </div>
+                    <h2 class="post-title">Spatial Structure Is All You Need for Alignment</h2>
+                    <p class="post-subtitle">Our large-scale empirical analysis confirms spatial structure, not global information, drives generation performance when aligning external representations.</p>
+                    <span class="post-series-tag">Representation</span>
+                </a>
+            </li>
+
+            <li data-series="noumena">
+                <a href="#" class="post-card">
+                    <div class="post-meta">
+                        <span class="post-number">#0001</span>
+                        <span class="meta-dot">&bull;</span>
+                        <span class="status-badge status-badge--note">note</span>
+                        <time class="post-date" datetime="2026-02-15">Feb 15, 2026</time>
+                    </div>
+                    <h2 class="post-title">Why We Started This Blog</h2>
+                    <p class="post-subtitle">A short note on making research thinking visible — the motivations behind maintaining a public research log.</p>
+                    <span class="post-series-tag">Noumena</span>
+                </a>
+            </li>
+
+        </ol>
+
+        <!-- Footer -->
+        <footer class="blog-footer">
+            <a href="../index.html">&larr; Back to End2End Diffusion</a>
+        </footer>
+
+    </div>
+
+    <!-- JS: theme toggle + series filtering -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Theme toggle (mirrors landing.js) ---
+        const toggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        let current = localStorage.getItem('theme');
+        if (!current) {
+            current = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        html.setAttribute('data-theme', current);
+
+        toggle.addEventListener('click', () => {
+            const now = html.getAttribute('data-theme');
+            const next = now === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+
+        // --- Series filter ---
+        const pills = document.querySelectorAll('.series-pill');
+        const posts = document.querySelectorAll('.post-list > li');
+
+        // Check URL for ?series= param
+        const params = new URLSearchParams(window.location.search);
+        const urlSeries = params.get('series');
+        if (urlSeries) {
+            pills.forEach(p => {
+                p.classList.toggle('active', p.dataset.series === urlSeries);
+                p.setAttribute('aria-selected', p.dataset.series === urlSeries);
+            });
+            filterPosts(urlSeries);
+        }
+
+        pills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                const series = pill.dataset.series;
+
+                pills.forEach(p => {
+                    p.classList.remove('active');
+                    p.setAttribute('aria-selected', 'false');
+                });
+                pill.classList.add('active');
+                pill.setAttribute('aria-selected', 'true');
+
+                filterPosts(series);
+            });
+        });
+
+        function filterPosts(series) {
+            posts.forEach(post => {
+                if (series === 'all' || post.dataset.series === series) {
+                    post.style.display = '';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        }
+    });
+    </script>
+
+</body>
+</html>

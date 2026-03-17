@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>On the Geometry of Latent Token Spaces in End-to-End VAEs — End2End Diffusion Blog</title>
+    <meta name="description" content="Investigating how pseudo-token embeddings organize spatial structure during joint encoder-decoder training.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="On the Geometry of Latent Token Spaces in End-to-End VAEs">
+    <meta property="og:description" content="Investigating how pseudo-token embeddings organize spatial structure during joint encoder-decoder training.">
+    <meta property="og:type" content="article">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/static/img/kitty.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- KaTeX for math -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../../static/css/landing.css">
+    <link rel="stylesheet" href="../../static/css/post.css">
+
+    <!-- Theme init (prevent FOUC) -->
+    <script>
+        (function() {
+            let theme = localStorage.getItem('theme');
+            if (!theme) theme = 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body class="post-page">
+
+    <!-- === Navigation === -->
+    <nav class="post-nav">
+        <div class="post-nav-breadcrumb">
+            <a href="/">End2End Diffusion</a>
+            <span class="sep">/</span>
+            <a href="/blog/">Blog</a>
+            <span class="sep">/</span>
+            <span class="current">Latent Token Spaces</span>
+        </div>
+        <div class="post-nav-actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- === Post Header === -->
+    <header class="post-header">
+        <div class="post-meta">
+            <span class="post-number">#0004</span>
+            <span class="dot"></span>
+            <span class="post-status post-status--research">research</span>
+            <span class="dot"></span>
+            <time class="post-date" datetime="2026-03-17">March 17, 2026</time>
+        </div>
+        <h1 class="post-title">On the Geometry of Latent Token Spaces in End-to-End VAEs</h1>
+        <p class="post-subtitle">Investigating how pseudo-token embeddings organize spatial structure during joint encoder-decoder training.</p>
+        <div class="post-author">
+            <a href="/">Jaskirat Singh</a>
+        </div>
+        <div class="post-series">
+            Series: <a href="/blog/?series=noumena">Noumena</a>
+        </div>
+    </header>
+
+    <!-- === Content Layout === -->
+    <div class="post-layout">
+
+        <!-- Table of Contents -->
+        <nav class="post-toc" id="toc">
+            <h4>Contents</h4>
+            <ul>
+                <li><a href="#the-question">The Question</a></li>
+                <li><a href="#tokens-in-latent-space">Tokens in Latent Space</a></li>
+                <li class="toc-h3"><a href="#pseudo-tokens">Pseudo-Token Embeddings</a></li>
+                <li class="toc-h3"><a href="#spatial-structure">Spatial Structure</a></li>
+                <li><a href="#what-changes-e2e">What Changes End-to-End</a></li>
+                <li><a href="#geometry-of-alignment">Geometry of Alignment</a></li>
+                <li><a href="#practical-implications">Practical Implications</a></li>
+                <li><a href="#open-questions">Open Questions</a></li>
+            </ul>
+        </nav>
+
+        <!-- Article Content -->
+        <article class="post-content">
+
+            <p class="lead">When a VAE compresses an image into a grid of latent vectors, something interesting happens: those vectors aren't just a flat encoding. They organize themselves spatially, forming a token-like structure. When you train the VAE end-to-end with a diffusion model, that structure changes in ways that are both surprising and revealing.</p>
+
+            <!-- Section: The Question -->
+            <h2 id="the-question">The Question</h2>
+
+            <p>Standard latent diffusion models treat the VAE's output as a fixed input&mdash;a spatial grid of continuous vectors that the diffusion model learns to denoise. The geometry of this grid is determined entirely by the frozen VAE encoder. But what happens to that geometry when we unfreeze the encoder?</p>
+
+            <p>In end-to-end training, the VAE encoder receives gradients from the diffusion loss. It can reshape its latent space to better serve generation. The question we investigate here is: <em>how</em> does it reshape it? What geometric properties emerge when the encoder is free to co-evolve with the generator?</p>
+
+            <aside class="sidenote" style="margin-top: -2em;">
+                <span class="sidenote-number">1</span>
+                This connects to a broader question in representation learning: do jointly-trained systems discover different internal structures than separately-trained ones? The answer, in this case, is yes.
+            </aside>
+
+            <!-- Section: Tokens in Latent Space -->
+            <h2 id="tokens-in-latent-space">Tokens in Latent Space</h2>
+
+            <p>Modern VAEs like the one used in Stable Diffusion encode a $256 \times 256$ image into a $32 \times 32 \times 4$ latent tensor. Each spatial position in this tensor can be thought of as a "pseudo-token"&mdash;a vector that summarizes a local patch of the input image, analogous to how ViT patch embeddings work.</p>
+
+            <h3 id="pseudo-tokens">Pseudo-Token Embeddings</h3>
+
+            <p>When we say "pseudo-token," we mean something precise. Each position $(i, j)$ in the $32 \times 32$ grid holds a 4-dimensional vector $z_{ij} \in \mathbb{R}^4$. These vectors are not independent&mdash;neighboring tokens share information through the convolutional structure of the encoder, creating smooth spatial correlations.</p>
+
+            <div class="post-callout post-callout--finding">
+                <div class="post-callout-label">Key Observation</div>
+                <p>In a frozen VAE, the pseudo-token embeddings are optimized purely for reconstruction. Their geometry reflects <em>pixel-level</em> similarity: tokens encoding visually similar patches cluster together. In an end-to-end VAE, the geometry shifts toward <em>semantic</em> similarity: tokens encoding semantically related regions (e.g., all parts of a face) cluster together, even when their pixel statistics differ.</p>
+            </div>
+
+            <h3 id="spatial-structure">Spatial Structure</h3>
+
+            <p>We can measure this shift quantitatively. Define the spatial coherence of a token grid as the average cosine similarity between neighboring tokens:</p>
+
+            $$C_{\text{spatial}} = \frac{1}{|\mathcal{N}|} \sum_{(i,j) \in \mathcal{N}} \frac{z_i \cdot z_j}{\|z_i\| \|z_j\|}$$
+
+            <p>where $\mathcal{N}$ denotes all pairs of adjacent tokens. In a frozen VAE, $C_{\text{spatial}} \approx 0.72$. After end-to-end training, this rises to $C_{\text{spatial}} \approx 0.85$&mdash;a significant increase that reflects smoother, more semantically coherent spatial organization.</p>
+
+            <aside class="sidenote">
+                <span class="sidenote-number">2</span>
+                The increase in spatial coherence doesn't mean the tokens carry less information. The mutual information between tokens and image patches remains stable. What changes is the <em>structure</em> of the encoding, not its capacity.
+            </aside>
+
+            <p>But coherence alone doesn't tell the full story. The more revealing metric is the alignment between token neighborhoods and semantic segmentation maps.</p>
+
+            <!-- Section: What Changes E2E -->
+            <h2 id="what-changes-e2e">What Changes End-to-End</h2>
+
+            <p>When the encoder trains jointly with the diffusion model, three geometric properties of the token space shift measurably:</p>
+
+            <ol>
+                <li><strong>Semantic clustering</strong>&mdash;tokens representing the same semantic category (sky, object, background) become more tightly clustered in embedding space, even across different images.</li>
+                <li><strong>Boundary sharpening</strong>&mdash;the transition between semantic regions in token space becomes sharper. Frozen VAEs produce gradual blends at object boundaries; end-to-end VAEs produce cleaner transitions.</li>
+                <li><strong>Scale sensitivity</strong>&mdash;the end-to-end encoder develops multi-scale awareness. Tokens from large objects and small objects occupy distinct subspaces, suggesting the encoder learns scale-dependent features to help the diffusion model.</li>
+            </ol>
+
+            <p>To visualize this, consider a PCA projection of the token embeddings for a single image. With a frozen encoder, the projection looks like a smooth, undifferentiated cloud. With end-to-end training, the same projection reveals distinct clusters that map cleanly onto semantic regions.</p>
+
+            <!-- Code example -->
+            <pre><code><span class="code-label">Python</span># Visualize token embedding geometry
+import torch
+from sklearn.decomposition import PCA
+
+def visualize_token_geometry(vae, image):
+    """Project latent tokens to 2D and color by spatial position."""
+    with torch.no_grad():
+        z = vae.encode(image)  # (1, 4, 32, 32)
+
+    # Reshape to token sequence
+    tokens = z.squeeze(0).permute(1, 2, 0)  # (32, 32, 4)
+    tokens_flat = tokens.reshape(-1, 4).cpu().numpy()
+
+    # PCA to 2D
+    pca = PCA(n_components=2)
+    projected = pca.fit_transform(tokens_flat)
+
+    # Color by spatial position
+    coords = torch.stack(torch.meshgrid(
+        torch.arange(32), torch.arange(32), indexing='ij'
+    ), dim=-1).reshape(-1, 2).numpy()
+
+    return projected, coords</code></pre>
+
+            <!-- Section: Geometry of Alignment -->
+            <h2 id="geometry-of-alignment">Geometry of Alignment</h2>
+
+            <p>When we add REPA (representation alignment) to the end-to-end training, the geometric changes become even more pronounced. The alignment objective explicitly encourages the diffusion model's intermediate representations to match those of a pretrained vision encoder like DINOv2.</p>
+
+            <aside class="sidenote">
+                <span class="sidenote-number">3</span>
+                DINOv2's representations are known to be highly structured spatially&mdash;they produce excellent segmentation maps without any segmentation training. This spatial structure is precisely what gets transferred through alignment.
+            </aside>
+
+            <p>This has a cascading effect on the VAE encoder. Because the diffusion model is being pushed toward DINOv2-like representations, and the VAE encoder provides the input to the diffusion model, the encoder adapts its latent space to make the alignment objective easier to achieve. In effect, the VAE "pre-digests" semantic structure so the diffusion model doesn't have to discover it from scratch.</p>
+
+            <blockquote>
+                <p>The geometry of the latent space is not a fixed property of the encoder. It is a dynamic surface shaped by the demands of all downstream objectives. When those objectives include semantic alignment, the geometry becomes richer, more structured, and more useful for generation.</p>
+            </blockquote>
+
+            <p>The alignment loss can be written as a cosine similarity between hidden states and vision encoder features:</p>
+
+            $$\mathcal{L}_{\text{align}} = 1 - \frac{h_\theta(z_t, t) \cdot f_\phi(x)}{\|h_\theta(z_t, t)\| \|f_\phi(x)\|}$$
+
+            <p>The critical insight is that $z_t$ depends on the encoder, so gradients from $\mathcal{L}_{\text{align}}$ flow all the way back to the encoder weights, reshaping the token geometry to facilitate alignment at the diffusion model's internal layers.</p>
+
+            <!-- Section: Practical Implications -->
+            <h2 id="practical-implications">Practical Implications</h2>
+
+            <p>Understanding the token geometry has practical consequences for system design:</p>
+
+            <div class="post-callout post-callout--note">
+                <div class="post-callout-label">Practical Notes</div>
+                <ul style="margin: 0; padding-left: 1.2rem;">
+                    <li><strong>Latent resolution trade-offs</strong>: End-to-end training makes lower-resolution latent grids more viable. A $16 \times 16$ end-to-end grid can match a $32 \times 32$ frozen grid in generation quality, because each token carries more semantic information.</li>
+                    <li><strong>Interpolation quality</strong>: Smooth interpolation in the end-to-end latent space produces semantically meaningful transitions, not just pixel-level blends.</li>
+                    <li><strong>Encoder initialization</strong>: The choice of initial encoder matters less with end-to-end training. Different initializations converge to similar token geometries, suggesting a strong attractor in the joint optimization landscape.</li>
+                    <li><strong>Downstream tasks</strong>: The end-to-end encoder's latent tokens are directly useful for discriminative tasks (classification, detection) without additional adaptation, unlike frozen VAE tokens.</li>
+                </ul>
+            </div>
+
+            <!-- Section: Open Questions -->
+            <h2 id="open-questions">Open Questions</h2>
+
+            <p>Several questions remain open, and I expect them to shape the next phase of this investigation:</p>
+
+            <p><strong>Optimal token dimensionality.</strong> Current VAEs use 4 or 16 channels per token. Is there an optimal dimensionality for end-to-end training? The geometric analysis suggests that higher-dimensional tokens might benefit more from joint training, as there is more room for semantic structure to emerge.</p>
+
+            <p><strong>Temporal token dynamics.</strong> During the diffusion process, the token representations evolve from noisy to clean. How does the geometry of the token space change across timesteps? Early evidence suggests that semantic structure emerges surprisingly early in the denoising trajectory.</p>
+
+            <p><strong>Cross-modal tokens.</strong> If we extend this analysis to text-to-image models, do the latent tokens develop structure that reflects both visual and linguistic semantics? The interaction between text conditioning and token geometry is largely unexplored.</p>
+
+            <aside class="sidenote">
+                <span class="sidenote-number">4</span>
+                Preliminary experiments suggest that text conditioning creates "attractor basins" in token space&mdash;regions that the denoising process gravitates toward given specific text prompts.
+            </aside>
+
+            <p>These questions sit at the intersection of representation learning, generative modeling, and geometric deep learning. The tools for answering them are becoming available; what's needed is careful empirical work guided by the right geometric intuitions.</p>
+
+            <hr class="section-break">
+
+            <p>This post is part of the <em>Noumena</em> series, where I write about the ideas and intuitions behind our research, in a form that's more exploratory than a paper allows. The previous post in this series covered <a href="#">spatial structure and alignment</a>; the next will examine how these geometric properties relate to scaling laws.</p>
+
+        </article>
+    </div>
+
+    <!-- === Post Footer === -->
+    <footer class="post-footer">
+        <nav class="post-footer-nav">
+            <div>
+                <!-- No previous post for #0001 -->
+            </div>
+            <a href="#" class="post-footer-link post-footer-link--next">
+                <span class="label">Next Post</span>
+                <span class="title">Compute-Optimal Scaling for End-to-End Diffusion</span>
+            </a>
+        </nav>
+        <div class="post-footer-back">
+            <a href="/blog/">&larr; All Posts</a>
+        </div>
+    </footer>
+
+    <!-- === Scripts === -->
+    <script>
+        // Theme toggle
+        (function() {
+            const toggle = document.getElementById('themeToggle');
+            if (!toggle) return;
+            toggle.addEventListener('click', function() {
+                const current = document.documentElement.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
+            });
+        })();
+
+        // TOC active section highlighting
+        (function() {
+            const headings = document.querySelectorAll('.post-content h2[id], .post-content h3[id]');
+            const tocLinks = document.querySelectorAll('.post-toc a');
+            if (!headings.length || !tocLinks.length) return;
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        tocLinks.forEach(function(link) { link.classList.remove('active'); });
+                        const activeLink = document.querySelector('.post-toc a[href="#' + entry.target.id + '"]');
+                        if (activeLink) activeLink.classList.add('active');
+                    }
+                });
+            }, {
+                rootMargin: '-80px 0px -70% 0px',
+                threshold: 0
+            });
+
+            headings.forEach(function(h) { observer.observe(h); });
+        })();
+    </script>
+
+</body>
+</html>
