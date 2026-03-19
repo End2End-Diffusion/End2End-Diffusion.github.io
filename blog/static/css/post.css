@@ -209,13 +209,15 @@ body.post-page ::selection {
 .post-header {
     max-width: var(--post-content-width);
     margin: 0 auto;
-    padding: var(--post-gap-3xl) var(--post-gap-lg) var(--post-gap-xl);
-    border-bottom: 1px solid var(--post-border);
+    padding: var(--post-gap-3xl) var(--post-gap-lg) var(--post-gap-2xl);
+    border-bottom: none;
+    text-align: center;
 }
 
 .post-meta {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.75rem;
     font-family: var(--post-font-ui);
     font-size: 0.8rem;
@@ -240,7 +242,6 @@ body.post-page ::selection {
     opacity: 0.5;
 }
 
-/* Status badges */
 /* Status badges — warm academic palette */
 .post-status {
     font-family: var(--post-font-ui);
@@ -285,28 +286,29 @@ body.post-page ::selection {
 .post-title {
     font-family: var(--post-font-body);
     font-size: 2.25rem;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.25;
     color: var(--post-text);
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.75rem 0;
     text-wrap: balance;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.01em;
 }
 
 .post-subtitle {
     font-family: var(--post-font-body);
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     font-weight: 400;
     font-style: italic;
-    line-height: 1.5;
+    line-height: 1.6;
     color: var(--post-text-secondary);
-    margin: 0 0 var(--post-gap-lg) 0;
+    margin: 0 0 var(--post-gap-md) 0;
 }
 
 .post-author {
     font-family: var(--post-font-ui);
     font-size: 0.9rem;
     color: var(--post-text-secondary);
+    text-align: center;
 }
 
 .post-author a {
@@ -326,6 +328,7 @@ body.post-page ::selection {
     font-family: var(--post-font-ui);
     font-size: 0.8rem;
     color: var(--post-text-muted);
+    text-align: center;
 }
 
 .post-series a {
@@ -336,6 +339,150 @@ body.post-page ::selection {
 
 .post-series a:hover {
     text-decoration: underline;
+}
+
+/* === HERO HEADER VARIANT === */
+.post-header--hero {
+    max-width: 780px;
+}
+
+.post-header--hero .post-title,
+.post-header--hero .post-subtitle,
+.post-header--hero .post-meta,
+.post-header--hero .post-author,
+.post-header--hero .post-series {
+    max-width: var(--post-content-width);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* === DECORATIVE RULE === */
+.post-header-rule {
+    width: 60px;
+    height: 1px;
+    margin: var(--post-gap-lg) auto;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--post-border),
+        transparent
+    );
+    opacity: 0.6;
+}
+
+/* === HERO BACKDROP (CSS-only geometric pattern) === */
+.post-hero-backdrop {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3.2 / 1;
+    margin: var(--post-gap-lg) 0;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--post-surface);
+    border: 1px solid var(--post-border);
+}
+
+/* Dot-grid lattice — evokes token positions in a latent space */
+.post-hero-backdrop::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+        circle,
+        var(--post-text-muted) 0.8px,
+        transparent 0.8px
+    );
+    background-size: 28px 28px;
+    background-position: 14px 14px;
+    opacity: 0.12;
+}
+
+/* Warm gradient wash — focal glow suggesting structure in the grid */
+.post-hero-backdrop::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 50% 70% at 30% 45%,
+            color-mix(in srgb, var(--post-accent) 7%, transparent),
+            transparent),
+        radial-gradient(ellipse 45% 60% at 72% 55%,
+            color-mix(in srgb, var(--badge-framing) 6%, transparent),
+            transparent),
+        radial-gradient(ellipse 35% 50% at 50% 50%,
+            color-mix(in srgb, var(--badge-note) 4%, transparent),
+            transparent);
+    pointer-events: none;
+}
+
+[data-theme="dark"] .post-hero-backdrop {
+    background: var(--post-surface);
+}
+
+[data-theme="dark"] .post-hero-backdrop::before {
+    opacity: 0.08;
+}
+
+/* === HEADER ORNAMENT === */
+.post-header-ornament {
+    display: inline-block;
+    margin-left: 0.75rem;
+    font-size: 0.65rem;
+    color: var(--post-text-muted);
+    opacity: 0.5;
+    letter-spacing: 0.5em;
+    vertical-align: middle;
+}
+
+/* === DROP CAP === */
+.post-content .lead::first-letter {
+    float: left;
+    font-family: var(--post-font-body);
+    font-size: 3.8em;
+    font-weight: 400;
+    line-height: 0.8;
+    margin-right: 0.08em;
+    margin-top: 0.05em;
+    color: var(--post-accent);
+}
+
+/* === ENTRANCE ANIMATIONS === */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.post-header .post-meta {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.post-header .post-title {
+    animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+.post-header .post-subtitle {
+    animation: fadeInUp 0.6s ease-out 0.15s both;
+}
+
+.post-hero-backdrop {
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.post-header .post-author {
+    animation: fadeInUp 0.6s ease-out 0.25s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .post-header *,
+    .post-hero-backdrop {
+        animation: none !important;
+    }
 }
 
 /* === CONTENT LAYOUT === */
@@ -841,12 +988,24 @@ body.post-page {
         padding: var(--post-gap-2xl) var(--post-gap-md) var(--post-gap-lg);
     }
 
+    .post-header--hero {
+        max-width: 100%;
+    }
+
     .post-title {
         font-size: 1.65rem;
     }
 
     .post-subtitle {
         font-size: 1.05rem;
+    }
+
+    .post-hero-backdrop {
+        border-radius: 2px;
+    }
+
+    .post-content .lead::first-letter {
+        font-size: 3em;
     }
 
     .post-layout {
@@ -897,6 +1056,14 @@ body.post-page {
 
     body.post-page {
         font-size: 16px;
+    }
+
+    .post-content .lead::first-letter {
+        font-size: 2.8em;
+    }
+
+    .post-hero-backdrop {
+        border-radius: 0;
     }
 }
 
