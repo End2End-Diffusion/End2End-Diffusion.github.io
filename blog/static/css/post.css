@@ -209,8 +209,31 @@ body.post-page ::selection {
 .post-header {
     max-width: var(--post-content-width);
     margin: 0 auto;
-    padding: var(--post-gap-3xl) var(--post-gap-lg) var(--post-gap-xl);
-    border-bottom: 1px solid var(--post-border);
+    padding: var(--post-gap-2xl) var(--post-gap-lg) var(--post-gap-lg);
+    border-bottom: none;
+}
+
+/* Decorative gradient rule — replaces plain border-bottom */
+.post-header-rule {
+    width: 80px;
+    height: 1px;
+    margin: var(--post-gap-md) 0;
+    background: linear-gradient(
+        90deg,
+        var(--post-text-muted),
+        var(--post-border),
+        transparent
+    );
+}
+
+/* Ornament after author name */
+.post-header-ornament {
+    display: inline-block;
+    margin-left: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--post-text-muted);
+    opacity: 0.45;
+    vertical-align: middle;
 }
 
 .post-meta {
@@ -460,6 +483,18 @@ body.post-page {
     font-size: 1.15rem;
     line-height: 1.85;
     color: var(--post-text);
+}
+
+/* Drop cap on lead paragraph */
+.post-content .lead::first-letter {
+    float: left;
+    font-family: var(--post-font-body);
+    font-size: 3.8em;
+    font-weight: 400;
+    line-height: 0.8;
+    margin-right: 0.08em;
+    margin-top: 0.05em;
+    color: var(--post-accent);
 }
 
 /* Links */
@@ -847,6 +882,10 @@ body.post-page {
 
     .post-subtitle {
         font-size: 1.05rem;
+    }
+
+    .post-content .lead::first-letter {
+        font-size: 3em;
     }
 
     .post-layout {
