@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+# Google Scholar bot
+User-agent: Google-Scholar
+Allow: /
+
+Sitemap: https://end2end-diffusion.github.io/sitemap.xml
