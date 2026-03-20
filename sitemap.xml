@@ -40,10 +40,10 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Blog post: Noumena -->
+  <!-- Blog post: AutoResearch -->
   <url>
-    <loc>https://end2end-diffusion.github.io/blog/posts/noumena/</loc>
-    <lastmod>2026-03-17</lastmod>
+    <loc>https://end2end-diffusion.github.io/blog/posts/autoresearch/</loc>
+    <lastmod>2026-03-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

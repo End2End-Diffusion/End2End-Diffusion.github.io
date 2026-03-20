@@ -6,50 +6,17 @@
     <description>Research notes, hypotheses, and findings on end-to-end diffusion training and visual representation learning.</description>
     <language>en</language>
     <atom:link href="https://end2end-diffusion.github.io/blog/rss.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Mon, 17 Mar 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 20 Mar 2026 00:00:00 GMT</lastBuildDate>
 
     <item>
-      <title>On the Geometry of Latent Token Spaces in End-to-End VAEs</title>
-      <link>https://end2end-diffusion.github.io/blog/posts/noumena/</link>
-      <guid isPermaLink="true">https://end2end-diffusion.github.io/blog/posts/noumena/</guid>
-      <description>Investigating how pseudo-token embeddings organize spatial structure during joint encoder-decoder training.</description>
+      <title>Scaling Diffusion Transformer Research with AutoResearch</title>
+      <link>https://end2end-diffusion.github.io/blog/posts/autoresearch/</link>
+      <guid isPermaLink="true">https://end2end-diffusion.github.io/blog/posts/autoresearch/</guid>
+      <description>Scaling Diffusion Transformer Research with AutoResearch.</description>
       <dc:creator>Jaskirat Singh</dc:creator>
-      <pubDate>Tue, 17 Mar 2026 00:00:00 GMT</pubDate>
+      <pubDate>Fri, 20 Mar 2026 00:00:00 GMT</pubDate>
       <category>research</category>
-      <category>Noumena</category>
-    </item>
-
-    <item>
-      <title>Compute-Optimal Scaling for End-to-End Diffusion: A Hypothesis</title>
-      <link>https://end2end-diffusion.github.io/blog/posts/0003-scaling/</link>
-      <guid isPermaLink="true">https://end2end-diffusion.github.io/blog/posts/0003-scaling/</guid>
-      <description>Early observations suggest a distinct scaling regime when the VAE and DiT are co-trained. Are Chinchilla-style laws applicable here?</description>
-      <dc:creator>Jaskirat Singh</dc:creator>
-      <pubDate>Tue, 10 Mar 2026 00:00:00 GMT</pubDate>
-      <category>hypothesis</category>
-      <category>Scaling Laws</category>
-    </item>
-
-    <item>
-      <title>Spatial Structure Is All You Need for Alignment</title>
-      <link>https://end2end-diffusion.github.io/blog/posts/0002-spatial/</link>
-      <guid isPermaLink="true">https://end2end-diffusion.github.io/blog/posts/0002-spatial/</guid>
-      <description>Our large-scale empirical analysis confirms spatial structure, not global information, drives generation performance when aligning external representations.</description>
-      <dc:creator>Jaskirat Singh</dc:creator>
-      <pubDate>Sat, 28 Feb 2026 00:00:00 GMT</pubDate>
-      <category>result</category>
-      <category>Representation</category>
-    </item>
-
-    <item>
-      <title>Why We Started This Blog</title>
-      <link>https://end2end-diffusion.github.io/blog/posts/0001-intro/</link>
-      <guid isPermaLink="true">https://end2end-diffusion.github.io/blog/posts/0001-intro/</guid>
-      <description>A short note on making research thinking visible — the motivations behind maintaining a public research log.</description>
-      <dc:creator>Jaskirat Singh</dc:creator>
-      <pubDate>Sun, 15 Feb 2026 00:00:00 GMT</pubDate>
-      <category>note</category>
-      <category>Noumena</category>
+      <category>AutoResearch</category>
     </item>
 
   </channel>
