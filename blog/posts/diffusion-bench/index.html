@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call for DiffusionBench: Holistic Benchmark for Diffusion Transformers — End2End Diffusion Blog</title>
+    <meta name="description" content="ImageNet FID has driven diffusion model research for years. We ask whether those gains transfer to text-to-image. The answer is only partial. DiffusionBench is our attempt at a holistic yardstick, and an open call to help build it.">
+
+    <!-- Google Scholar meta tags -->
+    <meta name="citation_title" content="Call for DiffusionBench: Holistic Benchmark for Diffusion Transformers">
+    <meta name="citation_publication_date" content="2026/05/30">
+    <meta name="citation_online_date" content="2026/05/30">
+    <meta name="citation_abstract" content="Diffusion model research has converged on ImageNet FID. We use a unified training framework, NanoGen, to ask whether ImageNet rankings transfer to text-to-image generation. The correlation is weak, especially at the top of the leaderboard. We introduce DiffusionBench as a holistic alternative and invite the community to help build it.">
+    <meta name="citation_language" content="en">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Call for DiffusionBench: Holistic Benchmark for Diffusion Transformers",
+      "description": "ImageNet FID has driven diffusion model research for years. We ask whether those gains transfer to text-to-image. The answer is only partial. DiffusionBench is our attempt at a holistic yardstick.",
+      "datePublished": "2026-05-30",
+      "publisher": {
+        "@type": "Organization",
+        "name": "End2End Diffusion",
+        "url": "https://end2end-diffusion.github.io"
+      },
+      "url": "https://end2end-diffusion.github.io/blog/posts/diffusion-bench/",
+      "mainEntityOfPage": "https://end2end-diffusion.github.io/blog/posts/diffusion-bench/",
+      "isAccessibleForFree": true,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "name": "End2End Diffusion Blog",
+        "url": "https://end2end-diffusion.github.io/blog/"
+      }
+    }
+    </script>
+
+    <!-- Open Graph -->
+    <meta property="og:url" content="https://end2end-diffusion.github.io/blog/posts/diffusion-bench/">
+    <meta property="og:title" content="Call for DiffusionBench: Holistic Benchmark for Diffusion Transformers">
+    <meta property="og:description" content="ImageNet FID has driven diffusion model research for years. Do those gains transfer to text-to-image? Only partially. An open call to help build a better yardstick.">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Call for DiffusionBench: Holistic Benchmark for Diffusion Transformers">
+    <meta name="twitter:description" content="ImageNet FID has driven diffusion model research for years. Do those gains transfer to text-to-image? Only partially. An open call to help build a better yardstick.">
+
+    <!-- RSS Feed & Canonical -->
+    <link rel="alternate" type="application/rss+xml" title="End2End Diffusion Blog" href="https://end2end-diffusion.github.io/blog/rss.xml">
+    <link rel="canonical" href="https://end2end-diffusion.github.io/blog/posts/diffusion-bench/">
+    <meta name="robots" content="index, follow">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/static/img/kitty.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../static/css/post.css">
+
+    <!-- Distill template (for numbered citations) -->
+    <script src="../../static/js/distill_template.v2.js"></script>
+
+    <!-- Theme init (prevent FOUC) -->
+    <script>
+        (function() {
+            let theme = localStorage.getItem('theme');
+            if (!theme) theme = 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body class="post-page">
+
+    <!-- === Navigation === -->
+    <nav class="post-nav">
+        <div class="post-nav-breadcrumb">
+            <a href="/">End2End Diffusion</a>
+            <span class="sep">/</span>
+            <a href="/blog/">Blog</a>
+            <span class="sep">/</span>
+            <span class="current">DiffusionBench</span>
+        </div>
+        <div class="post-nav-actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- === Post Header === -->
+    <header class="post-header">
+        <div class="post-meta">
+            <span class="post-number">#0001</span>
+            <span class="dot"></span>
+            <span class="post-status post-status--research">research</span>
+            <span class="dot"></span>
+            <time class="post-date" datetime="2026-05-30">May 30, 2026</time>
+        </div>
+        <h1 class="post-title">
+            Call for DiffusionBench
+            <span class="post-title-sub">Holistic Benchmark for Diffusion Transformers</span>
+        </h1>
+        <p class="post-subtitle">Because ImageNet evaluation alone is no longer enough. Come join us!</p>
+        <div class="post-series">
+            Series: <a href="/blog/?series=diffusionbench">DiffusionBench</a>
+        </div>
+        <div class="post-header-rule"></div>
+    </header>
+
+    <!-- === Content Layout === -->
+    <div class="post-layout">
+
+        <!-- TOC (desktop only) -->
+        <nav class="post-toc" aria-label="Table of contents">
+            <h4>Contents</h4>
+            <ul>
+                <li><a href="#monoculture">The ImageNet monoculture</a></li>
+                <li><a href="#transfer">Do ImageNet gains transfer?</a></li>
+                <li><a href="#nanogen">NanoGen: a unified codebase</a></li>
+                <li><a href="#call">DiffusionBench v0.1: a call for contributions</a></li>
+                <li><a href="#references">References</a></li>
+            </ul>
+        </nav>
+
+        <article class="post-content">
+
+            <p class="lead">Diffusion model research has converged on one number. That number is ImageNet FID. It is cheap to compute. It makes head-to-head comparisons easy. It has driven real progress on architectures and training recipes.</p>
+
+            <p>But most people use diffusion transformers for practical applications. Examples include text-to-image, text-to-video, world models, and so on. Few papers actually train and evaluate on these. The reason is friction. Each task needs different data, different evaluation, often a different codebase. So most work reports ImageNet alone.</p>
+
+            <p>That leaves an open question. Do gains on ImageNet transfer to the tasks we care about? Our early evidence says only partially. We are building <strong>DiffusionBench</strong> to study this honestly. This post explains why we started. It is also an open invitation to build it with us.</p>
+
+            <h2 id="monoculture">The ImageNet monoculture</h2>
+
+            <p>ImageNet class-conditional generation is the de facto benchmark. New diffusion methods report FID on it. Top numbers cluster tightly. The metric is mature.</p>
+
+            <p>That maturity has a cost. When everyone optimizes one number, the field can drift toward tricks that move the number without moving real capability. Recent work has also questioned whether FID itself reliably reflects perceptual quality<d-cite key="fid_critique_mmd1"></d-cite><d-cite key="fid_critique_mmd2"></d-cite>. The natural correction is to evaluate on other tasks. The most important one is text-to-image. In practice, this rarely happens.</p>
+
+            <p>Two forces keep it that way. First, T2I, T2V, and world models look like separate engineering projects. Each needs its own data pipeline and evaluation harness. Second, their metrics are noisier and easier to game. Both are fixable.</p>
+
+            <h2 id="transfer">Do ImageNet gains transfer?</h2>
+
+            <p>We trained the same set of methods under a shared recipe. We then measured ImageNet FID and four T2I metrics on each method.<span class="sidenote"><span class="sidenote-number">1</span>The T2I metrics are GenEval<d-cite key="geneval"></d-cite>, DPGBench<d-cite key="dpgbench"></d-cite>, GenAI-Bench<d-cite key="genaibench"></d-cite>, and SimpleEval (introduced in our work).</span> Figure 1 shows the correlation.</p>
+
+            <figure>
+                <div style="display: flex; gap: 10px; align-items: flex-start;">
+                    <img src="assets/fid_correlation_wcfg.png" alt="Correlation between ImageNet FID and T2I metrics, with classifier-free guidance" style="width: calc(50% - 5px);">
+                    <img src="assets/fid_correlation_nocfg.png" alt="Correlation between ImageNet FID and T2I metrics, without classifier-free guidance" style="width: calc(50% - 5px);">
+                </div>
+                <figcaption><strong>Figure 1.</strong> Correlation between ImageNet FID (x-axis) and T2I metrics (y-axis) across latent and pixel-space methods. Left: per-method best classifier-free guidance. Right: no guidance. Correlation is weak in both settings. It also shifts noticeably with the guidance protocol.</figcaption>
+            </figure>
+
+            <p>Two things stand out. First, the correlation is weak. ImageNet rank does not robustly predict T2I rank. Second, the picture changes with the CFG protocol. So even the weak correlation depends on a choice the evaluator makes.</p>
+
+            <p>The story is worse at the top of the leaderboard. Among the strongest methods (the RAE<d-cite key="rae"></d-cite> family and REPA-E<d-cite key="repae"></d-cite>), the correlation drops near zero. So the methods we care most about are exactly the ones for which ImageNet rank is least informative.</p>
+
+            <h2 id="nanogen">NanoGen: a unified codebase</h2>
+
+            <p>We could not run this study without a unified codebase. So we built one.</p>
+
+            <p>NanoGen is a diffusion training framework. It uses one DiT<d-cite key="dit"></d-cite> backbone, one optimizer, one training loop, one evaluation harness, one config format. Switching from ImageNet to T2I requires two changes. The data pipeline points at captioned images. The conditioner swaps from a class embedder to a frozen text encoder.</p>
+
+            <p>The only per-task knob is the conditioning. ImageNet uses 4 timestep tokens plus 8 class tokens. T2I uses 4 timestep tokens plus 256 text tokens. The optimizer, schedule, EMA, sampler, and loss stay the same.</p>
+
+            <p>The point is small but useful. Evaluating a method on T2I should not need a separate research programme. With NanoGen it is a config change.</p>
+
+            <h2 id="call">DiffusionBench v0.1: a call for contributions</h2>
+
+            <p>We are calling this v0.1 for a reason. The project is just beginning.</p>
+
+            <p>DiffusionBench bundles two evaluation axes for now. The first is ImageNet generation across latent and pixel regimes. The second is text-to-image generation, scored with several metrics. We use existing ones (GenEval, DPGBench, GenAI-Bench). We also propose <strong>SimpleEval</strong>, a hack-resistant metric built from a broad procedurally generated prompt set and a deliberately weak scorer.<span class="sidenote"><span class="sidenote-number">2</span>Many learned-scorer T2I metrics can be saturated by training that targets them. We discuss this failure mode and SimpleEval's defenses in the paper.</span></p>
+
+            <p>Our recommendation is simple. Future diffusion transformer papers should report DiffusionBench. Not ImageNet alone. Methods that improve DiffusionBench are more likely to reflect broad progress.</p>
+
+            <p>This is where we ask for help. We want DiffusionBench to be a community project, not a vendor benchmark. Concrete ways to contribute:</p>
+
+            <ul>
+                <li>Add a new evaluation axis (video, world models, editing).</li>
+                <li>Propose a new T2I metric or stress-test SimpleEval.</li>
+                <li>Reproduce a published method under DiffusionBench.</li>
+                <li>File issues on metric drift, scoring bugs, or reproducibility gaps.</li>
+            </ul>
+
+            <p>Two ways to join us:</p>
+
+            <ul class="join-links">
+                <li><i class="fa-brands fa-github"></i> <strong><a href="https://github.com/nanovisionx/diffbench">GitHub</a></strong>: code, issues, pull requests.</li>
+                <li><i class="fa-brands fa-discord"></i> <strong>Discord</strong>: TBD.</li>
+            </ul>
+
+            <p>We think holistic evaluation is how the field moves from local progress to broad progress. Help us build it.</p>
+
+            <d-bibliography src="references.bib"></d-bibliography>
+            <d-citation-list></d-citation-list>
+
+        </article>
+    </div>
+
+    <!-- === Post Footer === -->
+    <footer class="post-footer">
+        <div class="post-footer-back">
+            <a href="/blog/">&larr; All Posts</a>
+        </div>
+    </footer>
+
+    <!-- === Scripts === -->
+    <script>
+        // Theme toggle
+        (function() {
+            const toggle = document.getElementById('themeToggle');
+            if (!toggle) return;
+            toggle.addEventListener('click', function() {
+                const current = document.documentElement.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
+            });
+        })();
+
+        // TOC active section highlighting
+        (function() {
+            const tocLinks = document.querySelectorAll('.post-toc a');
+            if (!tocLinks.length) return;
+            const headings = Array.from(tocLinks).map(a => {
+                const id = a.getAttribute('href').slice(1);
+                return document.getElementById(id);
+            }).filter(Boolean);
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        tocLinks.forEach(a => a.classList.remove('active'));
+                        const link = document.querySelector('.post-toc a[href="#' + entry.target.id + '"]');
+                        if (link) link.classList.add('active');
+                    }
+                });
+            }, { rootMargin: '-30% 0px -60% 0px' });
+
+            headings.forEach(h => observer.observe(h));
+        })();
+    </script>
+
+</body>
+</html>

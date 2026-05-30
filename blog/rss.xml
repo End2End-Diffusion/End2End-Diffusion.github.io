@@ -6,17 +6,16 @@
     <description>Research notes, hypotheses, and findings on end-to-end diffusion training and visual representation learning.</description>
     <language>en</language>
     <atom:link href="https://end2end-diffusion.github.io/blog/rss.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Fri, 20 Mar 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2026 00:00:00 GMT</lastBuildDate>
 
     <item>
-      <title>Scaling Diffusion Transformer Research with AutoResearch</title>
-      <link>https://end2end-diffusion.github.io/blog/posts/autoresearch/</link>
-      <guid isPermaLink="true">https://end2end-diffusion.github.io/blog/posts/autoresearch/</guid>
-      <description>Scaling Diffusion Transformer Research with AutoResearch.</description>
-      <dc:creator>Jaskirat Singh</dc:creator>
-      <pubDate>Fri, 20 Mar 2026 00:00:00 GMT</pubDate>
+      <title>Call for DiffusionBench: Holistic Benchmark for Diffusion Transformers</title>
+      <link>https://end2end-diffusion.github.io/blog/posts/diffusion-bench/</link>
+      <guid isPermaLink="true">https://end2end-diffusion.github.io/blog/posts/diffusion-bench/</guid>
+      <description>ImageNet alone is no longer sufficient for evaluating diffusion transformers. We are building DiffusionBench as a holistic alternative. An open call to help build it with us.</description>
+      <pubDate>Sat, 30 May 2026 00:00:00 GMT</pubDate>
       <category>research</category>
-      <category>AutoResearch</category>
+      <category>DiffusionBench</category>
     </item>
 
   </channel>

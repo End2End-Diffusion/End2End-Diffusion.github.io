@@ -316,6 +316,23 @@ body.post-page ::selection {
     letter-spacing: -0.015em;
 }
 
+.post-title-sub {
+    display: block;
+    margin-top: 0.4rem;
+    font-family: var(--post-font-body);
+    font-size: 1.45rem;
+    font-weight: 500;
+    color: var(--post-text-secondary);
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+}
+
+@media (max-width: 767px) {
+    .post-title-sub {
+        font-size: 1.1rem;
+    }
+}
+
 .post-subtitle {
     font-family: var(--post-font-body);
     font-size: 1.2rem;
@@ -784,6 +801,86 @@ body.post-page {
     padding: var(--post-gap-sm) var(--post-gap-md);
     border-bottom: 1px solid var(--post-border);
     color: var(--post-text-secondary);
+}
+
+/* === JOIN LINKS (GitHub / Discord) === */
+.post-content ul.join-links {
+    list-style: none;
+    padding-left: 0;
+}
+
+.post-content ul.join-links li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: var(--post-gap-sm);
+}
+
+.post-content ul.join-links li i {
+    color: var(--post-text);
+    font-size: 1.05rem;
+    width: 1.2rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* === DISTILL CITATIONS === */
+
+/* Inline citation numbers — make blue visible on dark background */
+:root {
+    --d-cite-color: var(--post-accent);
+}
+
+/* d-citation-list auto-renders an h3 "References" heading and an <ol class="references"> list */
+.post-content d-citation-list {
+    display: block;
+    margin-top: var(--post-gap-3xl);
+}
+
+.post-content d-citation-list h3 {
+    font-family: var(--post-font-body);
+    font-size: 1.55rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--post-text);
+    margin: 0 0 var(--post-gap-lg) 0;
+    letter-spacing: -0.01em;
+    text-align: center;
+}
+
+.post-content d-citation-list ol.references {
+    max-width: 520px;
+    margin: 0 auto;
+    padding-left: 1.6rem;
+    font-family: var(--post-font-ui);
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--post-text-secondary);
+    list-style: decimal;
+}
+
+.post-content d-citation-list ol.references li {
+    margin-bottom: var(--post-gap-md);
+    padding-left: 0.25rem;
+}
+
+.post-content d-citation-list ol.references li::marker {
+    color: var(--post-text-muted);
+}
+
+.post-content d-citation-list ol.references a {
+    color: var(--post-accent);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--post-accent) 30%, transparent);
+}
+
+.post-content d-citation-list ol.references a:hover {
+    border-bottom-color: var(--post-accent);
+}
+
+/* d-bibliography is invisible (just loads the bib file) */
+.post-content d-bibliography {
+    display: none;
 }
 
 /* === POST FOOTER === */
