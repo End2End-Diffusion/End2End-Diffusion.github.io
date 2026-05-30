@@ -831,10 +831,18 @@ body.post-page {
     --d-cite-color: var(--post-accent);
 }
 
-/* d-citation-list auto-renders an h3 "References" heading and an <ol class="references"> list */
+/* d-citation-list auto-renders an h3 "References" heading and an <ol class="references"> list.
+   Distill injects a CSS grid layout on d-citation-list that places .references in the "text"
+   column (offset right). We force display:block and reset grid-column on all children. */
 .post-content d-citation-list {
-    display: block;
+    display: block !important;
+    grid-template-columns: none !important;
     margin-top: var(--post-gap-3xl);
+    width: 100%;
+}
+
+.post-content d-citation-list > * {
+    grid-column: unset !important;
 }
 
 .post-content d-citation-list h3 {
@@ -844,19 +852,22 @@ body.post-page {
     line-height: 1.3;
     color: var(--post-text);
     margin: 0 0 var(--post-gap-lg) 0;
+    padding: 0;
+    border: none;
     letter-spacing: -0.01em;
     text-align: center;
 }
 
 .post-content d-citation-list ol.references {
     max-width: 520px;
-    margin: 0 auto;
+    margin: 0 auto !important;
     padding-left: 1.6rem;
     font-family: var(--post-font-ui);
     font-size: 0.82rem;
     line-height: 1.55;
     color: var(--post-text-secondary);
     list-style: decimal;
+    grid-column: unset !important;
 }
 
 .post-content d-citation-list ol.references li {
