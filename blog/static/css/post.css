@@ -745,6 +745,12 @@ body.post-page {
     font-size: 0.95rem;
 }
 
+/* Tighten the gap when the callout opens the article — pulls it up under the
+   header rule instead of stacking the layout's top padding on its own margin. */
+.post-content > .post-callout:first-child {
+    margin-top: calc(-1 * var(--post-gap-2xl));
+}
+
 .post-callout-label {
     font-family: var(--post-font-ui);
     font-size: 0.7rem;
@@ -761,6 +767,9 @@ body.post-page {
 
 .post-callout--finding .post-callout-label {
     color: var(--post-accent);
+    font-size: 1.15rem;
+    letter-spacing: 0.04em;
+    margin-bottom: var(--post-gap-md);
 }
 
 .post-callout--note {

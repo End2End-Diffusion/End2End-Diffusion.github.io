@@ -66,7 +66,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="../../static/css/post.css">
+    <link rel="stylesheet" href="../../static/css/post.css?v=2">
 
     <!-- Distill template (for numbered citations) -->
     <script src="../../static/js/distill_template.v2.js"></script>
@@ -136,6 +136,16 @@
 
         <article class="post-content">
 
+            <div class="post-callout post-callout--finding">
+                <div class="post-callout-label">Call for Contributions</div>
+                <p>DiffusionBench is an open, community-built benchmark for holistic evaluation of diffusion transformers, beyond ImageNet FID alone. It is at v0.1, and we are looking for collaborators: new evaluation axes, new metrics, and reproductions of published methods. Two ways to join us:</p>
+                <ul class="join-links">
+                    <li><i class="fa-brands fa-github"></i> <strong><a href="https://github.com/nanovisionx/diffbench">GitHub</a></strong>: code, issues, pull requests.</li>
+                    <li><i class="fa-brands fa-discord"></i> <strong><a href="https://discord.gg/jh5Bz8uHEr">Discord</a></strong>: chat, questions, coordination.</li>
+                </ul>
+                <p>Full details at the <a href="#call">end of this post</a>.</p>
+            </div>
+
             <p class="lead">Diffusion model research has converged on one number. That number is ImageNet FID. It is cheap to compute. It makes head-to-head comparisons easy. It has driven real progress on architectures and training recipes.</p>
 
             <p>But most people use diffusion transformers for practical applications. Examples include text-to-image, text-to-video, world models, and so on. Few papers actually train and evaluate on these. The reason is friction. Each task needs different data, different evaluation, often a different codebase. So most work reports ImageNet alone.</p>
@@ -152,19 +162,17 @@
 
             <h2 id="transfer">Do ImageNet gains transfer?</h2>
 
-            <p>We trained the same set of methods under a shared recipe. We then measured ImageNet FID and four T2I metrics on each method.<span class="sidenote"><span class="sidenote-number">1</span>The T2I metrics are GenEval<d-cite key="geneval"></d-cite>, DPGBench<d-cite key="dpgbench"></d-cite>, GenAI-Bench<d-cite key="genaibench"></d-cite>, and SimpleEval (introduced in our work).</span> Figure 1 shows the correlation.</p>
+            <p>We trained the same set of methods under a shared recipe: a single ~615M-parameter DiT backbone at 256&times;256. For ImageNet, the models are class-conditional, and we report FID both without guidance and with per-method best CFG (applied on the t-interval [0, 0.9]). For text-to-image, we retrain on captioned data with a frozen text encoder (CFG scale 6.0) and score four T2I metrics<span class="sidenote-ref">1</span> on each method.<span class="sidenote"><span class="sidenote-number">1</span>The T2I metrics are GenEval<d-cite key="geneval"></d-cite>, DPGBench<d-cite key="dpgbench"></d-cite>, GenAI-Bench<d-cite key="genaibench"></d-cite>, and SimpleEval (introduced in our work).</span> Figure 1 shows the correlation.</p>
 
             <figure>
-                <div style="display: flex; gap: 10px; align-items: flex-start;">
-                    <img src="assets/fid_correlation_wcfg.png" alt="Correlation between ImageNet FID and T2I metrics, with classifier-free guidance" style="width: calc(50% - 5px);">
-                    <img src="assets/fid_correlation_nocfg.png" alt="Correlation between ImageNet FID and T2I metrics, without classifier-free guidance" style="width: calc(50% - 5px);">
-                </div>
-                <figcaption><strong>Figure 1.</strong> Correlation between ImageNet FID (x-axis) and T2I metrics (y-axis) across latent and pixel-space methods. Left: per-method best classifier-free guidance. Right: no guidance. Correlation is weak in both settings. It also shifts noticeably with the guidance protocol.</figcaption>
+                <iframe src="assets/fid_correlation.html" title="Correlation between ImageNet FID (without CFG) and T2I metrics" loading="lazy" scrolling="no" style="width:100%; height:480px; border:0; display:block; overflow:hidden;"></iframe>
+                <iframe src="assets/fid_correlation_wcfg.html" title="Correlation between ImageNet FID (with CFG) and T2I metrics" loading="lazy" scrolling="no" style="width:100%; height:480px; border:0; display:block; overflow:hidden; margin-top:12px;"></iframe>
+                <figcaption><strong>Figure 1.</strong> Correlation between ImageNet FID (x-axis) and four T2I metrics (y-axis) across latent-space (RAE, VAE) and pixel-space methods. Top: FID without classifier-free guidance. Bottom: FID with per-method best CFG. Drag a rectangle to recompute r on a comparable cluster of points (double-click to reset), or toggle categories in the legend.</figcaption>
             </figure>
 
-            <p>Two things stand out. First, the correlation is weak. ImageNet rank does not robustly predict T2I rank. Second, the picture changes with the CFG protocol. So even the weak correlation depends on a choice the evaluator makes.</p>
+            <p>Two things stand out. First, the correlation is weaker than it looks: in the top plot it appears strong, but that is driven by the pixel-space and weak VAE outliers. Drag a box around a comparable cluster, or hide the pixel-space group from the legend, and r falls to about &minus;0.30 on GenEval and &minus;0.36 on DPG-Bench. <strong>ImageNet rank does not robustly predict T2I rank.</strong> Second, <strong>the picture changes with the CFG protocol.</strong> So even the weak correlation depends on a choice the evaluator makes.</p>
 
-            <p>The story is worse at the top of the leaderboard. Among the strongest methods (the RAE<d-cite key="rae"></d-cite> family and REPA-E<d-cite key="repae"></d-cite>), the correlation drops near zero. So the methods we care most about are exactly the ones for which ImageNet rank is least informative.</p>
+            <p>The story is worse at the top of the leaderboard. Select only the strongest methods (the RAE<d-cite key="rae"></d-cite> family and REPA-E<d-cite key="repae"></d-cite>) with the box, and the correlation drops near zero. So the methods we care most about are exactly the ones for which ImageNet rank is least informative.</p>
 
             <h2 id="nanogen">NanoGen: a unified codebase</h2>
 
@@ -180,7 +188,7 @@
 
             <p>We are calling this v0.1 for a reason. The project is just beginning.</p>
 
-            <p>DiffusionBench bundles two evaluation axes for now. The first is ImageNet generation across latent and pixel regimes. The second is text-to-image generation, scored with several metrics. We use existing ones (GenEval, DPGBench, GenAI-Bench). We also propose <strong>SimpleEval</strong>, a hack-resistant metric built from a broad procedurally generated prompt set and a deliberately weak scorer.<span class="sidenote"><span class="sidenote-number">2</span>Many learned-scorer T2I metrics can be saturated by training that targets them. We discuss this failure mode and SimpleEval's defenses in the paper.</span></p>
+            <p>DiffusionBench bundles two evaluation axes for now. The first is ImageNet generation across latent and pixel regimes. The second is text-to-image generation, scored with several metrics. We use existing ones (GenEval, DPGBench, GenAI-Bench). We also propose <strong>SimpleEval</strong>, a hack-resistant metric built from a broad procedurally generated prompt set and a deliberately weak scorer.<span class="sidenote"><span class="sidenote-number">2</span>Many learned-scorer T2I metrics can be saturated by training that targets them. More details on this failure mode and SimpleEval's defenses will be released soon.</span></p>
 
             <p>Our recommendation is simple. Future diffusion transformer papers should report DiffusionBench. Not ImageNet alone. Methods that improve DiffusionBench are more likely to reflect broad progress.</p>
 
