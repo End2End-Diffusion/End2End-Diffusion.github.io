@@ -71,6 +71,7 @@ D.panels.forEach((panel, i) => {
       name: style.label,
       legendgroup: cat,
       showlegend: i === 0,
+      visible: cat === "Pixel" ? "legendonly" : true,   // pixel-space off by default; click legend to show
       marker: { size: 7, color: style.color, symbol: style.symbol,
                 line: { color: P.bg, width: 1 } },
       selected:   { marker: { opacity: 1.0, size: 9 } },
@@ -186,6 +187,7 @@ let suppress = false;   // guard so our own trend restyle doesn't re-trigger ren
 Plotly.newPlot(fig, traces, layout, {responsive: true, displaylogo: false,
   modeBarButtonsToRemove: ["lasso2d"]}).then(() => {
   Plotly.relayout(fig, {dragmode: "select"});
+  render();   // pixel-space hidden by default -> recompute stats/trend for the visible (latent) set
 });
 
 // Re-color the figure when the host toggles light/dark.
