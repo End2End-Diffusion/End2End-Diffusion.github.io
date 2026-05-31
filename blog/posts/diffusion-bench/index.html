@@ -146,7 +146,7 @@
 
             <p>ImageNet class-conditional generation is the de facto benchmark. New diffusion methods report FID on it. Top numbers cluster tightly. The metric is mature.</p>
 
-            <p>That maturity has a cost. When everyone optimizes one number, the field can drift toward tricks that move the number without moving real capability. Recent work has also questioned whether FID itself reliably reflects perceptual quality<d-cite key="fid_critique_mmd1"></d-cite><d-cite key="fid_critique_mmd2"></d-cite>. The natural correction is to evaluate on other tasks. The most important one is text-to-image. In practice, this rarely happens.</p>
+            <p>That maturity has a cost. When everyone optimizes one number, the field can drift toward tricks that move the number without moving real capability. Recent work has also questioned whether FID itself reliably reflects perceptual quality<d-cite key="mind"></d-cite><d-cite key="reprfrechet"></d-cite>. The natural correction is to evaluate on other tasks. The most important one is text-to-image. In practice, this rarely happens.</p>
 
             <p>Two forces keep it that way. First, T2I, T2V, and world models look like separate engineering projects. Each needs its own data pipeline and evaluation harness. Second, their metrics are noisier and easier to game. Both are fixable.</p>
 
