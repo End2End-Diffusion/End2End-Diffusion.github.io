@@ -767,6 +767,9 @@ body.post-page {
 
 .post-callout--finding .post-callout-label {
     color: var(--post-accent);
+    font-size: 1.15rem;
+    letter-spacing: 0.04em;
+    margin-bottom: var(--post-gap-md);
 }
 
 .post-callout--note {
