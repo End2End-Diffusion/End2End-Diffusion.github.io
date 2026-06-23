@@ -13,10 +13,10 @@
 /* Widen the key-point icon box so the landscape illustrations fit without distortion;
    all icons share one box width + left alignment so the bullet text stays aligned. */
 .central-header .key-point-icon {
-    width: 48px;
-    height: 32px;
+    width: 88px;
+    height: 40px;
     object-fit: contain;
-    object-position: left center;
+    object-position: center;
     margin-top: 0;
 }
 
@@ -1204,13 +1204,13 @@ figure.data-table table {
     width: 100%;
     border-collapse: collapse;
     font-family: var(--font-sans, -apple-system, sans-serif);
-    font-size: 0.76rem;
-    white-space: nowrap;
+    font-size: 0.72rem;
+    white-space: normal;
     table-layout: auto;
 }
 figure.data-table th,
 figure.data-table td {
-    padding: 0.35rem 0.45rem;
+    padding: 0.3rem 0.32rem;
     text-align: center;
     font-variant-numeric: tabular-nums;
     border-bottom: 1px solid #ececf1;

@@ -81,7 +81,7 @@
 
         <link rel="stylesheet" href="../static/css/paper-layout.css">
         <link rel="stylesheet" href="./static/css/style.css">
-        <link rel="stylesheet" href="./static/css/custom.css?v=22">
+        <link rel="stylesheet" href="./static/css/custom.css?v=26">
         <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 
@@ -157,7 +157,7 @@
 
                 <!-- TL;DR -->
                 <div class="tldr-section">
-                    <p><span class="tldr-label">TL;DR:</span> <span class="sc">NanoGen</span> is a unified framework that trains and evaluates diffusion transformers across ImageNet and text-to-image with only roughly <strong>12 lines</strong> of config change. We use it to show that method rankings on ImageNet <strong>do not transfer to T2I</strong>, and introduce <span class="sc">DiffusionBench</span>, a holistic benchmark for DiT research.</p>
+                    <p><span class="tldr-label">TL;DR:</span> <span class="sc">NanoGen</span> is a unified framework that trains and evaluates diffusion transformers across ImageNet and text-to-image with only roughly <strong>12 lines</strong> of config change. We use it to show that method rankings show <strong>no strong correlation</strong> between ImageNet and T2I generation, and introduce <span class="sc">DiffusionBench</span>, a holistic benchmark for DiT research.</p>
                 </div>
 
                 <!-- Key points + Hero -->
@@ -168,11 +168,11 @@
                             <div class="key-point-text"><strong>Matching State-of-the-Art Performance</strong>: The unified <span class="sc">NanoGen</span> training framework matches state-of-the-art DiT methods on ImageNet.</div>
                         </div>
                         <div class="key-point">
-                            <img class="key-point-icon key-point-icon--illus" src="./static/img/bullet2.png?v=2" alt="Config Icon">
+                            <img class="key-point-icon key-point-icon--illus" src="./static/img/bullet2.png?v=3" alt="Config Icon">
                             <div class="key-point-text"><strong>Effortless ImageNet &rarr; T2I</strong>: Going from ImageNet to text-to-image takes only roughly 12 lines of config change.</div>
                         </div>
                         <div class="key-point">
-                            <img class="key-point-icon" src="./static/img/icons/eval.svg" alt="Evaluation Icon">
+                            <img class="key-point-icon key-point-icon--illus" src="./static/img/bullet3.png?v=1" alt="Evaluation Icon">
                             <div class="key-point-text"><strong>Holistic Evaluation</strong>: A systematic comparison of 25 methods across ImageNet and T2I under various metrics.</div>
                         </div>
 
@@ -233,7 +233,7 @@
 
         <ol class="text">
             <li><strong><a href="#framework">&sect;A Unified Framework</a></strong>: We release <em><span class="sc">NanoGen</span></em>, a unified DiT training framework that matches state-of-the-art methods on ImageNet and extends to text-to-image training with roughly 12 lines of config changes.</li>
-            <li><strong><a href="#diffbench">&sect;ImageNet Rankings Don't Transfer</a></strong>: We show empirically that ImageNet rankings do not transfer reliably to text-to-image, with magnitudes large enough to flip conclusions from ImageNet.</li>
+            <li><strong><a href="#diffbench">&sect;ImageNet Rankings Don't Reliably Predict T2I</a></strong>: We observe that method ranking shows no strong correlation between ImageNet and T2I generation, large enough to flip conclusions from ImageNet.</li>
             <li><strong><a href="#diffbench">&sect;A Holistic Benchmark</a></strong>: We incorporate both tasks into <em><span class="sc">DiffusionBench</span></em>, present results across many existing methods, and argue for its adoption as a default DiT benchmark.</li>
         </ol>
 
@@ -579,7 +579,7 @@ uv run torchrun --nproc_per_node=8 src/offline_eval.py --config [STAGE2_CONFIG_P
                 <figcaption>Correlation between ImageNet FID and three T2I metrics. Toggle the guidance setting between without CFG and with CFG. Drag a rectangle to recompute r on a comparable cluster of points (double-click to reset), or toggle categories in the legend.</figcaption>
             </figure>
             <p class="text">
-                We have several observations. <strong>First, in the state-of-the-art frontier, ImageNet ranking does not robustly predict the T2I ranking.</strong> For example, RAE with SpatialPE-L has very good ImageNet FID, but its T2I performance is among the worst across various metrics. <strong>Second, different metrics to some extent disagree with each other.</strong> For example, E2E-Qwen-Image-VAE is one of the strongest if we look at GenEval and DPG-Bench metrics but is at the second tier if we use the GenAIBench metric. <strong>Third, ImageNet trend is consistent with T2I trend if we look at broader method category ranking.</strong>: improved latent-space methods (RAE, FLUX.2-VAE, REPA-E) &gt; traditional latent-space &gt; pixel-space &gt; MeanFlow, so ImageNet signals are useful at the category level. But state-of-the-art papers typically report FID between 1 and 2, which falls in the most uncorrelated region. <strong>Fourth, when we train T2I for 200K steps, the performance generally remains similar or improves slightly under the three metrics.</strong> This observation is interesting: upon visual check below, images at 200K training are better than at 100K. We suspect that better metrics should be proposed.
+                We have several observations. <strong>First, in the state-of-the-art frontier, ImageNet ranking does not robustly predict the T2I ranking.</strong> For example, RAE with SpatialPE-L has very good ImageNet FID, but its T2I performance is among the worst across various metrics. <strong>Second, different metrics to some extent disagree with each other.</strong> For example, E2E-Qwen-Image-VAE is one of the strongest if we look at GenEval and DPG-Bench metrics but it falls into the second tier under the GenAIBench metric. <strong>Third, ImageNet trend is consistent with T2I trend if we look at broader method category ranking.</strong> That is, improved latent-space methods (RAE, FLUX.2-VAE, REPA-E) &gt; traditional latent-space &gt; pixel-space &gt; MeanFlow, so ImageNet signals are useful at the category level. But most state-of-the-art methods report FID between 1 and 2, which fall into the most uncorrelated regions. <strong>Fourth, when we train T2I for 200K steps, the performance generally remains similar or improves slightly under the three metrics.</strong> This observation is interesting: upon visual check below, images at 200K training are better than at 100K. We suspect that better metrics should be proposed.
             </p>
 
             <figure class="fig-img">
@@ -606,7 +606,7 @@ uv run torchrun --nproc_per_node=8 src/offline_eval.py --config [STAGE2_CONFIG_P
                 enough. In this paper we introduce <span class="sc">NanoGen</span>, a training and evaluation framework that removes the
                 engineering barrier to training and evaluating DiT methods on the T2I task, and use it to show that
                 ImageNet rankings do not reliably predict text-to-image performance. Finally, we package the two
-                evaluation axes, ImageNet and T2I generation, into <span class="sc">DiffusionBench</span> and argue for its adoption as the
+                evaluation axes: ImageNet and T2I generation, into <span class="sc">DiffusionBench</span> and argue for its adoption as the
                 default DiT benchmark. Our hope is that making holistic evaluation cheap, both engineering-wise and
                 computationally, will shift the field toward progress that is broad rather than local.
             </p>
