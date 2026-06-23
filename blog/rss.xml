@@ -10,8 +10,8 @@
 
     <item>
       <title>Call for DiffusionBench: Holistic Benchmark for Diffusion Transformers</title>
-      <link>https://end2end-diffusion.github.io/blog/posts/diffusion-bench/</link>
-      <guid isPermaLink="true">https://end2end-diffusion.github.io/blog/posts/diffusion-bench/</guid>
+      <link>https://end2end-diffusion.github.io/blog/posts/diffusion-bench-contributors/</link>
+      <guid isPermaLink="true">https://end2end-diffusion.github.io/blog/posts/diffusion-bench-contributors/</guid>
       <description>ImageNet alone is no longer sufficient for evaluating diffusion transformers. We are building DiffusionBench as a holistic alternative. An open call to help build it with us.</description>
       <pubDate>Sat, 30 May 2026 00:00:00 GMT</pubDate>
       <category>research</category>

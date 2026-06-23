@@ -15,7 +15,7 @@ cd nanogen
 ## Structure
 
 ```
-nanogen/
+diffusion-bench/
 ├── index.html          # Main page (skeleton — fill in sections)
 ├── references.bib      # Citations; reference via <d-cite key="...">
 ├── serve.sh            # Local preview server
