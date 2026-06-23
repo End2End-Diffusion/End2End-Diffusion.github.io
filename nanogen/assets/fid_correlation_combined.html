@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ImageNet FID vs T2I metrics</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; margin: 0; padding: 16px;
+         background: #fff; color: #222; }
+  #fig { width: 100%; margin: 0 auto; }
+  .guidance-toggle { display: flex; align-items: center; gap: 8px; margin: 0 0 8px;
+                     font-family: Georgia, serif; font-size: 13px; }
+  .guidance-toggle .gt-label { color: #555; }
+  .guidance-toggle button { border: 1px solid #d0d3dc; background: #fff; color: #444;
+                            padding: 3px 13px; border-radius: 6px; font: inherit; cursor: pointer;
+                            transition: background .15s, color .15s, border-color .15s; }
+  .guidance-toggle button[aria-pressed="true"] { background: #2952b3; border-color: #2952b3; color: #fff; }
+</style>
+</head>
+<body>
+<div class="guidance-toggle">
+  <span class="gt-label">ImageNet FID:</span>
+  <button type="button" data-col="fid_nocfg" data-label="&#8592; ImageNet FID (w/o CFG)" aria-pressed="true">without CFG</button>
+  <button type="button" data-col="fid_cfg" data-label="&#8592; ImageNet FID (w/ CFG)" aria-pressed="false">with CFG</button>
+</div>
+<div id="fig"></div>
+<script>
+const D = {"records": [{"method": "DINOv2-B", "category": "RAE", "fid_cfg": 1.96, "fid_nocfg": 2.14, "geneval": 0.628, "dpgbench": 0.81, "genaibench": 0.707, "simpleeval": 0.247}, {"method": "DINOv2-B+REG", "category": "RAE", "fid_cfg": 1.84, "fid_nocfg": 2.08, "geneval": 0.608, "dpgbench": 0.808, "genaibench": 0.702, "simpleeval": 0.273}, {"method": "DINOv3-B", "category": "RAE", "fid_cfg": 1.74, "fid_nocfg": 2.15, "geneval": 0.636, "dpgbench": 0.828, "genaibench": 0.718, "simpleeval": 0.258}, {"method": "DINOv3-B+REG", "category": "RAE", "fid_cfg": 1.78, "fid_nocfg": 2.15, "geneval": 0.642, "dpgbench": 0.827, "genaibench": 0.73, "simpleeval": 0.264}, {"method": "SigLIP2-B", "category": "RAE", "fid_cfg": 2.61, "fid_nocfg": 3.48, "geneval": 0.606, "dpgbench": 0.809, "genaibench": 0.718, "simpleeval": 0.309}, {"method": "PE-L", "category": "RAE", "fid_cfg": 2.84, "fid_nocfg": 3.08, "geneval": 0.586, "dpgbench": 0.818, "genaibench": 0.723, "simpleeval": 0.293}, {"method": "LangPE-L", "category": "RAE", "fid_cfg": 2.46, "fid_nocfg": 2.76, "geneval": 0.633, "dpgbench": 0.826, "genaibench": 0.724, "simpleeval": 0.279}, {"method": "SpatialPE-L", "category": "RAE", "fid_cfg": 1.86, "fid_nocfg": 3.61, "geneval": 0.535, "dpgbench": 0.79, "genaibench": 0.694, "simpleeval": 0.146}, {"method": "SD-VAE-EMA", "category": "VAE", "fid_cfg": 2.43, "fid_nocfg": 10.16, "geneval": 0.578, "dpgbench": 0.804, "genaibench": 0.691, "simpleeval": 0.207}, {"method": "SD-VAE-EMA+REG", "category": "VAE", "fid_cfg": 2.34, "fid_nocfg": 5.39, "geneval": 0.57, "dpgbench": 0.792, "genaibench": 0.691, "simpleeval": 0.233}, {"method": "SD-VAE-MSE", "category": "VAE", "fid_cfg": 2.56, "fid_nocfg": 10.15, "geneval": 0.624, "dpgbench": 0.813, "genaibench": 0.701, "simpleeval": 0.222}, {"method": "SDXL-VAE", "category": "VAE", "fid_cfg": 3.07, "fid_nocfg": 12.88, "geneval": 0.617, "dpgbench": 0.812, "genaibench": 0.705, "simpleeval": 0.224}, {"method": "SD3.5-VAE", "category": "VAE", "fid_cfg": 2.64, "fid_nocfg": 10.18, "geneval": 0.64, "dpgbench": 0.818, "genaibench": 0.702, "simpleeval": 0.243}, {"method": "FLUX.1-VAE", "category": "VAE", "fid_cfg": 3.55, "fid_nocfg": 15.75, "geneval": 0.559, "dpgbench": 0.796, "genaibench": 0.684, "simpleeval": 0.194}, {"method": "FLUX.2-VAE", "category": "VAE", "fid_cfg": 1.37, "fid_nocfg": 4.53, "geneval": 0.675, "dpgbench": 0.83, "genaibench": 0.712, "simpleeval": 0.22}, {"method": "FLUX.2-VAE+REG", "category": "VAE", "fid_cfg": 1.44, "fid_nocfg": 4.19, "geneval": 0.687, "dpgbench": 0.83, "genaibench": 0.722, "simpleeval": 0.257}, {"method": "Qwen-Image-VAE", "category": "VAE", "fid_cfg": 3.01, "fid_nocfg": 10.86, "geneval": 0.611, "dpgbench": 0.802, "genaibench": 0.704, "simpleeval": 0.23}, {"method": "E2E-VAVAE", "category": "VAE", "fid_cfg": 1.65, "fid_nocfg": 4.27, "geneval": 0.632, "dpgbench": 0.824, "genaibench": 0.703, "simpleeval": 0.21}, {"method": "E2E-FLUX.1-VAE", "category": "VAE", "fid_cfg": 1.67, "fid_nocfg": 6.3, "geneval": 0.625, "dpgbench": 0.823, "genaibench": 0.706, "simpleeval": 0.217}, {"method": "E2E-SD3.5-VAE", "category": "VAE", "fid_cfg": 1.62, "fid_nocfg": 5.32, "geneval": 0.637, "dpgbench": 0.84, "genaibench": 0.715, "simpleeval": 0.228}, {"method": "E2E-Qwen-Image-VAE", "category": "VAE", "fid_cfg": 1.55, "fid_nocfg": 4.98, "geneval": 0.691, "dpgbench": 0.835, "genaibench": 0.714, "simpleeval": 0.229}, {"method": "JiT", "category": "Pixel", "fid_cfg": 4.08, "fid_nocfg": 21.72, "geneval": 0.516, "dpgbench": 0.782, "genaibench": 0.674, "simpleeval": 0.16}, {"method": "PixNerd", "category": "Pixel", "fid_cfg": 4.17, "fid_nocfg": 20.61, "geneval": 0.484, "dpgbench": 0.777, "genaibench": 0.643, "simpleeval": 0.107}, {"method": "PixelGen", "category": "Pixel", "fid_cfg": 3.97, "fid_nocfg": 12.1, "geneval": 0.554, "dpgbench": 0.798, "genaibench": 0.678, "simpleeval": 0.168}], "panels": [{"key": "geneval", "label": "GenEval", "r": -0.6458122595745655, "p": 0.0006529427379763848, "trend_x": [2.08, 21.72], "trend_y": [0.6387891405058159, 0.5252366712969756]}, {"key": "dpgbench", "label": "DPG-Bench", "r": -0.6629215612116294, "p": 0.0004151334035307313, "trend_x": [2.08, 21.72], "trend_y": [0.8228425085625221, 0.784405563588261]}, {"key": "genaibench", "label": "GenAIBench", "r": -0.8122432264858295, "p": 1.4359132066847922e-06, "trend_x": [2.08, 21.72], "trend_y": [0.7174001583073948, 0.6639041407411442]}], "categories": {"RAE": {"label": "Latent (RAE)", "color": "#3498DB", "symbol": "circle"}, "VAE": {"label": "Latent (VAE)", "color": "#C0392B", "symbol": "square"}, "Pixel": {"label": "Pixel-space", "color": "#27AE60", "symbol": "triangle-up"}}, "xcol": "fid_nocfg", "xlabel": "\u2190 ImageNet FID (w/o CFG)", "rows": 1, "cols": 3};
+// Match the 1x3 panel aspect ratio to the 2x2's (~1.59:1 w:h, which looks nice).
+// 2x2: 980x720, margins 80/24/72/72, xgap .18 ygap .28 -> panel ~402x253 px.
+// 1x3: 1440 wide, xgap .26 -> panel ~384 wide; height 410 -> panel ~266 tall (taller than 2x2 panels).
+const _fig = document.getElementById("fig");
+if (D.rows === 1) { _fig.style.maxWidth = "1440px"; _fig.style.height = "280px"; }
+else { _fig.style.maxWidth = "980px"; _fig.style.height = "720px"; }
+
+const axisFor = i => i === 0 ? ["x","y"] : ["x"+(i+1), "y"+(i+1)];
+const recsByCat = cat => D.records.filter(r => r.category === cat);
+
+function metricVal(r, key) { return r[key]; }
+
+// Hover shows only the metrics present in this figure (so the 1x3 omits SimpleEval).
+// customdata layout: [method, fid, <metric values in panel order>]
+const fidLabel = "ImageNet FID";   // generic so the hover label stays valid across the CFG toggle
+const hoverTemplate =
+  "<b>%{customdata[0]}</b><br>" + fidLabel + ": %{customdata[1]:.2f}<br>" +
+  D.panels.map((p, k) => p.label + ": %{customdata[" + (k + 2) + "]:.3f}").join("<br>") +
+  "<extra></extra>";
+const customFor = recs => recs.map(r => [r.method, r[D.xcol], ...D.panels.map(p => r[p.key])]);
+
+const traces = [];
+const trendIdxForPanel = {};   // panel index -> trend-line trace index
+const scatterTraces = [];      // {idx, panel} for every scatter (category) trace
+D.panels.forEach((panel, i) => {
+  const [ax, ay] = axisFor(i);
+  // scatter traces per category
+  Object.entries(D.categories).forEach(([cat, style]) => {
+    const recs = recsByCat(cat);
+    scatterTraces.push({ idx: traces.length, panel: i, recs: recs });
+    traces.push({
+      type: "scatter", mode: "markers",
+      xaxis: ax, yaxis: ay,
+      meta: { panel: i },
+      x: recs.map(r => r[D.xcol]),
+      y: recs.map(r => r[panel.key]),
+      name: style.label,
+      legendgroup: cat,
+      visible: cat === "Pixel" ? "legendonly" : true,
+      showlegend: i === 0,
+      marker: { size: 8, color: style.color, symbol: style.symbol,
+                line: { color: "#fff", width: 1 } },
+      selected:   { marker: { opacity: 1.0, size: 10 } },
+      unselected: { marker: { opacity: 0.15 } },
+      customdata: customFor(recs),
+      hovertemplate: hoverTemplate,
+    });
+  });
+  // trend line (refit live on selection)
+  trendIdxForPanel[i] = traces.length;
+  traces.push({
+    type: "scatter", mode: "lines",
+    xaxis: ax, yaxis: ay,
+    x: panel.trend_x, y: panel.trend_y,
+    line: { color: "#4A4A4A", width: 2, dash: "dash" },
+    hoverinfo: "skip", showlegend: false,
+  });
+});
+
+// 2x2 layout with independent axes
+const layout = {
+  grid: { rows: D.rows, columns: D.cols, pattern: "independent",
+          xgap: (D.rows === 1 ? 0.26 : 0.18), ygap: 0.28 },
+  margin: { l: 50, r: 12, t: 40, b: 46 },
+  font: { size: 12 },
+  legend: { orientation: "h", x: 0.5, xanchor: "center", y: (D.rows === 1 ? 1.16 : 1.13), font: { size: 12 } },
+  hovermode: "closest",
+  hoverlabel: { bgcolor: "#fff", bordercolor: "#888", font: { family: "monospace", size: 13 } },
+  annotations: [],
+  paper_bgcolor: "#fff", plot_bgcolor: "#fff",
+};
+
+const annIndexForPanel = {};   // panel index -> layout.annotations index
+D.panels.forEach((panel, i) => {
+  const [ax, ay] = axisFor(i);
+  const xa = "xaxis" + (i === 0 ? "" : (i+1));
+  const ya = "yaxis" + (i === 0 ? "" : (i+1));
+  // visible left/bottom axis lines + outside ticks, mirror off (top/right hidden) — matches matplotlib spines
+  const spine = { showline: true, linecolor: "#222", linewidth: 1.2, mirror: false,
+                  ticks: "outside", tickcolor: "#222", ticklen: 6, tickwidth: 1.2 };
+  layout[xa] = Object.assign({ title: { text: D.xlabel, font: { size: 13 } }, tickfont: { size: 10 }, gridcolor: "#eee", zeroline: false }, spine);
+  layout[ya] = Object.assign({ title: { text: panel.label + " →", font: { size: 13 } }, tickfont: { size: 10 }, gridcolor: "#eee", zeroline: false }, spine);
+  annIndexForPanel[i] = layout.annotations.length;
+  layout.annotations.push({
+    xref: ax + " domain", yref: ay + " domain",
+    x: 0.96, y: 0.96, xanchor: "right", yanchor: "top",
+    text: statsText(panel.r, panel.p, D.records.length),
+    showarrow: false, align: "right",
+    font: { size: 11, family: "monospace" },
+    bgcolor: "rgba(255,255,255,0.85)", bordercolor: "#999", borderwidth: 1, borderpad: 4,
+  });
+});
+
+// ---- stats helpers (recompute r, p, n for a selected subset) ----
+function statsText(r, p, n) {
+  const pstr = (p === null) ? "n/a" : (p >= 1e-3 ? p.toFixed(3) : "<0.001");
+  const rstr = (r === null) ? "n/a" : r.toFixed(3);
+  return "r = " + rstr;
+}
+function pearson(xs, ys) {
+  const n = xs.length;
+  if (n < 2) return null;
+  const mx = xs.reduce((a,b)=>a+b,0)/n, my = ys.reduce((a,b)=>a+b,0)/n;
+  let sxy=0, sxx=0, syy=0;
+  for (let i=0;i<n;i++){ const dx=xs[i]-mx, dy=ys[i]-my; sxy+=dx*dy; sxx+=dx*dx; syy+=dy*dy; }
+  if (sxx===0 || syy===0) return null;
+  return sxy/Math.sqrt(sxx*syy);
+}
+// least-squares line over a point set; returns endpoints spanning the selected x-range
+function fitLine(xs, ys) {
+  const n = xs.length;
+  if (n < 2) return null;
+  const mx = xs.reduce((a,b)=>a+b,0)/n, my = ys.reduce((a,b)=>a+b,0)/n;
+  let sxy=0, sxx=0;
+  for (let i=0;i<n;i++){ const dx=xs[i]-mx; sxy+=dx*(ys[i]-my); sxx+=dx*dx; }
+  if (sxx===0) return null;
+  const slope = sxy/sxx, intercept = my - slope*mx;
+  const xlo = Math.min(...xs), xhi = Math.max(...xs);
+  return { x: [xlo, xhi], y: [slope*xlo+intercept, slope*xhi+intercept] };
+}
+// two-sided p-value via incomplete beta (matches scipy.stats.pearsonr)
+function gammaln(x){
+  const c=[76.18009172947146,-86.50532032941677,24.01409824083091,
+           -1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
+  let y=x, t=x+5.5; t-=(x+0.5)*Math.log(t); let s=1.000000000190015;
+  for(let j=0;j<6;j++){ y+=1; s+=c[j]/y; }
+  return -t+Math.log(2.5066282746310005*s/x);
+}
+function betacf(a,b,x){
+  const FPMIN=1e-300; let qab=a+b, qap=a+1, qam=a-1;
+  let c=1, d=1-qab*x/qap; if(Math.abs(d)<FPMIN)d=FPMIN; d=1/d; let h=d;
+  for(let m=1;m<=200;m++){
+    const m2=2*m;
+    let aa=m*(b-m)*x/((qam+m2)*(a+m2));
+    d=1+aa*d; if(Math.abs(d)<FPMIN)d=FPMIN; c=1+aa/c; if(Math.abs(c)<FPMIN)c=FPMIN; d=1/d; h*=d*c;
+    aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));
+    d=1+aa*d; if(Math.abs(d)<FPMIN)d=FPMIN; c=1+aa/c; if(Math.abs(c)<FPMIN)c=FPMIN; d=1/d;
+    const del=d*c; h*=del; if(Math.abs(del-1)<3e-7) break;
+  }
+  return h;
+}
+function betai(a,b,x){
+  if(x<=0) return 0; if(x>=1) return 1;
+  const bt=Math.exp(gammaln(a+b)-gammaln(a)-gammaln(b)+a*Math.log(x)+b*Math.log(1-x));
+  return x<(a+1)/(a+b+2) ? bt*betacf(a,b,x)/a : 1-bt*betacf(b,a,1-x)/b;
+}
+function pValue(r, n){
+  if(r===null || n<3) return null;
+  const df=n-2; const rr=Math.min(Math.max(r,-0.999999999),0.999999999);
+  const t2=rr*rr*df/(1-rr*rr);
+  return betai(df/2, 0.5, df/(df+t2));  // two-sided
+}
+
+const fig = document.getElementById("fig");
+let selection = null;   // panel -> {x,y} from a box-select, or null when none active
+let suppress = false;   // guard so our own trend restyle doesn't re-trigger render()
+
+Plotly.newPlot(fig, traces, layout, {responsive: true, displaylogo: false,
+  modeBarButtonsToRemove: ["lasso2d"]}).then(() => {
+  // default to box-select so dragging a rectangle recomputes stats
+  Plotly.relayout(fig, {dragmode: "select"});
+  render();
+});
+
+// Points to use per panel = currently VISIBLE categories (respects legend toggles).
+function visiblePanelPts() {
+  const m = {};
+  scatterTraces.forEach(st => {
+    const tr = fig.data[st.idx];
+    if (tr.visible === "legendonly") return;          // hidden via legend
+    const a = (m[st.panel] = m[st.panel] || {x:[], y:[]});
+    for (let k = 0; k < tr.x.length; k++) { a.x.push(tr.x[k]); a.y.push(tr.y[k]); }
+  });
+  return m;
+}
+
+// Recompute r/p/n and refit the regression line for every panel.
+// Uses the box-selected points when a selection is active, else the visible points.
+function render() {
+  const base = visiblePanelPts();
+  const annUpdate = {}, tX = [], tY = [], tIdx = [];
+  D.panels.forEach((panel, i) => {
+    const ai = annIndexForPanel[i];
+    const pts = (selection && selection[i] && selection[i].x.length) ? selection[i] : base[i];
+    tIdx.push(trendIdxForPanel[i]);
+    if (pts && pts.x.length >= 1) {
+      const r = pearson(pts.x, pts.y);
+      annUpdate["annotations[" + ai + "].text"] = statsText(r, pValue(r, pts.x.length), pts.x.length);
+      const line = fitLine(pts.x, pts.y);
+      tX.push(line ? line.x : []); tY.push(line ? line.y : []);
+    } else {
+      annUpdate["annotations[" + ai + "].text"] = statsText(null, null, 0);
+      tX.push([]); tY.push([]);                       // nothing visible -> no line
+    }
+  });
+  suppress = true;
+  Plotly.restyle(fig, { x: tX, y: tY }, tIdx).then(() => { suppress = false; });
+  Plotly.relayout(fig, annUpdate);
+}
+
+fig.on("plotly_selected", (ev) => {
+  const m = {};
+  if (ev && ev.points) ev.points.forEach(pt => {
+    const pidx = pt.data.meta ? pt.data.meta.panel : null;
+    if (pidx === null || pidx === undefined) return;
+    (m[pidx] = m[pidx] || {x:[], y:[]});
+    m[pidx].x.push(pt.x); m[pidx].y.push(pt.y);
+  });
+  selection = m; render();
+});
+fig.on("plotly_deselect", () => { selection = null; render(); });   // double-click clears
+fig.on("plotly_restyle", () => { if (!suppress) render(); });        // legend toggles
+
+// ---- Guidance toggle: swap the x column between w/o CFG and w/ CFG ----
+function switchGuidance(col, label) {
+  D.xcol = col; D.xlabel = label;
+  selection = null;                                  // x range changed; drop any box selection
+  const xUpd = [], cdUpd = [], idxs = [];
+  scatterTraces.forEach(st => {
+    idxs.push(st.idx);
+    xUpd.push(st.recs.map(r => r[col]));
+    cdUpd.push(customFor(st.recs));                  // customFor reads the now-updated D.xcol
+  });
+  suppress = true;
+  Plotly.restyle(fig, { x: xUpd, customdata: cdUpd }, idxs).then(() => {
+    const axUpd = {};
+    D.panels.forEach((p, i) => {
+      const xa = "xaxis" + (i === 0 ? "" : (i + 1));
+      axUpd[xa + ".title.text"] = label;
+      axUpd[xa + ".autorange"] = true;               // re-fit the axis to the new range
+    });
+    return Plotly.relayout(fig, axUpd);
+  }).then(() => { suppress = false; render(); });
+}
+
+document.querySelectorAll(".guidance-toggle button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".guidance-toggle button").forEach(b =>
+      b.setAttribute("aria-pressed", b === btn ? "true" : "false"));
+    switchGuidance(btn.getAttribute("data-col"), btn.getAttribute("data-label"));
+  });
+});
+</script>
+</body>
+</html>

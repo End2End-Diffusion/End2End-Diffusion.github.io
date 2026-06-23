@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Play/Start symbol for quickstart -->
+  <polygon points="5,3 19,12 5,21" fill="#667eea" stroke="#764ba2" stroke-width="2"/>
+  <circle cx="12" cy="12" r="10" stroke="#508af6" stroke-width="2" fill="none"/>
+</svg>

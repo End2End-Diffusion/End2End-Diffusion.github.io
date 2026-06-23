@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Broken trend line showing accuracy paradox -->
+  <path d="M3 17 L8 12 L13 14 L18 9" stroke="#667eea" stroke-width="2.5"/>
+  <path d="M18 9 L20 13" stroke="#764ba2" stroke-width="2.5" stroke-dasharray="2,2"/>
+  <!-- X mark at the break -->
+  <circle cx="18" cy="9" r="2.5" fill="#764ba2"/>
+  <line x1="17" y1="8" x2="19" y2="10" stroke="white" stroke-width="1.5"/>
+  <line x1="19" y1="8" x2="17" y2="10" stroke="white" stroke-width="1.5"/>
+</svg>
