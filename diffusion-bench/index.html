@@ -1,0 +1,796 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>DiffusionBench: On Holistic Evaluation of Diffusion Transformers</title>
+        <link rel="icon" type="image/png" href="../static/img/kitty.png">
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Canonical, RSS, Robots -->
+        <link rel="canonical" href="https://end2end-diffusion.github.io/diffusion-bench/">
+        <link rel="alternate" type="application/rss+xml" title="End2End Diffusion Blog" href="https://end2end-diffusion.github.io/blog/rss.xml">
+        <meta name="robots" content="index, follow">
+
+        <!-- Google Scholar meta tags -->
+        <meta name="citation_title" content="DiffusionBench: On Holistic Evaluation of Diffusion Transformers">
+        <meta name="citation_author" content="Leng, Xingjian">
+        <meta name="citation_author" content="Singh, Jaskirat">
+        <meta name="citation_author" content="Liang, Zhanhao">
+        <meta name="citation_author" content="Smith, Ethan">
+        <meta name="citation_author" content="Bell, Martin">
+        <meta name="citation_author" content="Saha, Aninda">
+        <meta name="citation_author" content="Yuan, Yuhui">
+        <meta name="citation_author" content="Zheng, Liang">
+        <meta name="citation_publication_date" content="2025">
+        <meta name="citation_online_date" content="2025">
+        <meta name="citation_technical_report_institution" content="End2End Diffusion">
+        <meta name="citation_abstract" content="NanoGen is a unified training and evaluation framework that matches state-of-the-art diffusion transformer baselines on ImageNet and, with only a few lines of configuration change, also trains competitive text-to-image models. We further introduce DiffusionBench, a holistic benchmark combining ImageNet and text-to-image evaluation.">
+        <meta name="citation_language" content="en">
+
+        <!-- JSON-LD Structured Data -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "ScholarlyArticle",
+          "headline": "DiffusionBench: On Holistic Evaluation of Diffusion Transformers",
+          "name": "DiffusionBench: On Holistic Evaluation of Diffusion Transformers",
+          "description": "NanoGen is a unified training and evaluation framework that matches state-of-the-art diffusion transformer baselines on ImageNet and, with only a few lines of configuration change, also trains competitive text-to-image models. We further introduce DiffusionBench, a holistic benchmark.",
+          "author": [
+            {"@type": "Person", "name": "Xingjian Leng"},
+            {"@type": "Person", "name": "Jaskirat Singh"},
+            {"@type": "Person", "name": "Zhanhao Liang"},
+            {"@type": "Person", "name": "Ethan Smith"},
+            {"@type": "Person", "name": "Martin Bell"},
+            {"@type": "Person", "name": "Aninda Saha"},
+            {"@type": "Person", "name": "Yuhui Yuan"},
+            {"@type": "Person", "name": "Liang Zheng"}
+          ],
+          "datePublished": "2025",
+          "publisher": {
+            "@type": "Organization",
+            "name": "End2End Diffusion",
+            "url": "https://end2end-diffusion.github.io"
+          },
+          "url": "https://end2end-diffusion.github.io/diffusion-bench/",
+          "mainEntityOfPage": "https://end2end-diffusion.github.io/diffusion-bench/",
+          "isAccessibleForFree": true,
+          "inLanguage": "en"
+        }
+        </script>
+
+        <!-- Open Graph -->
+        <meta property="og:url" content="https://end2end-diffusion.github.io/diffusion-bench" />
+        <meta property="og:title" content="DiffusionBench: On Holistic Evaluation of Diffusion Transformers" />
+        <meta property="og:description" content="A unified framework for training and evaluating diffusion transformers across ImageNet and text-to-image, plus the DiffusionBench holistic benchmark." />
+        <meta property="og:type" content="article" />
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="DiffusionBench: On Holistic Evaluation of Diffusion Transformers" />
+        <meta name="twitter:description" content="A unified framework for training and evaluating diffusion transformers across ImageNet and text-to-image." />
+
+        <script src="./static/js/distill_template.v2.js"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+        <script defer="" src="./static/js/hider.js"></script>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="../static/css/paper-layout.css">
+        <link rel="stylesheet" href="./static/css/style.css">
+        <link rel="stylesheet" href="./static/css/custom.css?v=26">
+        <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js" integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+            onload="renderMathInElement(document.body);"></script>
+        <script defer src="./static/js/fontawesome.all.min.js"></script>
+
+        <!-- medium zoom -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+        <script defer src="./static/js/medium-zoom.min.js"></script>
+        <script defer src="./static/js/zoom.js"></script>
+
+        <!-- Prism.js for syntax highlighting -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+
+        <!-- Tab switching -->
+        <script defer src="./static/js/tabs.js"></script>
+    </head>
+    <body>
+        <!-- Sticky Table of Contents -->
+        <nav class="toc-container">
+            <h4>Contents</h4>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#quickstart">Quickstart</a></li>
+                <li><a href="#framework"><span class="sc">NanoGen</span> Framework</a></li>
+                <li><a href="#imagenet">ImageNet Reproducibility</a></li>
+                <li><a href="#diffbench"><span class="sc">DiffusionBench</span></a></li>
+                <li><a href="#conclusion">Conclusion</a></li>
+            </ul>
+        </nav>
+
+        <nav style="background-color: #fff; border-bottom: 1px solid #e5e5e5; padding: 12px 0;">
+            <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+                <a href="../index.html" style="color: #1a1a1a; text-decoration: none; font-size: 15px; font-weight: 500;">
+                    <i class="fas fa-arrow-left" style="margin-right: 8px; opacity: 0.5;"></i>
+                    End2End Diffusion
+                </a>
+                <div style="display: flex; gap: 20px;">
+                    <a href="../repa-e/" style="color: #666; text-decoration: none; font-size: 14px;">REPA-E</a>
+                    <a href="../repa-e-t2i/" style="color: #666; text-decoration: none; font-size: 14px;">REPA-E for T2I</a>
+                    <a href="../irepa/" style="color: #666; text-decoration: none; font-size: 14px;">iREPA</a>
+                </div>
+            </div>
+        </nav>
+        <div class="header-wrapper">
+            <div class="central-header">
+                <!-- Title -->
+                <div class="title-section">
+                    <h1><img src="./static/img/diffusionbench-logo.png" alt="DiffusionBench logo" class="title-logo">DiffusionBench</h1>
+                    <h2>On Holistic Evaluation of Diffusion Transformers</h2>
+                    <p class="title-subtitle">with a Unified Training Framework Bridging ImageNet and Text-to-Image</p>
+                </div>
+
+                <!-- Authors -->
+                <div class="authors">
+                    <a href="https://scholar.google.com.au/citations?user=GQzvqS4AAAAJ" target="_blank">Xingjian Leng</a><sup>1,2</sup>,
+                    <a href="https://1jsingh.github.io/" target="_blank">Jaskirat Singh</a><sup>1</sup>,
+                    <a href="https://github.com/RockeyCoss" target="_blank">Zhanhao Liang</a><sup>1</sup>,
+                    <a href="https://www.ethansmith2000.com/" target="_blank">Ethan Smith</a><sup>2</sup>,
+                    Martin Bell<sup>2</sup>,
+                    Aninda Saha<sup>2</sup>,
+                    Yuhui Yuan<sup>2</sup>,
+                    <a href="https://zheng-lab-anu.github.io/" target="_blank">Liang Zheng</a><sup>1,2</sup>
+                    <br>
+                    <span style="color: #555; font-size: 0.9em;"><sup>1</sup>Australian National University &nbsp;&nbsp; <sup>2</sup>Canva Research</span>
+                </div>
+
+                <!-- TL;DR -->
+                <div class="tldr-section">
+                    <p><span class="tldr-label">TL;DR:</span> <span class="sc">NanoGen</span> is a unified framework that trains and evaluates diffusion transformers across ImageNet and text-to-image with only roughly <strong>12 lines</strong> of config change. We use it to show that method rankings show <strong>no strong correlation</strong> between ImageNet and T2I generation, and introduce <span class="sc">DiffusionBench</span>, a holistic benchmark for DiT research.</p>
+                </div>
+
+                <!-- Key points + Hero -->
+                <div class="hero-section">
+                    <div class="key-points">
+                        <div class="key-point">
+                            <img class="key-point-icon key-point-icon--illus" src="./static/img/bullet1.png?v=2" alt="Performance Icon">
+                            <div class="key-point-text"><strong>Matching State-of-the-Art Performance</strong>: The unified <span class="sc">NanoGen</span> training framework matches state-of-the-art DiT methods on ImageNet.</div>
+                        </div>
+                        <div class="key-point">
+                            <img class="key-point-icon key-point-icon--illus" src="./static/img/bullet2.png?v=3" alt="Config Icon">
+                            <div class="key-point-text"><strong>Effortless ImageNet &rarr; T2I</strong>: Going from ImageNet to text-to-image takes only roughly 12 lines of config change.</div>
+                        </div>
+                        <div class="key-point">
+                            <img class="key-point-icon key-point-icon--illus" src="./static/img/bullet3.png?v=1" alt="Evaluation Icon">
+                            <div class="key-point-text"><strong>Holistic Evaluation</strong>: A systematic comparison of 25 methods across ImageNet and T2I under various metrics.</div>
+                        </div>
+
+                        <div class="button-row">
+                            <!-- TODO: add arXiv link once available -->
+                            <a href="#" class="button paper-link" aria-disabled="true">
+                                <span class="icon is-small"><i class="ai ai-arxiv"></i></span> Paper (coming soon)
+                            </a>
+                            <a href="https://github.com/End2End-Diffusion/diffusion-bench" class="button" target="_blank">
+                                <span class="icon is-small"><i class="fab fa-github"></i></span> Code
+                            </a>
+                            <a href="https://huggingface.co/diffusion-bench/diffusion-bench" class="button" target="_blank">
+                                <span class="icon is-small"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HF" style="height: 1em;"></span> Models
+                            </a>
+                        </div>
+                    </div>
+                    <div class="hero-media">
+                        <div class="bench-term">
+                        <div class="bench-term__bar">
+                            <span class="bench-term__dot bench-term__dot--r"></span>
+                            <span class="bench-term__dot bench-term__dot--y"></span>
+                            <span class="bench-term__dot bench-term__dot--g"></span>
+                            <span class="bench-term__title">diffusion-bench</span>
+                        </div>
+<pre class="bench-term__art">############################################################################
+#                                                                            #
+#   ____  _  __  __           _                            .-----------.     #
+#  |  _ \(_)/ _|/ _|_   _ ___(_) ___  _ __                 |           |     #
+#  | | | | | |_| |_| | | / __| |/ _ \| '_ \                | ░▒▓█▓▒░▒▓ |     #
+#  | |_| | |  _|  _| |_| \__ \ | (_) | | | |               | ▒▓█████▓▒ |     #
+#  |____/|_|_| |_|  \__,_|___/_|\___/|_| |_|               | ▓███████▓ |     #
+#                                                          |     ↓     |     #
+#   ____                  _                                | █████████ |     #
+#  | __ )  ___ _ __   ___| |__                             | ▓███████▓ |     #
+#  |  _ \ / _ \ '_ \ / __| '_ \                            | ▒▓█████▓▒ |     #
+#  | |_) |  __/ | | | (__| | | |                           |           |     #
+#  |____/ \___|_| |_|\___|_| |_|                           '-----------'     #
+#                                                                            #
+#           Because ImageNet evaluation alone is no longer enough!           #
+#                                                                            #
+############################################################################</pre>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <d-article>
+        <hr style="width: 60%; margin: 20px auto; border: none; border-top: 1px solid #d0d0d0;">
+
+        <!-- ==================== Overview ==================== -->
+        <h1 class="text" id="overview">Overview</h1>
+
+        <div class="sidenote-container">
+            <p class="text">
+                Diffusion transformer (DiT) research on image generation has converged to a single evaluation setup: class-conditional generation on ImageNet. While methods improve the FID and related metrics, it is increasingly unclear whether they reflect real progress in generative modeling. The natural alternative, i.e., text-to-image (T2I) generation, is perceived as too costly or inconvenient to train and evaluate and is often skipped. We argue that this perception no longer holds. We introduce <span class="sc">NanoGen</span>, a unified training and evaluation framework that matches state-of-the-art DiT baselines on ImageNet and, with 12 lines of configuration change, also trains competitive text-to-image models.
+            </p>
+        </div>
+
+        <ol class="text">
+            <li><strong><a href="#framework">&sect;A Unified Framework</a></strong>: We release <em><span class="sc">NanoGen</span></em>, a unified DiT training framework that matches state-of-the-art methods on ImageNet and extends to text-to-image training with roughly 12 lines of config changes.</li>
+            <li><strong><a href="#diffbench">&sect;ImageNet Rankings Don't Reliably Predict T2I</a></strong>: We observe that method ranking shows no strong correlation between ImageNet and T2I generation, large enough to flip conclusions from ImageNet.</li>
+            <li><strong><a href="#diffbench">&sect;A Holistic Benchmark</a></strong>: We incorporate both tasks into <em><span class="sc">DiffusionBench</span></em>, present results across many existing methods, and argue for its adoption as a default DiT benchmark.</li>
+        </ol>
+
+        <hr>
+
+        <!-- ==================== Quickstart ==================== -->
+        <div class="quickstart-section" id="quickstart">
+            <h1 class="text">Quickstart</h1>
+            <p class="text">
+                <span class="sc">NanoGen</span> supports training and evaluation across tasks (ImageNet, T2I, ...) through a single
+                interface. Below are the essentials. Full details in the
+                <a href="https://github.com/End2End-Diffusion/diffusion-bench" target="_blank">GitHub repo</a>.
+            </p>
+
+        <!-- Teaser: ImageNet -> T2I config diff -->
+        <div class="config-teaser">
+            <p class="config-teaser__lead">
+                Switching from ImageNet to text-to-image is a <strong>config change, not a code change</strong> &mdash;
+                roughly 12 lines. Only two blocks move: the <span class="chg">conditioning</span> module
+                and the <span class="chg">dataset</span>. The backbone, optimiser, training loop, and evaluation harness stay identical.
+            </p>
+            <div class="config-grid">
+                <div class="config-col config-col--imagenet">
+                    <div class="config-col__head"><span class="dot"></span>ImageNet<span class="config-col__file">imagenet.yaml</span></div>
+                    <pre class="config-code"><code><span class="ln"><span class="c"># stage_1, stage_2, transport, sampler,</span></span><span class="ln"><span class="c"># training, misc ... shared across tasks</span></span><span class="ln"> </span><span class="ln">conditioning:</span><span class="ln"><span class="c">  # class label</span></span><span class="d">  type: <span class="s">"label"</span></span><span class="ln">  cfg_dropout_prob: 0.1</span><span class="ln">  arch:</span><span class="ln">    num_t_tokens: 4</span><span class="d">    num_c_tokens: 8</span><span class="ln"><span class="c">  # no text encoder</span></span><span class="ln"><span class="c">  # for class</span></span><span class="ln"><span class="c">  # conditioning</span></span><span class="ln"> </span><span class="ln">dataset:</span><span class="d">  target: <span class="s">"imagenet"</span></span><span class="d">  type: <span class="s">"hf"</span></span><span class="d">  data_dir: <span class="s">"./data/imagenet"</span></span><span class="d">  split: <span class="s">"train"</span></span><span class="d">  condition_type: <span class="s">"label"</span></span></code></pre>
+                </div>
+                <div class="config-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></div>
+                <div class="config-col config-col--t2i">
+                    <div class="config-col__head"><span class="dot"></span>Text-to-Image<span class="config-col__file">t2i.yaml</span></div>
+                    <pre class="config-code"><code><span class="ln"><span class="c"># stage_1, stage_2, transport, sampler,</span></span><span class="ln"><span class="c"># training, misc ... shared across tasks</span></span><span class="ln"> </span><span class="ln">conditioning:</span><span class="ln"><span class="c">  # text prompt</span></span><span class="d">  type: <span class="s">"text"</span></span><span class="ln">  cfg_dropout_prob: 0.1</span><span class="ln">  arch:</span><span class="ln">    num_t_tokens: 4</span><span class="ln"><span class="c">    # num_c_tokens: 8</span></span><span class="d">  text_encoder:</span><span class="d">    model_name: <span class="s">"Qwen/Qwen3-0.6B"</span></span><span class="d">    max_length: 256</span><span class="ln"> </span><span class="ln">dataset:</span><span class="d">  target: <span class="s">"blip3o"</span></span><span class="d">  type: <span class="s">"wds"</span></span><span class="d">  data_dir: <span class="s">"./data/blip3o-256"</span></span><span class="d">  split: [<span class="s">"journeydb"</span>, <span class="s">"long-caption"</span>]</span><span class="d">  condition_type: <span class="s">"text"</span></span></code></pre>
+                </div>
+            </div>
+        </div>
+
+            <!-- Tab Buttons -->
+            <div class="tab-container">
+                <button class="tab-button" data-tab="tab-setup">Setup</button>
+                <button class="tab-button" data-tab="tab-training">Training</button>
+                <button class="tab-button" data-tab="tab-eval">Evaluation</button>
+            </div>
+
+            <!-- Setup -->
+            <div id="tab-setup" class="tab-content">
+                <div class="quickstart-example">
+                    <pre><code class="language-bash"># install uv project manager (if you don't already have it)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# install dependencies
+uv sync
+
+# prepare data
+uv run python scripts/prepare.py --data {all,imagenet,t2i,eval}
+
+# download pretrained models
+uv run hf download diffusion-bench/diffusion-bench --local-dir pretrained_models --exclude .gitattributes</code></pre>
+                </div>
+            </div>
+
+            <!-- Training -->
+            <div id="tab-training" class="tab-content">
+                <p class="text">Reproduction flow: <strong>Stage 1 &rarr; Stage 2</strong>. Set these environment variables first (used for the output directory and W&amp;B logging):</p>
+                <div class="quickstart-example">
+                    <pre><code class="language-bash">export EXPERIMENT_NAME=&lt;run-name&gt;
+export ENTITY=&lt;wandb-entity&gt;
+export PROJECT=&lt;wandb-project&gt;
+export WANDB_KEY=&lt;key&gt;</code></pre>
+                </div>
+                <div class="quickstart-example">
+                    <h3>Stage 1 &mdash; train the RAE tokenizer</h3>
+                    <pre><code class="language-bash">uv run torchrun --standalone --nproc_per_node=8 \
+    src/train_stage1.py \
+    --config [STAGE1_CONFIG_PATH] \
+    --results-dir results/stage1 --precision bf16 --compile --wandb</code></pre>
+                </div>
+                <div class="quickstart-example">
+                    <h3>Stage 2 &mdash; train the diffusion model (VAE / RAE / Pixel)</h3>
+                    <pre><code class="language-bash">uv run torchrun --standalone --nproc_per_node=8 \
+    src/train.py \
+    --config [STAGE2_CONFIG_PATH] \
+    --results-dir results/stage2 --precision bf16 --compile --wandb</code></pre>
+                </div>
+            </div>
+
+            <!-- Evaluation -->
+            <div id="tab-eval" class="tab-content">
+                <p class="text">Stage 2 training configs run online evaluation during training. For standalone evaluation of a released checkpoint, use the <code>sampling/</code> configs &mdash; each embeds the trained checkpoint and eval-time guidance, so the weights load automatically:</p>
+                <div class="quickstart-example">
+                    <pre><code class="language-bash">export EXPERIMENT_NAME=&lt;run-name&gt;
+
+# stage 1 reconstruction (rFID / PSNR / SSIM / LPIPS)
+uv run torchrun --nproc_per_node=8 src/offline_eval_stage1.py --config [STAGE1_CONFIG_PATH]
+
+# stage 2 generation (FID / IS, GenEval / DPGBench / ...)
+uv run torchrun --nproc_per_node=8 src/offline_eval.py --config [STAGE2_CONFIG_PATH]</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- ==================== NanoGen Framework ==================== -->
+        <div class="method-block" id="framework">
+            <h1 class="text">The <span class="sc">NanoGen</span> Training and Evaluation Framework</h1>
+            <p class="text">
+                <span class="sc">NanoGen</span> is a diffusion model training and evaluation framework that supports both class-conditional ImageNet generation and text-to-image generation under a single codebase. Its goal is to make the additional cost of evaluating a method on the T2I task as low as possible
+            </p>
+            <p class="text" style="margin-bottom: 0.7em;"><strong>Design principles.</strong></p>
+            <div class="dp-card">
+                <div class="dp-group">
+                    <div class="dp-group__title"><i class="fas fa-lock"></i> Across ImageNet &amp; T2I, we use the same:</div>
+                    <div class="dp-chips">
+                        <span class="dp-chip">backbone</span>
+                        <span class="dp-chip">optimiser</span>
+                        <span class="dp-chip">training loop</span>
+                        <span class="dp-chip">evaluation harness</span>
+                        <span class="dp-chip">config format</span>
+                    </div>
+                </div>
+                <div class="dp-group">
+                    <div class="dp-group__title dp-group__title--change"><i class="fas fa-pen"></i> Switching between tasks requires only two changes:</div>
+                    <div class="dp-chips">
+                        <span class="dp-chip dp-chip--change">dataset</span>
+                        <span class="dp-chip dp-chip--change">conditioning module</span>
+                    </div>
+                </div>
+            </div>
+            <p class="text">
+                <strong>Backbone architecture.</strong> A standard diffusion transformer with three deliberate modifications: a <strong>Decoupled Diffusion Transformer (DDT)</strong> backbone whose encoder-decoder split increases effective width without the quadratic FLOPs cost of a uniformly wide DiT; <strong>no AdaLN</strong> in the encoder; and <strong>in-context conditioning</strong>, feeding all conditioning (including the timestep) as tokens, so adapting to a new task just means changing those tokens.
+            </p>
+            <p class="text" style="margin-bottom: 6px;">
+                <strong>Task-specific conditioning tokens.</strong> The only per-task difference:
+            </p>
+            <ul class="text" style="margin-top: 0;">
+                <li><strong>ImageNet</strong>: 4 timestep + 8 class tokens</li>
+                <li><strong>T2I</strong>: 4 timestep + 256 text tokens</li>
+            </ul>
+
+            <p class="text" style="margin-bottom: 0.4em;"><strong>Training recipe.</strong></p>
+            <div class="config-box">
+                <div class="config-box-label">Setup</div>
+                <ul>
+                    <li><strong>Training</strong>
+                        <ul>
+                            <li>Resolution: 256&times;256</li>
+                            <li>Iterations: 100K</li>
+                            <li>Batch size: 1024</li>
+                            <li>Optimizer: AdamW<d-cite key="adamw"></d-cite>, learning rate 2&times;10<sup>-4</sup> with linear decay</li>
+                            <li>Sampler: 50-step Euler</li>
+                        </ul>
+                    </li>
+                    <li><strong>ImageNet</strong>
+                        <ul>
+                            <li>Conditioning: 4 timestep + 8 class tokens</li>
+                            <li>Guidance: without CFG / per-method best CFG (applied on the t-interval [0, 0.9])</li>
+                        </ul>
+                    </li>
+                    <li><strong>Text-to-image</strong>
+                        <ul>
+                            <li>Data: BLIP-3o<d-cite key="blip3o"></d-cite> (JourneyDB<d-cite key="journeydb"></d-cite>, Long-Caption, and Short-Caption splits)</li>
+                            <li>Conditioning: 4 timestep + 256 text tokens from a frozen Qwen3-0.6B<d-cite key="qwen3"></d-cite> encoder</li>
+                            <li>Guidance: classifier-free guidance<d-cite key="cfg"></d-cite> scale 6.0</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- ==================== ImageNet Reproducibility ==================== -->
+        <div class="method-block" id="imagenet">
+            <h1 class="text">ImageNet Reproducibility Validation</h1>
+            <p class="text">
+                We first confirm that <span class="sc">NanoGen</span> establishes trustworthy ImageNet baselines, where the implemented methods match reported numbers in their papers. We re-implement and re-train six existing methods, including three latent-space (RAE, two E2E-VAEs) and three pixel-space methods (PixNerd, JiT, PixelGen). We observe that the <span class="sc">NanoGen</span> results are competitive with published numbers and sometimes slightly superior. 
+            </p>
+            <figure class="data-table">
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Epochs</th>
+                                <th>#Params</th>
+                                <th>Prediction</th>
+                                <th>NFE</th>
+                                <th>with Guidance</th>
+                                <th>FID&nbsp;&darr;<d-cite key="fid"></d-cite></th>
+                                <th>IS&nbsp;&uarr;<d-cite key="is"></d-cite></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="group-row"><td colspan="8">Latent-space</td></tr>
+                            <tr><td>RAE (DINOv2-B)<d-cite key="rae"></d-cite></td><td>80</td><td>839M</td><td><var>v</var></td><td>50</td><td>&times;</td><td>2.16</td><td>214.8</td></tr>
+                            <tr class="row-ours"><td>Ours</td><td>80</td><td>847M</td><td><var>v</var></td><td>50</td><td>&times;</td><td>2.07</td><td>213.5</td></tr>
+                            <tr><td>E2E-VAVAE<d-cite key="repae"></d-cite></td><td>80</td><td>675M</td><td><var>v</var></td><td>250</td><td>&times;</td><td>5.26</td><td>&ndash;</td></tr>
+                            <tr class="row-ours"><td>Ours</td><td>80</td><td>680M</td><td><var>v</var></td><td>250</td><td>&times;</td><td>3.64</td><td>152.5</td></tr>
+                            <tr><td>E2E-VAVAE + REPA<d-cite key="repae"></d-cite></td><td>80</td><td>675M</td><td><var>v</var></td><td>250</td><td>&times;</td><td>3.46</td><td>159.8</td></tr>
+                            <tr class="row-ours"><td>Ours</td><td>80</td><td>681M</td><td><var>v</var></td><td>250</td><td>&times;</td><td>2.88</td><td>165.4</td></tr>
+                            <tr class="group-row"><td colspan="8">Pixel-space</td></tr>
+                            <tr><td>PixNerd<d-cite key="pixnerd"></d-cite></td><td>160</td><td>458M</td><td><var>v</var></td><td>100</td><td>&check;</td><td>2.64</td><td>297.0</td></tr>
+                            <tr class="row-ours"><td>Ours</td><td>160</td><td>446M</td><td><var>v</var></td><td>100</td><td>&check;</td><td>2.58</td><td>299.3</td></tr>
+                            <tr><td>JiT<d-cite key="jit"></d-cite></td><td>200</td><td>131M</td><td><var>x</var></td><td>50</td><td>&check;</td><td>8.62</td><td>&ndash;</td></tr>
+                            <tr class="row-ours"><td>Ours</td><td>200</td><td>88M</td><td><var>x</var></td><td>50</td><td>&check;</td><td>5.49</td><td>231.6</td></tr>
+                            <tr><td>PixelGen<d-cite key="pixelgen"></d-cite></td><td>40</td><td>459M</td><td><var>x</var></td><td>50</td><td>&times;</td><td>7.53</td><td>131.7</td></tr>
+                            <tr class="row-ours"><td>Ours</td><td>40</td><td>458M</td><td><var>x</var></td><td>50</td><td>&times;</td><td>7.52</td><td>123.5</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <figcaption>ImageNet-256 reproducibility across latent-space and pixel-space methods</figcaption>
+            </figure>
+        </div>
+
+        <hr>
+
+        <!-- ==================== DiffusionBench ==================== -->
+        <div class="method-block" id="diffbench">
+            <h1 class="text"><span class="sc">DiffusionBench</span>: A Holistic Benchmark</h1>
+            <p class="text"><strong>ImageNet generation.</strong> The best FID (1.37) is achieved by FLUX.2-VAE, followed by the end-to-end REPA-E VAEs at around 1.5&ndash;1.6. The RAE family is slightly higher, with the better ones around 1.7&ndash;1.9 (DINOv3-B is the best RAE at 1.74). Traditional VAEs such as SD-VAE and SD3.5-VAE, along with the pixel-space methods, lag behind, though at 80 epochs this gap is largely driven by convergence speed and should narrow with longer training. Toggle guidance (with / without CFG) and the metric (FDr<d-cite key="reprfrechet"></d-cite> / MIND<d-cite key="mind"></d-cite>).</p>
+            <figure class="data-table">
+                <div class="metric-toggle">
+                    <span class="metric-toggle-label">Guidance:</span>
+                    <button type="button" data-toggle="data-cfg" data-value="cfg" aria-pressed="true">with CFG</button>
+                    <button type="button" data-toggle="data-cfg" data-value="nocfg" aria-pressed="false">without CFG</button>
+                </div>
+                <div class="metric-toggle">
+                    <span class="metric-toggle-label">Distributional metric:</span>
+                    <button type="button" data-toggle="data-metric" data-value="fdr" aria-pressed="true">FDr</button>
+                    <button type="button" data-toggle="data-metric" data-value="mind" aria-pressed="false">MIND</button>
+                </div>
+                <div class="table-scroll">
+                    <table data-metric="fdr" data-cfg="cfg">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Method</th>
+                                <th rowspan="2">FID&nbsp;&darr;<d-cite key="fid"></d-cite></th>
+                                <th rowspan="2">IS&nbsp;&uarr;<d-cite key="is"></d-cite></th>
+                                <th colspan="5"><span class="m-fdr">FDr&nbsp;&darr;</span><span class="m-mind">MIND&nbsp;&darr;</span></th>
+                            </tr>
+                            <tr>
+                                <th>Inception</th><th>ConvNeXt</th><th>DINOv2</th><th>MAE</th><th>SigLIP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>DINOv2-B<d-cite key="dinov2"></d-cite></td><td><span class="v-cfg">1.96</span><span class="v-nocfg">2.14</span></td><td><span class="v-cfg">224.1</span><span class="v-nocfg">211.9</span></td><td><span class="m m-fdr m-cfg">1.22</span><span class="m m-fdr m-nocfg">1.32</span><span class="m m-mind m-cfg">2.03</span><span class="m m-mind m-nocfg">2.54</span></td><td><span class="m m-fdr m-cfg">2.20</span><span class="m m-fdr m-nocfg">2.33</span><span class="m m-mind m-cfg">66.49</span><span class="m m-mind m-nocfg">70.53</span></td><td><span class="m m-fdr m-cfg">3.26</span><span class="m m-fdr m-nocfg">3.14</span><span class="m m-mind m-cfg">27.74</span><span class="m m-mind m-nocfg">26.52</span></td><td><span class="m m-fdr m-cfg">6.19</span><span class="m m-fdr m-nocfg">6.33</span><span class="m m-mind m-cfg">0.43</span><span class="m m-mind m-nocfg">0.44</span></td><td><span class="m m-fdr m-cfg">7.76</span><span class="m m-fdr m-nocfg">7.56</span><span class="m m-mind m-cfg">6.52</span><span class="m m-mind m-nocfg">6.30</span></td></tr>
+                            <tr><td>DINOv2-B + REG<d-cite key="reg"></d-cite></td><td><span class="v-cfg">1.84</span><span class="v-nocfg">2.08</span></td><td><span class="v-cfg">236.2</span><span class="v-nocfg">207.7</span></td><td><span class="m m-fdr m-cfg">1.15</span><span class="m m-fdr m-nocfg">1.29</span><span class="m m-mind m-cfg">1.90</span><span class="m m-mind m-nocfg">2.23</span></td><td><span class="m m-fdr m-cfg">2.15</span><span class="m m-fdr m-nocfg">2.45</span><span class="m m-mind m-cfg">64.30</span><span class="m m-mind m-nocfg">76.20</span></td><td><span class="m m-fdr m-cfg">3.21</span><span class="m m-fdr m-nocfg">3.26</span><span class="m m-mind m-cfg">27.40</span><span class="m m-mind m-nocfg">27.98</span></td><td><span class="m m-fdr m-cfg">6.43</span><span class="m m-fdr m-nocfg">6.42</span><span class="m m-mind m-cfg">0.44</span><span class="m m-mind m-nocfg">0.45</span></td><td><span class="m m-fdr m-cfg">7.71</span><span class="m m-fdr m-nocfg">7.82</span><span class="m m-mind m-cfg">6.43</span><span class="m m-mind m-nocfg">6.47</span></td></tr>
+                            <tr><td>DINOv3-B<d-cite key="dinov3"></d-cite></td><td><span class="v-cfg">1.74</span><span class="v-nocfg">2.15</span></td><td><span class="v-cfg">244.2</span><span class="v-nocfg">200.8</span></td><td><span class="m m-fdr m-cfg">1.09</span><span class="m m-fdr m-nocfg">1.33</span><span class="m m-mind m-cfg">1.80</span><span class="m m-mind m-nocfg">2.16</span></td><td><span class="m m-fdr m-cfg">2.10</span><span class="m m-fdr m-nocfg">2.82</span><span class="m m-mind m-cfg">65.83</span><span class="m m-mind m-nocfg">97.15</span></td><td><span class="m m-fdr m-cfg">3.30</span><span class="m m-fdr m-nocfg">3.89</span><span class="m m-mind m-cfg">29.35</span><span class="m m-mind m-nocfg">33.62</span></td><td><span class="m m-fdr m-cfg">6.53</span><span class="m m-fdr m-nocfg">6.80</span><span class="m m-mind m-cfg">0.43</span><span class="m m-mind m-nocfg">0.45</span></td><td><span class="m m-fdr m-cfg">7.66</span><span class="m m-fdr m-nocfg">8.17</span><span class="m m-mind m-cfg">6.03</span><span class="m m-mind m-nocfg">6.45</span></td></tr>
+                            <tr><td>DINOv3-B + REG<d-cite key="reg"></d-cite></td><td><span class="v-cfg">1.78</span><span class="v-nocfg">2.15</span></td><td><span class="v-cfg">248.1</span><span class="v-nocfg">204.4</span></td><td><span class="m m-fdr m-cfg">1.11</span><span class="m m-fdr m-nocfg">1.32</span><span class="m m-mind m-cfg">1.88</span><span class="m m-mind m-nocfg">2.35</span></td><td><span class="m m-fdr m-cfg">2.12</span><span class="m m-fdr m-nocfg">2.71</span><span class="m m-mind m-cfg">65.81</span><span class="m m-mind m-nocfg">90.39</span></td><td><span class="m m-fdr m-cfg">3.41</span><span class="m m-fdr m-nocfg">3.79</span><span class="m m-mind m-cfg">29.97</span><span class="m m-mind m-nocfg">32.33</span></td><td><span class="m m-fdr m-cfg">6.54</span><span class="m m-fdr m-nocfg">6.71</span><span class="m m-mind m-cfg">0.43</span><span class="m m-mind m-nocfg">0.45</span></td><td><span class="m m-fdr m-cfg">7.88</span><span class="m m-fdr m-nocfg">8.11</span><span class="m m-mind m-cfg">6.17</span><span class="m m-mind m-nocfg">6.38</span></td></tr>
+                            <tr><td>SigLIP2-B<d-cite key="siglip2"></d-cite></td><td><span class="v-cfg">2.61</span><span class="v-nocfg">3.48</span></td><td><span class="v-cfg">222.9</span><span class="v-nocfg">179.4</span></td><td><span class="m m-fdr m-cfg">1.59</span><span class="m m-fdr m-nocfg">2.11</span><span class="m m-mind m-cfg">1.86</span><span class="m m-mind m-nocfg">2.45</span></td><td><span class="m m-fdr m-cfg">3.01</span><span class="m m-fdr m-nocfg">4.20</span><span class="m m-mind m-cfg">97.91</span><span class="m m-mind m-nocfg">162.71</span></td><td><span class="m m-fdr m-cfg">7.33</span><span class="m m-fdr m-nocfg">8.55</span><span class="m m-mind m-cfg">76.01</span><span class="m m-mind m-nocfg">85.81</span></td><td><span class="m m-fdr m-cfg">10.61</span><span class="m m-fdr m-nocfg">10.97</span><span class="m m-mind m-cfg">0.87</span><span class="m m-mind m-nocfg">0.90</span></td><td><span class="m m-fdr m-cfg">11.38</span><span class="m m-fdr m-nocfg">11.76</span><span class="m m-mind m-cfg">9.89</span><span class="m m-mind m-nocfg">10.15</span></td></tr>
+                            <tr><td>PE-L<d-cite key="perceptionencoder"></d-cite></td><td><span class="v-cfg">2.84</span><span class="v-nocfg">3.08</span></td><td><span class="v-cfg">221.5</span><span class="v-nocfg">206.6</span></td><td><span class="m m-fdr m-cfg">1.72</span><span class="m m-fdr m-nocfg">1.86</span><span class="m m-mind m-cfg">2.86</span><span class="m m-mind m-nocfg">3.05</span></td><td><span class="m m-fdr m-cfg">2.80</span><span class="m m-fdr m-nocfg">3.15</span><span class="m m-mind m-cfg">90.07</span><span class="m m-mind m-nocfg">97.69</span></td><td><span class="m m-fdr m-cfg">5.91</span><span class="m m-fdr m-nocfg">6.17</span><span class="m m-mind m-cfg">56.80</span><span class="m m-mind m-nocfg">58.40</span></td><td><span class="m m-fdr m-cfg">10.90</span><span class="m m-fdr m-nocfg">11.01</span><span class="m m-mind m-cfg">0.88</span><span class="m m-mind m-nocfg">0.89</span></td><td><span class="m m-fdr m-cfg">9.88</span><span class="m m-fdr m-nocfg">9.87</span><span class="m m-mind m-cfg">8.19</span><span class="m m-mind m-nocfg">8.08</span></td></tr>
+                            <tr><td>LangPE-L<d-cite key="perceptionencoder"></d-cite></td><td><span class="v-cfg">2.46</span><span class="v-nocfg">2.76</span></td><td><span class="v-cfg">196.7</span><span class="v-nocfg">182.2</span></td><td><span class="m m-fdr m-cfg">1.48</span><span class="m m-fdr m-nocfg">1.65</span><span class="m m-mind m-cfg">2.12</span><span class="m m-mind m-nocfg">2.53</span></td><td><span class="m m-fdr m-cfg">2.99</span><span class="m m-fdr m-nocfg">3.48</span><span class="m m-mind m-cfg">108.83</span><span class="m m-mind m-nocfg">138.39</span></td><td><span class="m m-fdr m-cfg">6.27</span><span class="m m-fdr m-nocfg">6.66</span><span class="m m-mind m-cfg">61.86</span><span class="m m-mind m-nocfg">64.01</span></td><td><span class="m m-fdr m-cfg">8.87</span><span class="m m-fdr m-nocfg">8.97</span><span class="m m-mind m-cfg">0.68</span><span class="m m-mind m-nocfg">0.69</span></td><td><span class="m m-fdr m-cfg">10.24</span><span class="m m-fdr m-nocfg">10.28</span><span class="m m-mind m-cfg">9.03</span><span class="m m-mind m-nocfg">9.07</span></td></tr>
+                            <tr><td>SpatialPE-L<d-cite key="perceptionencoder"></d-cite></td><td><span class="v-cfg">1.86</span><span class="v-nocfg">3.61</span></td><td><span class="v-cfg">247.1</span><span class="v-nocfg">160.4</span></td><td><span class="m m-fdr m-cfg">1.16</span><span class="m m-fdr m-nocfg">2.18</span><span class="m m-mind m-cfg">1.35</span><span class="m m-mind m-nocfg">2.35</span></td><td><span class="m m-fdr m-cfg">1.82</span><span class="m m-fdr m-nocfg">4.17</span><span class="m m-mind m-cfg">55.46</span><span class="m m-mind m-nocfg">206.52</span></td><td><span class="m m-fdr m-cfg">4.67</span><span class="m m-fdr m-nocfg">7.30</span><span class="m m-mind m-cfg">45.79</span><span class="m m-mind m-nocfg">69.92</span></td><td><span class="m m-fdr m-cfg">6.62</span><span class="m m-fdr m-nocfg">7.01</span><span class="m m-mind m-cfg">0.51</span><span class="m m-mind m-nocfg">0.54</span></td><td><span class="m m-fdr m-cfg">8.57</span><span class="m m-fdr m-nocfg">10.74</span><span class="m m-mind m-cfg">7.23</span><span class="m m-mind m-nocfg">9.16</span></td></tr>
+                            <tr class="group-row"><td colspan="8">Latent-space (VAE)</td></tr>
+                            <tr><td>SD-VAE-EMA<d-cite key="ldm"></d-cite></td><td><span class="v-cfg">2.43</span><span class="v-nocfg">10.16</span></td><td><span class="v-cfg">259.6</span><span class="v-nocfg">113.4</span></td><td><span class="m m-fdr m-cfg">1.38</span><span class="m m-fdr m-nocfg">5.97</span><span class="m m-mind m-cfg">2.92</span><span class="m m-mind m-nocfg">9.56</span></td><td><span class="m m-fdr m-cfg">1.92</span><span class="m m-fdr m-nocfg">10.14</span><span class="m m-mind m-cfg">48.52</span><span class="m m-mind m-nocfg">688.82</span></td><td><span class="m m-fdr m-cfg">7.71</span><span class="m m-fdr m-nocfg">18.17</span><span class="m m-mind m-cfg">87.44</span><span class="m m-mind m-nocfg">245.95</span></td><td><span class="m m-fdr m-cfg">6.94</span><span class="m m-fdr m-nocfg">11.11</span><span class="m m-mind m-cfg">0.62</span><span class="m m-mind m-nocfg">0.99</span></td><td><span class="m m-fdr m-cfg">19.15</span><span class="m m-fdr m-nocfg">35.43</span><span class="m m-mind m-cfg">20.39</span><span class="m m-mind m-nocfg">38.87</span></td></tr>
+                            <tr><td>SD-VAE-EMA + REG<d-cite key="reg"></d-cite></td><td><span class="v-cfg">2.34</span><span class="v-nocfg">5.39</span></td><td><span class="v-cfg">271.6</span><span class="v-nocfg">162.7</span></td><td><span class="m m-fdr m-cfg">1.32</span><span class="m m-fdr m-nocfg">3.14</span><span class="m m-mind m-cfg">2.04</span><span class="m m-mind m-nocfg">3.45</span></td><td><span class="m m-fdr m-cfg">1.74</span><span class="m m-fdr m-nocfg">5.14</span><span class="m m-mind m-cfg">55.02</span><span class="m m-mind m-nocfg">246.05</span></td><td><span class="m m-fdr m-cfg">7.24</span><span class="m m-fdr m-nocfg">11.30</span><span class="m m-mind m-cfg">84.72</span><span class="m m-mind m-nocfg">145.13</span></td><td><span class="m m-fdr m-cfg">7.55</span><span class="m m-fdr m-nocfg">9.58</span><span class="m m-mind m-cfg">0.69</span><span class="m m-mind m-nocfg">0.87</span></td><td><span class="m m-fdr m-cfg">18.47</span><span class="m m-fdr m-nocfg">25.63</span><span class="m m-mind m-cfg">20.14</span><span class="m m-mind m-nocfg">28.41</span></td></tr>
+                            <tr><td>SD-VAE-MSE<d-cite key="ldm"></d-cite></td><td><span class="v-cfg">2.56</span><span class="v-nocfg">10.15</span></td><td><span class="v-cfg">259.7</span><span class="v-nocfg">112.4</span></td><td><span class="m m-fdr m-cfg">1.45</span><span class="m m-fdr m-nocfg">5.97</span><span class="m m-mind m-cfg">3.10</span><span class="m m-mind m-nocfg">9.34</span></td><td><span class="m m-fdr m-cfg">2.15</span><span class="m m-fdr m-nocfg">10.36</span><span class="m m-mind m-cfg">55.66</span><span class="m m-mind m-nocfg">676.48</span></td><td><span class="m m-fdr m-cfg">7.61</span><span class="m m-fdr m-nocfg">17.84</span><span class="m m-mind m-cfg">86.97</span><span class="m m-mind m-nocfg">243.23</span></td><td><span class="m m-fdr m-cfg">7.82</span><span class="m m-fdr m-nocfg">12.03</span><span class="m m-mind m-cfg">0.70</span><span class="m m-mind m-nocfg">1.07</span></td><td><span class="m m-fdr m-cfg">21.82</span><span class="m m-fdr m-nocfg">38.19</span><span class="m m-mind m-cfg">25.01</span><span class="m m-mind m-nocfg">43.99</span></td></tr>
+                            <tr><td>SDXL-VAE<d-cite key="sdxl"></d-cite></td><td><span class="v-cfg">3.07</span><span class="v-nocfg">12.88</span></td><td><span class="v-cfg">256.0</span><span class="v-nocfg">104.7</span></td><td><span class="m m-fdr m-cfg">1.69</span><span class="m m-fdr m-nocfg">7.50</span><span class="m m-mind m-cfg">3.38</span><span class="m m-mind m-nocfg">12.96</span></td><td><span class="m m-fdr m-cfg">2.74</span><span class="m m-fdr m-nocfg">12.58</span><span class="m m-mind m-cfg">70.85</span><span class="m m-mind m-nocfg">858.54</span></td><td><span class="m m-fdr m-cfg">9.26</span><span class="m m-fdr m-nocfg">21.50</span><span class="m m-mind m-cfg">109.22</span><span class="m m-mind m-nocfg">297.59</span></td><td><span class="m m-fdr m-cfg">8.64</span><span class="m m-fdr m-nocfg">13.57</span><span class="m m-mind m-cfg">0.75</span><span class="m m-mind m-nocfg">1.21</span></td><td><span class="m m-fdr m-cfg">21.55</span><span class="m m-fdr m-nocfg">40.39</span><span class="m m-mind m-cfg">22.66</span><span class="m m-mind m-nocfg">44.20</span></td></tr>
+                            <tr><td>SD3.5-VAE<d-cite key="sd3"></d-cite></td><td><span class="v-cfg">2.64</span><span class="v-nocfg">10.18</span></td><td><span class="v-cfg">262.9</span><span class="v-nocfg">111.7</span></td><td><span class="m m-fdr m-cfg">1.51</span><span class="m m-fdr m-nocfg">5.96</span><span class="m m-mind m-cfg">3.04</span><span class="m m-mind m-nocfg">8.50</span></td><td><span class="m m-fdr m-cfg">2.14</span><span class="m m-fdr m-nocfg">10.21</span><span class="m m-mind m-cfg">75.53</span><span class="m m-mind m-nocfg">634.85</span></td><td><span class="m m-fdr m-cfg">7.76</span><span class="m m-fdr m-nocfg">17.97</span><span class="m m-mind m-cfg">89.20</span><span class="m m-mind m-nocfg">240.52</span></td><td><span class="m m-fdr m-cfg">6.19</span><span class="m m-fdr m-nocfg">10.39</span><span class="m m-mind m-cfg">0.55</span><span class="m m-mind m-nocfg">0.96</span></td><td><span class="m m-fdr m-cfg">15.16</span><span class="m m-fdr m-nocfg">30.85</span><span class="m m-mind m-cfg">14.04</span><span class="m m-mind m-nocfg">30.70</span></td></tr>
+                            <tr><td>FLUX.1-VAE<d-cite key="flux"></d-cite></td><td><span class="v-cfg">3.55</span><span class="v-nocfg">15.75</span></td><td><span class="v-cfg">245.7</span><span class="v-nocfg">86.6</span></td><td><span class="m m-fdr m-cfg">2.04</span><span class="m m-fdr m-nocfg">9.28</span><span class="m m-mind m-cfg">3.37</span><span class="m m-mind m-nocfg">14.81</span></td><td><span class="m m-fdr m-cfg">3.89</span><span class="m m-fdr m-nocfg">16.66</span><span class="m m-mind m-cfg">107.70</span><span class="m m-mind m-nocfg">1072.69</span></td><td><span class="m m-fdr m-cfg">9.25</span><span class="m m-fdr m-nocfg">23.27</span><span class="m m-mind m-cfg">105.18</span><span class="m m-mind m-nocfg">316.55</span></td><td><span class="m m-fdr m-cfg">8.19</span><span class="m m-fdr m-nocfg">14.02</span><span class="m m-mind m-cfg">0.82</span><span class="m m-mind m-nocfg">1.41</span></td><td><span class="m m-fdr m-cfg">19.54</span><span class="m m-fdr m-nocfg">41.46</span><span class="m m-mind m-cfg">18.62</span><span class="m m-mind m-nocfg">42.58</span></td></tr>
+                            <tr><td>FLUX.2-VAE<d-cite key="flux2"></d-cite></td><td><span class="v-cfg">1.37</span><span class="v-nocfg">4.53</span></td><td><span class="v-cfg">272.7</span><span class="v-nocfg">146.9</span></td><td><span class="m m-fdr m-cfg">0.89</span><span class="m m-fdr m-nocfg">2.76</span><span class="m m-mind m-cfg">0.90</span><span class="m m-mind m-nocfg">2.53</span></td><td><span class="m m-fdr m-cfg">1.07</span><span class="m m-fdr m-nocfg">4.65</span><span class="m m-mind m-cfg">24.98</span><span class="m m-mind m-nocfg">234.79</span></td><td><span class="m m-fdr m-cfg">4.32</span><span class="m m-fdr m-nocfg">8.56</span><span class="m m-mind m-cfg">43.59</span><span class="m m-mind m-nocfg">96.75</span></td><td><span class="m m-fdr m-cfg">3.90</span><span class="m m-fdr m-nocfg">5.15</span><span class="m m-mind m-cfg">0.31</span><span class="m m-mind m-nocfg">0.41</span></td><td><span class="m m-fdr m-cfg">10.75</span><span class="m m-fdr m-nocfg">17.41</span><span class="m m-mind m-cfg">9.84</span><span class="m m-mind m-nocfg">16.46</span></td></tr>
+                            <tr><td>FLUX.2-VAE + REG<d-cite key="reg"></d-cite></td><td><span class="v-cfg">1.44</span><span class="v-nocfg">4.19</span></td><td><span class="v-cfg">294.1</span><span class="v-nocfg">155.8</span></td><td><span class="m m-fdr m-cfg">0.92</span><span class="m m-fdr m-nocfg">2.56</span><span class="m m-mind m-cfg">1.06</span><span class="m m-mind m-nocfg">2.11</span></td><td><span class="m m-fdr m-cfg">0.95</span><span class="m m-fdr m-nocfg">4.06</span><span class="m m-mind m-cfg">37.56</span><span class="m m-mind m-nocfg">183.74</span></td><td><span class="m m-fdr m-cfg">4.27</span><span class="m m-fdr m-nocfg">7.91</span><span class="m m-mind m-cfg">42.47</span><span class="m m-mind m-nocfg">88.65</span></td><td><span class="m m-fdr m-cfg">3.91</span><span class="m m-fdr m-nocfg">5.17</span><span class="m m-mind m-cfg">0.31</span><span class="m m-mind m-nocfg">0.41</span></td><td><span class="m m-fdr m-cfg">10.17</span><span class="m m-fdr m-nocfg">16.74</span><span class="m m-mind m-cfg">9.42</span><span class="m m-mind m-nocfg">15.82</span></td></tr>
+                            <tr><td>Qwen-Image-VAE<d-cite key="qwenimage"></d-cite></td><td><span class="v-cfg">3.01</span><span class="v-nocfg">10.86</span></td><td><span class="v-cfg">238.9</span><span class="v-nocfg">108.9</span></td><td><span class="m m-fdr m-cfg">1.85</span><span class="m m-fdr m-nocfg">6.52</span><span class="m m-mind m-cfg">2.75</span><span class="m m-mind m-nocfg">9.34</span></td><td><span class="m m-fdr m-cfg">4.56</span><span class="m m-fdr m-nocfg">13.25</span><span class="m m-mind m-cfg">159.26</span><span class="m m-mind m-nocfg">804.53</span></td><td><span class="m m-fdr m-cfg">9.77</span><span class="m m-fdr m-nocfg">19.78</span><span class="m m-mind m-cfg">118.42</span><span class="m m-mind m-nocfg">270.50</span></td><td><span class="m m-fdr m-cfg">9.19</span><span class="m m-fdr m-nocfg">13.45</span><span class="m m-mind m-cfg">0.90</span><span class="m m-mind m-nocfg">1.31</span></td><td><span class="m m-fdr m-cfg">25.46</span><span class="m m-fdr m-nocfg">41.51</span><span class="m m-mind m-cfg">25.97</span><span class="m m-mind m-nocfg">44.01</span></td></tr>
+                            <tr><td>E2E-VAVAE<d-cite key="repae"></d-cite></td><td><span class="v-cfg">1.65</span><span class="v-nocfg">4.27</span></td><td><span class="v-cfg">275.4</span><span class="v-nocfg">147.6</span></td><td><span class="m m-fdr m-cfg">1.08</span><span class="m m-fdr m-nocfg">2.64</span><span class="m m-mind m-cfg">2.13</span><span class="m m-mind m-nocfg">2.20</span></td><td><span class="m m-fdr m-cfg">1.99</span><span class="m m-fdr m-nocfg">5.90</span><span class="m m-mind m-cfg">62.17</span><span class="m m-mind m-nocfg">277.26</span></td><td><span class="m m-fdr m-cfg">4.51</span><span class="m m-fdr m-nocfg">8.59</span><span class="m m-mind m-cfg">50.75</span><span class="m m-mind m-nocfg">103.04</span></td><td><span class="m m-fdr m-cfg">4.71</span><span class="m m-fdr m-nocfg">6.33</span><span class="m m-mind m-cfg">0.36</span><span class="m m-mind m-nocfg">0.51</span></td><td><span class="m m-fdr m-cfg">9.83</span><span class="m m-fdr m-nocfg">16.30</span><span class="m m-mind m-cfg">9.17</span><span class="m m-mind m-nocfg">15.54</span></td></tr>
+                            <tr><td>E2E-FLUX.1-VAE<d-cite key="repae"></d-cite></td><td><span class="v-cfg">1.67</span><span class="v-nocfg">6.30</span></td><td><span class="v-cfg">266.3</span><span class="v-nocfg">134.3</span></td><td><span class="m m-fdr m-cfg">1.07</span><span class="m m-fdr m-nocfg">3.83</span><span class="m m-mind m-cfg">1.16</span><span class="m m-mind m-nocfg">4.23</span></td><td><span class="m m-fdr m-cfg">1.83</span><span class="m m-fdr m-nocfg">6.89</span><span class="m m-mind m-cfg">50.73</span><span class="m m-mind m-nocfg">373.50</span></td><td><span class="m m-fdr m-cfg">5.12</span><span class="m m-fdr m-nocfg">10.92</span><span class="m m-mind m-cfg">53.43</span><span class="m m-mind m-nocfg">129.48</span></td><td><span class="m m-fdr m-cfg">4.68</span><span class="m m-fdr m-nocfg">6.67</span><span class="m m-mind m-cfg">0.36</span><span class="m m-mind m-nocfg">0.53</span></td><td><span class="m m-fdr m-cfg">11.76</span><span class="m m-fdr m-nocfg">21.28</span><span class="m m-mind m-cfg">10.75</span><span class="m m-mind m-nocfg">20.39</span></td></tr>
+                            <tr><td>E2E-SD3.5-VAE<d-cite key="repae"></d-cite></td><td><span class="v-cfg">1.62</span><span class="v-nocfg">5.32</span></td><td><span class="v-cfg">265.4</span><span class="v-nocfg">140.8</span></td><td><span class="m m-fdr m-cfg">1.16</span><span class="m m-fdr m-nocfg">3.37</span><span class="m m-mind m-cfg">1.10</span><span class="m m-mind m-nocfg">3.19</span></td><td><span class="m m-fdr m-cfg">1.30</span><span class="m m-fdr m-nocfg">5.10</span><span class="m m-mind m-cfg">42.14</span><span class="m m-mind m-nocfg">266.87</span></td><td><span class="m m-fdr m-cfg">4.57</span><span class="m m-fdr m-nocfg">9.21</span><span class="m m-mind m-cfg">48.18</span><span class="m m-mind m-nocfg">108.44</span></td><td><span class="m m-fdr m-cfg">5.49</span><span class="m m-fdr m-nocfg">7.07</span><span class="m m-mind m-cfg">0.42</span><span class="m m-mind m-nocfg">0.55</span></td><td><span class="m m-fdr m-cfg">11.12</span><span class="m m-fdr m-nocfg">18.70</span><span class="m m-mind m-cfg">10.25</span><span class="m m-mind m-nocfg">17.69</span></td></tr>
+                            <tr><td>E2E-Qwen-Image-VAE<d-cite key="repae"></d-cite></td><td><span class="v-cfg">1.55</span><span class="v-nocfg">4.98</span></td><td><span class="v-cfg">261.4</span><span class="v-nocfg">138.4</span></td><td><span class="m m-fdr m-cfg">1.06</span><span class="m m-fdr m-nocfg">3.11</span><span class="m m-mind m-cfg">1.54</span><span class="m m-mind m-nocfg">2.84</span></td><td><span class="m m-fdr m-cfg">2.26</span><span class="m m-fdr m-nocfg">6.80</span><span class="m m-mind m-cfg">61.19</span><span class="m m-mind m-nocfg">337.95</span></td><td><span class="m m-fdr m-cfg">4.57</span><span class="m m-fdr m-nocfg">9.57</span><span class="m m-mind m-cfg">48.81</span><span class="m m-mind m-nocfg">113.68</span></td><td><span class="m m-fdr m-cfg">4.63</span><span class="m m-fdr m-nocfg">6.46</span><span class="m m-mind m-cfg">0.37</span><span class="m m-mind m-nocfg">0.53</span></td><td><span class="m m-fdr m-cfg">11.33</span><span class="m m-fdr m-nocfg">19.85</span><span class="m m-mind m-cfg">10.24</span><span class="m m-mind m-nocfg">18.88</span></td></tr>
+                            <tr class="group-row"><td colspan="8">Pixel-space</td></tr>
+                            <tr><td>JiT<d-cite key="jit"></d-cite></td><td><span class="v-cfg">4.08</span><span class="v-nocfg">21.72</span></td><td><span class="v-cfg">231.2</span><span class="v-nocfg">65.0</span></td><td><span class="m m-fdr m-cfg">2.38</span><span class="m m-fdr m-nocfg">12.82</span><span class="m m-mind m-cfg">3.97</span><span class="m m-mind m-nocfg">24.19</span></td><td><span class="m m-fdr m-cfg">4.59</span><span class="m m-fdr m-nocfg">22.87</span><span class="m m-mind m-cfg">146.37</span><span class="m m-mind m-nocfg">1632.56</span></td><td><span class="m m-fdr m-cfg">9.57</span><span class="m m-fdr m-nocfg">28.16</span><span class="m m-mind m-cfg">113.63</span><span class="m m-mind m-nocfg">412.33</span></td><td><span class="m m-fdr m-cfg">13.70</span><span class="m m-fdr m-nocfg">23.59</span><span class="m m-mind m-cfg">1.23</span><span class="m m-mind m-nocfg">2.15</span></td><td><span class="m m-fdr m-cfg">22.51</span><span class="m m-fdr m-nocfg">53.76</span><span class="m m-mind m-cfg">21.21</span><span class="m m-mind m-nocfg">55.40</span></td></tr>
+                            <tr><td>PixNerd<d-cite key="pixnerd"></d-cite></td><td><span class="v-cfg">4.17</span><span class="v-nocfg">20.61</span></td><td><span class="v-cfg">213.8</span><span class="v-nocfg">63.9</span></td><td><span class="m m-fdr m-cfg">2.45</span><span class="m m-fdr m-nocfg">12.18</span><span class="m m-mind m-cfg">4.24</span><span class="m m-mind m-nocfg">22.77</span></td><td><span class="m m-fdr m-cfg">4.01</span><span class="m m-fdr m-nocfg">21.42</span><span class="m m-mind m-cfg">104.21</span><span class="m m-mind m-nocfg">1581.55</span></td><td><span class="m m-fdr m-cfg">8.33</span><span class="m m-fdr m-nocfg">25.08</span><span class="m m-mind m-cfg">86.10</span><span class="m m-mind m-nocfg">345.19</span></td><td><span class="m m-fdr m-cfg">11.67</span><span class="m m-fdr m-nocfg">19.67</span><span class="m m-mind m-cfg">0.96</span><span class="m m-mind m-nocfg">1.71</span></td><td><span class="m m-fdr m-cfg">20.65</span><span class="m m-fdr m-nocfg">48.24</span><span class="m m-mind m-cfg">18.94</span><span class="m m-mind m-nocfg">49.33</span></td></tr>
+                            <tr><td>PixelGen<d-cite key="pixelgen"></d-cite></td><td><span class="v-cfg">3.97</span><span class="v-nocfg">12.10</span></td><td><span class="v-cfg">247.4</span><span class="v-nocfg">104.0</span></td><td><span class="m m-fdr m-cfg">2.26</span><span class="m m-fdr m-nocfg">7.01</span><span class="m m-mind m-cfg">3.96</span><span class="m m-mind m-nocfg">9.07</span></td><td><span class="m m-fdr m-cfg">4.34</span><span class="m m-fdr m-nocfg">13.93</span><span class="m m-mind m-cfg">138.33</span><span class="m m-mind m-nocfg">769.26</span></td><td><span class="m m-fdr m-cfg">7.80</span><span class="m m-fdr m-nocfg">17.89</span><span class="m m-mind m-cfg">86.50</span><span class="m m-mind m-nocfg">222.02</span></td><td><span class="m m-fdr m-cfg">13.14</span><span class="m m-fdr m-nocfg">18.98</span><span class="m m-mind m-cfg">1.12</span><span class="m m-mind m-nocfg">1.68</span></td><td><span class="m m-fdr m-cfg">17.97</span><span class="m m-fdr m-nocfg">34.49</span><span class="m m-mind m-cfg">15.73</span><span class="m m-mind m-nocfg">32.35</span></td></tr>
+                            <tr class="group-row"><td colspan="8">One-/Few-step</td></tr>
+                            <tr><td>MeanFlow (NFE=1)<d-cite key="meanflow"></d-cite></td><td><span class="v-cfg">6.60</span><span class="v-nocfg">24.83</span></td><td><span class="v-cfg">206.7</span><span class="v-nocfg">61.4</span></td><td><span class="m m-fdr m-cfg">3.71</span><span class="m m-fdr m-nocfg">14.56</span><span class="m m-mind m-cfg">6.19</span><span class="m m-mind m-nocfg">31.56</span></td><td><span class="m m-fdr m-cfg">4.71</span><span class="m m-fdr m-nocfg">24.09</span><span class="m m-mind m-cfg">116.13</span><span class="m m-mind m-nocfg">1993.71</span></td><td><span class="m m-fdr m-cfg">17.35</span><span class="m m-fdr m-nocfg">37.39</span><span class="m m-mind m-cfg">203.45</span><span class="m m-mind m-nocfg">571.19</span></td><td><span class="m m-fdr m-cfg">15.54</span><span class="m m-fdr m-nocfg">21.15</span><span class="m m-mind m-cfg">1.35</span><span class="m m-mind m-nocfg">1.88</span></td><td><span class="m m-fdr m-cfg">43.69</span><span class="m m-fdr m-nocfg">70.61</span><span class="m m-mind m-cfg">49.72</span><span class="m m-mind m-nocfg">81.85</span></td></tr>
+                            <tr><td>MeanFlow (NFE=2)<d-cite key="meanflow"></d-cite></td><td><span class="v-cfg">5.40</span><span class="v-nocfg">20.58</span></td><td><span class="v-cfg">226.5</span><span class="v-nocfg">63.0</span></td><td><span class="m m-fdr m-cfg">3.19</span><span class="m m-fdr m-nocfg">12.24</span><span class="m m-mind m-cfg">7.93</span><span class="m m-mind m-nocfg">24.85</span></td><td><span class="m m-fdr m-cfg">3.25</span><span class="m m-fdr m-nocfg">21.97</span><span class="m m-mind m-cfg">69.05</span><span class="m m-mind m-nocfg">1860.67</span></td><td><span class="m m-fdr m-cfg">13.19</span><span class="m m-fdr m-nocfg">34.62</span><span class="m m-mind m-cfg">148.75</span><span class="m m-mind m-nocfg">524.10</span></td><td><span class="m m-fdr m-cfg">9.84</span><span class="m m-fdr m-nocfg">16.23</span><span class="m m-mind m-cfg">0.83</span><span class="m m-mind m-nocfg">1.42</span></td><td><span class="m m-fdr m-cfg">28.42</span><span class="m m-fdr m-nocfg">58.31</span><span class="m m-mind m-cfg">27.45</span><span class="m m-mind m-nocfg">62.69</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <figcaption>Systematic comparison on ImageNet-256.</figcaption>
+            </figure>
+
+            <p class="text"><strong>Text-to-image generation.</strong> We train the same methods as text-to-image models and score them with GenEval<d-cite key="geneval"></d-cite>, DPG-Bench<d-cite key="dpgbench"></d-cite>, and GenAIBench<d-cite key="genaibench"></d-cite>. Public T2I models are shown for reference.</p>
+            <figure class="data-table">
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Iters</th>
+                                <th>#Params</th>
+                                <th>GenEval&nbsp;&uarr;</th>
+                                <th>DPG-Bench&nbsp;&uarr;</th>
+                                <th>GenAIBench&nbsp;&uarr;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="group-row"><td colspan="6">Public models (reference)</td></tr>
+                            <tr><td>SD-3.5-Large<d-cite key="sd3"></d-cite></td><td>&ndash;</td><td>8B</td><td>0.691</td><td>0.842</td><td>0.767</td></tr>
+                            <tr><td>FLUX-1<d-cite key="flux"></d-cite></td><td>&ndash;</td><td>12B</td><td>0.654</td><td>0.838</td><td>0.748</td></tr>
+                            <tr><td>FLUX-2<d-cite key="flux2"></d-cite></td><td>&ndash;</td><td>32B</td><td>0.854</td><td>0.870</td><td>0.841</td></tr>
+                            <tr><td>Qwen-Image<d-cite key="qwenimage"></d-cite></td><td>&ndash;</td><td>20B</td><td>0.848</td><td>0.888</td><td>0.803</td></tr>
+                            <tr><td>Z-Image-Turbo<d-cite key="zimage"></d-cite></td><td>&ndash;</td><td>6B</td><td>0.736</td><td>0.847</td><td>0.759</td></tr>
+                            <tr class="group-row"><td colspan="6">Latent-space (RAE)</td></tr>
+                            <tr><td>DINOv2-B</td><td>100K</td><td>615M</td><td>0.628</td><td>0.810</td><td>0.707</td></tr>
+                            <tr><td>DINOv2-B + REG</td><td>100K</td><td>619M</td><td>0.608</td><td>0.808</td><td>0.702</td></tr>
+                            <tr><td>DINOv3-B</td><td>100K</td><td>615M</td><td>0.636</td><td>0.828</td><td>0.718</td></tr>
+                            <tr><td>DINOv3-B + REG</td><td>100K</td><td>619M</td><td>0.642</td><td>0.827</td><td>0.730</td></tr>
+                            <tr><td>SigLIP2-B</td><td>100K</td><td>615M</td><td>0.606</td><td>0.809</td><td>0.718</td></tr>
+                            <tr><td>PE-L</td><td>100K</td><td>617M</td><td>0.586</td><td>0.818</td><td>0.723</td></tr>
+                            <tr><td>SpatialPE-L</td><td>100K</td><td>617M</td><td>0.535</td><td>0.790</td><td>0.694</td></tr>
+                            <tr><td>LangPE-L</td><td>100K</td><td>617M</td><td>0.633</td><td>0.826</td><td>0.724</td></tr>
+                            <tr><td>LangPE-L</td><td>200K</td><td>617M</td><td>0.635</td><td>0.824</td><td>0.715</td></tr>
+                            <tr class="group-row"><td colspan="6">Latent-space (VAE)</td></tr>
+                            <tr><td>SD-VAE-EMA</td><td>100K</td><td>611M</td><td>0.578</td><td>0.804</td><td>0.691</td></tr>
+                            <tr><td>SD-VAE-EMA + REG</td><td>100K</td><td>615M</td><td>0.570</td><td>0.792</td><td>0.691</td></tr>
+                            <tr><td>SD-VAE-MSE</td><td>100K</td><td>611M</td><td>0.624</td><td>0.813</td><td>0.701</td></tr>
+                            <tr><td>SDXL-VAE</td><td>100K</td><td>611M</td><td>0.617</td><td>0.812</td><td>0.705</td></tr>
+                            <tr><td>SD3.5-VAE</td><td>100K</td><td>612M</td><td>0.640</td><td>0.818</td><td>0.702</td></tr>
+                            <tr><td>Qwen-Image-VAE</td><td>100K</td><td>612M</td><td>0.611</td><td>0.802</td><td>0.704</td></tr>
+                            <tr><td>E2E-FLUX.1-VAE</td><td>100K</td><td>612M</td><td>0.625</td><td>0.823</td><td>0.706</td></tr>
+                            <tr><td>E2E-SD3.5-VAE</td><td>100K</td><td>612M</td><td>0.637</td><td>0.840</td><td>0.715</td></tr>
+                            <tr><td>E2E-Qwen-Image-VAE</td><td>100K</td><td>612M</td><td>0.691</td><td>0.835</td><td>0.714</td></tr>
+                            <tr><td>FLUX.1-VAE</td><td>100K</td><td>612M</td><td>0.559</td><td>0.796</td><td>0.684</td></tr>
+                            <tr><td>FLUX.1-VAE</td><td>200K</td><td>612M</td><td>0.544</td><td>0.816</td><td>0.687</td></tr>
+                            <tr><td>FLUX.2-VAE</td><td>100K</td><td>612M</td><td>0.675</td><td>0.830</td><td>0.712</td></tr>
+                            <tr><td>FLUX.2-VAE</td><td>200K</td><td>612M</td><td>0.625</td><td>0.841</td><td>0.713</td></tr>
+                            <tr><td>FLUX.2-VAE + REG</td><td>100K</td><td>616M</td><td>0.687</td><td>0.830</td><td>0.722</td></tr>
+                            <tr><td>E2E-VAVAE</td><td>100K</td><td>611M</td><td>0.632</td><td>0.824</td><td>0.703</td></tr>
+                            <tr><td>E2E-VAVAE</td><td>200K</td><td>611M</td><td>0.679</td><td>0.836</td><td>0.716</td></tr>
+                            <tr class="group-row"><td colspan="6">Pixel-space</td></tr>
+                            <tr><td>JiT</td><td>100K</td><td>615M</td><td>0.516</td><td>0.782</td><td>0.674</td></tr>
+                            <tr><td>PixNerd</td><td>100K</td><td>615M</td><td>0.484</td><td>0.777</td><td>0.643</td></tr>
+                            <tr><td>PixelGen</td><td>100K</td><td>615M</td><td>0.554</td><td>0.798</td><td>0.678</td></tr>
+                            <tr class="group-row"><td colspan="6">One-/Few-step</td></tr>
+                            <tr><td>MeanFlow (NFE=1)</td><td>100K</td><td>613M</td><td>0.287</td><td>0.688</td><td>0.582</td></tr>
+                            <tr><td>MeanFlow (NFE=2)</td><td>100K</td><td>613M</td><td>0.341</td><td>0.721</td><td>0.602</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <figcaption>Systematic comparison on text-to-image generation.</figcaption>
+            </figure>
+
+            <p class="text"><strong>ImageNet vs. text-to-image.</strong></p>
+            <figure class="plot-figure">
+                <iframe src="assets/fid_correlation_combined.html?v=1" title="Correlation between ImageNet FID and T2I metrics" loading="lazy" scrolling="no" style="width:100%; height:370px; border:0; display:block; overflow:hidden;"></iframe>
+                <figcaption>Correlation between ImageNet FID and three T2I metrics. Toggle the guidance setting between without CFG and with CFG. Drag a rectangle to recompute r on a comparable cluster of points (double-click to reset), or toggle categories in the legend.</figcaption>
+            </figure>
+            <p class="text">
+                We have several observations. <strong>First, in the state-of-the-art frontier, ImageNet ranking does not robustly predict the T2I ranking.</strong> For example, RAE with SpatialPE-L has very good ImageNet FID, but its T2I performance is among the worst across various metrics. <strong>Second, different metrics to some extent disagree with each other.</strong> For example, E2E-Qwen-Image-VAE is one of the strongest if we look at GenEval and DPG-Bench metrics but it falls into the second tier under the GenAIBench metric. <strong>Third, ImageNet trend is consistent with T2I trend if we look at broader method category ranking.</strong> That is, improved latent-space methods (RAE, FLUX.2-VAE, REPA-E) &gt; traditional latent-space &gt; pixel-space &gt; MeanFlow, so ImageNet signals are useful at the category level. But most state-of-the-art methods report FID between 1 and 2, which fall into the most uncorrelated regions. <strong>Fourth, when we train T2I for 200K steps, the performance generally remains similar or improves slightly under the three metrics.</strong> This observation is interesting: upon visual check below, images at 200K training are better than at 100K. We suspect that better metrics should be proposed.
+            </p>
+
+            <figure class="fig-img">
+                <img src="assets/t2i_qualitative.jpg" alt="Text-to-image qualitative samples at 256x256 from FLUX.1-VAE, FLUX.2-VAE, E2E-VAVAE, and LangPE-L at 100K and 200K iterations" loading="lazy" data-zoomable>
+                <figcaption><strong>Text-to-image qualitative samples at 256&times;256.</strong> Curated qualitative samples from <span class="sc">NanoGen</span> latent-space methods trained for 100K and 200K iterations at batch size 1024.</figcaption>
+            </figure>
+
+            <p class="text">As shown in the figure below, training T2I remains efficient across all methods. Moreover, training cost is comparable across latent-space methods, while pixel-space methods such as JiT<d-cite key="jit"></d-cite>, PixNerd<d-cite key="pixnerd"></d-cite>, and PixelGen<d-cite key="pixelgen"></d-cite> are much cheaper to train on ImageNet because they do not compute latents from VAEs. RAE<d-cite key="rae"></d-cite> methods are marginally faster to train than VAE methods. MeanFlow<d-cite key="meanflow"></d-cite> is much slower than other T2I methods.</p>
+            <figure class="fig-img">
+                <img src="assets/training_time.png" alt="Wall-clock training time per 100K steps for ImageNet vs text-to-image setups across 25 DiT methods" loading="lazy" data-zoomable>
+                <figcaption>Wall-clock training time of ImageNet and T2I setups.</figcaption>
+            </figure>
+
+            <p class="text"><strong>Recommended usage.</strong> Our recommendation is that future DiT papers report <span class="sc">DiffusionBench</span>, which includes both ImageNet and T2I generation, rather than any single axis. Methods that improve <span class="sc">DiffusionBench</span> are more likely to reflect broadly useful progress; methods that improve one axis but regress another may still be valuable, but should be labelled as task-specific improvements rather than general DiT advances.</p>
+        </div>
+
+        <hr>
+
+        <!-- ==================== Conclusion ==================== -->
+        <div id="conclusion" style="position: relative; margin-top: 40px; margin-bottom: 0px;">
+            <h2 class="text" style="margin-top:0px; margin-bottom:10px">Conclusion</h2>
+            <p class="text">
+                Diffusion transformer research has matured to the point where single-benchmark evaluation is no longer
+                enough. In this paper we introduce <span class="sc">NanoGen</span>, a training and evaluation framework that removes the
+                engineering barrier to training and evaluating DiT methods on the T2I task, and use it to show that
+                ImageNet rankings do not reliably predict text-to-image performance. Finally, we package the two
+                evaluation axes: ImageNet and T2I generation, into <span class="sc">DiffusionBench</span> and argue for its adoption as the
+                default DiT benchmark. Our hope is that making holistic evaluation cheap, both engineering-wise and
+                computationally, will shift the field toward progress that is broad rather than local.
+            </p>
+        </div>
+
+        </d-article>
+        <d-appendix>
+            <h3>Team</h3>
+            <p style="font-size: 0.9em;">
+                Xingjian Leng, Jaskirat Singh, Zhanhao Liang, Ethan Smith, Martin Bell, Aninda Saha, Yuhui Yuan, Liang Zheng.
+            </p>
+
+            <h3>BibTeX</h3>
+            <div class="bibtex-container" style="position: relative;">
+                <button class="copy-btn" id="copy-bibtex-btn" onclick="copyBibtex()" style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    padding: 5px 10px;
+                    background: #508af6;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 0.85em;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                    z-index: 10;
+                ">📋 Copy</button>
+                <p class="bibtex" id="bibtex-content">
+                    @misc{diffusionbench2025,<br>
+                    &nbsp;&nbsp;title={{DiffusionBench: On Holistic Evaluation of Diffusion Transformers}},<br>
+                    &nbsp;&nbsp;author={Leng, Xingjian and Singh, Jaskirat and Liang, Zhanhao and Smith, Ethan and Bell, Martin and Saha, Aninda and Yuan, Yuhui and Zheng, Liang},<br>
+                    &nbsp;&nbsp;howpublished={\url{https://end2end-diffusion.github.io/diffusion-bench/}},<br>
+                    &nbsp;&nbsp;year={2025}<br>
+                    }
+                </p>
+            </div>
+
+            <!-- Add BibTeX entries to references.bib and cite with <d-cite key="..."></d-cite> -->
+            <d-bibliography src="references.bib"></d-bibliography>
+
+            <d-footnote-list></d-footnote-list>
+            <d-citation-list></d-citation-list>
+        </d-appendix>
+        <script src="./static/js/nav-bar.js"></script>
+
+        <!-- Copy BibTeX functionality -->
+        <style>
+            .bibtex-container:hover .copy-btn {
+                opacity: 1 !important;
+            }
+            .copy-btn.copied {
+                background: #28a745 !important;
+            }
+        </style>
+        <script>
+            function copyBibtex() {
+                const bibtexElement = document.getElementById('bibtex-content');
+                const bibtexText = bibtexElement.innerText || bibtexElement.textContent;
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(bibtexText).then(() => {
+                        showCopySuccess();
+                    }).catch(() => {
+                        copyWithFallback(bibtexText);
+                    });
+                } else {
+                    copyWithFallback(bibtexText);
+                }
+            }
+
+            function copyWithFallback(text) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+
+                try {
+                    document.execCommand('copy');
+                    showCopySuccess();
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                }
+
+                document.body.removeChild(textarea);
+            }
+
+            function showCopySuccess() {
+                const button = document.getElementById('copy-bibtex-btn');
+                const originalText = button.innerHTML;
+
+                button.innerHTML = '✓ Copied!';
+                button.classList.add('copied');
+
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }
+        </script>
+
+        <!-- TOC scroll highlighting and visibility -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tocContainer = document.querySelector('.toc-container');
+            const tocLinks = document.querySelectorAll('.toc-container a');
+            const sections = ['overview', 'quickstart', 'framework', 'imagenet', 'diffbench', 'conclusion'];
+            const headerWrapper = document.querySelector('.header-wrapper');
+
+            function updateTOC() {
+                const scrollPos = window.scrollY;
+                const headerBottom = headerWrapper ? headerWrapper.offsetTop + headerWrapper.offsetHeight : 400;
+
+                // Show/hide TOC based on scroll position
+                if (scrollPos > headerBottom - 100) {
+                    tocContainer.classList.add('visible');
+                } else {
+                    tocContainer.classList.remove('visible');
+                }
+
+                // Update active link
+                let current = '';
+                const scrollPosForActive = scrollPos + 150;
+
+                sections.forEach(id => {
+                    const section = document.getElementById(id);
+                    if (section && scrollPosForActive >= section.offsetTop) {
+                        current = id;
+                    }
+                });
+
+                tocLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateTOC);
+            updateTOC();
+        });
+        </script>
+
+        <script>
+        // Match hero image height to key-points column
+        function adjustHeroImageHeight() {
+            const keyPoints = document.querySelector('.central-header .key-points');
+            const heroImg = document.querySelector('.central-header .hero-media img');
+            if (keyPoints && heroImg) {
+                const keyPointsHeight = keyPoints.offsetHeight;
+                if (heroImg.naturalHeight > keyPointsHeight) {
+                    heroImg.style.maxHeight = keyPointsHeight + 'px';
+                } else {
+                    heroImg.style.maxHeight = '';
+                }
+            }
+        }
+        window.addEventListener('load', adjustHeroImageHeight);
+        window.addEventListener('resize', adjustHeroImageHeight);
+        </script>
+
+        <script>
+        // Guidance (CFG) and distributional-metric (FDr/MIND) toggles for the systematic ImageNet table.
+        // Each .metric-toggle group flips one attribute (data-cfg or data-metric) on the table in its figure.
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.metric-toggle').forEach(function(group) {
+                const fig = group.closest('figure');
+                const table = fig ? fig.querySelector('table') : null;
+                if (!table) return;
+                const buttons = group.querySelectorAll('button[data-toggle]');
+                buttons.forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        table.setAttribute(btn.getAttribute('data-toggle'), btn.getAttribute('data-value'));
+                        buttons.forEach(function(b) {
+                            b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+                        });
+                    });
+                });
+            });
+        });
+        </script>
+    </body>
+</html>

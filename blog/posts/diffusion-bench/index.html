@@ -162,15 +162,15 @@
 
             <h2 id="transfer">Do ImageNet gains transfer?</h2>
 
-            <p>We trained the same set of methods under a shared recipe: a single ~615M-parameter DiT backbone at 256&times;256. For ImageNet, the models are class-conditional, and we report FID both without guidance and with per-method best CFG (applied on the t-interval [0, 0.9]). For text-to-image, we retrain on captioned data with a frozen text encoder (CFG scale 6.0) and score four T2I metrics<span class="sidenote-ref">1</span> on each method.<span class="sidenote"><span class="sidenote-number">1</span>The T2I metrics are GenEval<d-cite key="geneval"></d-cite>, DPGBench<d-cite key="dpgbench"></d-cite>, GenAI-Bench<d-cite key="genaibench"></d-cite>, and SimpleEval (introduced in our work).</span> Figure 1 shows the correlation.</p>
+            <p>We trained the same set of methods under a shared recipe: a single ~615M-parameter DiT backbone at 256&times;256. For ImageNet, the models are class-conditional, and we report FID both without guidance and with per-method best CFG (applied on the t-interval [0, 0.9]). For text-to-image, we retrain on captioned data with a frozen text encoder (CFG scale 6.0) and score three T2I metrics<span class="sidenote-ref">1</span> on each method.<span class="sidenote"><span class="sidenote-number">1</span>The T2I metrics are GenEval<d-cite key="geneval"></d-cite>, DPGBench<d-cite key="dpgbench"></d-cite>, and GenAI-Bench<d-cite key="genaibench"></d-cite>.</span> Figure 1 shows the correlation.</p>
 
             <figure>
-                <iframe src="assets/fid_correlation.html" title="Correlation between ImageNet FID (without CFG) and T2I metrics" loading="lazy" scrolling="no" style="width:100%; height:480px; border:0; display:block; overflow:hidden;"></iframe>
-                <iframe src="assets/fid_correlation_wcfg.html" title="Correlation between ImageNet FID (with CFG) and T2I metrics" loading="lazy" scrolling="no" style="width:100%; height:480px; border:0; display:block; overflow:hidden; margin-top:12px;"></iframe>
-                <figcaption><strong>Figure 1.</strong> Correlation between ImageNet FID (x-axis) and four T2I metrics (y-axis) across latent-space (RAE, VAE) and pixel-space methods. Top: FID without classifier-free guidance. Bottom: FID with per-method best CFG. Pixel-space methods are hidden by default; click the legend to add them, or drag a rectangle to recompute r on a comparable cluster of points (double-click to reset).</figcaption>
+                <iframe src="assets/fid_correlation.html?v=3" title="Correlation between ImageNet FID (without CFG) and T2I metrics" loading="lazy" scrolling="no" style="width:100%; height:340px; border:0; display:block; overflow:hidden;"></iframe>
+                <iframe src="assets/fid_correlation_wcfg.html?v=3" title="Correlation between ImageNet FID (with CFG) and T2I metrics" loading="lazy" scrolling="no" style="width:100%; height:340px; border:0; display:block; overflow:hidden; margin-top:12px;"></iframe>
+                <figcaption><strong>Figure 1.</strong> Correlation between ImageNet FID (x-axis) and three T2I metrics (y-axis) across latent-space (RAE, VAE) and pixel-space methods. Top: FID without classifier-free guidance. Bottom: FID with per-method best CFG. Pixel-space methods are hidden by default; click the legend to add them, or drag a rectangle to recompute r on a comparable cluster of points (double-click to reset).</figcaption>
             </figure>
 
-            <p>Two things stand out. First, the correlation is weak. The plots show only latent-space methods by default; across them, r in the top plot is about &minus;0.30 on GenEval and &minus;0.36 on DPG-Bench. Click the pixel-space group in the legend to add it back, and the trend looks much stronger, but that is an inter-group effect: a separate group of methods pulling the correlation up, not genuine predictive power. <strong>ImageNet rank does not robustly predict T2I rank.</strong> Second, <strong>the picture changes with the CFG protocol.</strong> So even the weak correlation depends on a choice the evaluator makes.</p>
+            <p>Two things stand out. First, method ranking shows no strong correlation between ImageNet and T2I generation. The plots show only latent-space methods by default; across them, r in the top plot is about &minus;0.27 on GenEval and &minus;0.37 on DPG-Bench. Click the pixel-space group in the legend to add it back, and the trend looks much stronger, but that is an inter-group effect: a separate group of methods pulling the correlation up, not genuine predictive power. <strong>ImageNet rank does not reliably predict T2I.</strong> Second, <strong>the picture changes with the CFG protocol.</strong> So how strong the correlation appears depends on a choice the evaluator makes.</p>
 
             <p>The story is worse at the top of the leaderboard. Select only the strongest methods (the RAE<d-cite key="rae"></d-cite> family and REPA-E<d-cite key="repae"></d-cite>) with the box, and the correlation drops near zero. So the methods we care most about are exactly the ones for which ImageNet rank is least informative.</p>
 
@@ -188,7 +188,7 @@
 
             <p>We are calling this v0.1 for a reason. The project is just beginning.</p>
 
-            <p>DiffusionBench bundles two evaluation axes for now. The first is ImageNet generation across latent and pixel regimes. The second is text-to-image generation, scored with several metrics. We use existing ones (GenEval, DPGBench, GenAI-Bench). We also propose <strong>SimpleEval</strong>, a hack-resistant metric built from a broad procedurally generated prompt set and a deliberately weak scorer.<span class="sidenote"><span class="sidenote-number">2</span>Many learned-scorer T2I metrics can be saturated by training that targets them. More details on this failure mode and SimpleEval's defenses will be released soon.</span></p>
+            <p>DiffusionBench bundles two evaluation axes for now. The first is ImageNet generation across latent and pixel regimes. The second is text-to-image generation, scored with several metrics. We use existing ones (GenEval, DPGBench, GenAI-Bench).</p>
 
             <p>Our recommendation is simple. Future diffusion transformer papers should report DiffusionBench. Not ImageNet alone. Methods that improve DiffusionBench are more likely to reflect broad progress.</p>
 
@@ -196,7 +196,7 @@
 
             <ul>
                 <li>Add a new evaluation axis (video, world models, editing).</li>
-                <li>Propose a new T2I metric or stress-test SimpleEval.</li>
+                <li>Propose a new T2I metric.</li>
                 <li>Reproduce a published method under DiffusionBench.</li>
                 <li>File issues on metric drift, scoring bugs, or reproducibility gaps.</li>
             </ul>
