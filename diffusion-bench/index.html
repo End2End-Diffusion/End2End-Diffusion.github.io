@@ -451,7 +451,7 @@ uv run torchrun --nproc_per_node=8 src/offline_eval.py --config [STAGE2_CONFIG_P
         <!-- ==================== DiffusionBench ==================== -->
         <div class="method-block" id="diffbench">
             <h1 class="text"><span class="sc">DiffusionBench</span>: A Holistic Benchmark</h1>
-            <p class="text"><strong>ImageNet generation.</strong> The best FID (1.37) is achieved by FLUX.2-VAE, followed by the end-to-end REPA-E VAEs at around 1.5&ndash;1.6. The RAE family is slightly higher, with the better ones around 1.7&ndash;1.9 (DINOv3-B is the best RAE at 1.74). Traditional VAEs such as SD-VAE and SD3.5-VAE, along with the pixel-space methods, lag behind, though at 80 epochs this gap is largely driven by convergence speed and should narrow with longer training. Toggle guidance (with / without CFG) and the metric (FDr<d-cite key="reprfrechet"></d-cite> / MIND<d-cite key="mind"></d-cite>).</p>
+            <p class="text"><strong>ImageNet generation.</strong> The best FID (1.37) is achieved by FLUX.2-VAE, followed by the end-to-end REPA-E VAEs at around 1.5&ndash;1.6. The RAE family is slightly higher, with the better ones around 1.7&ndash;1.9 (DINOv3-B is the best RAE at 1.74). Traditional VAEs such as SD-VAE and SD3.5-VAE, along with the pixel-space methods, lag behind, though at 80 epochs this gap is largely driven by convergence speed and should narrow with longer training. MeanFlow<d-cite key="meanflow"></d-cite> lags behind the multi-step methods on either latent-space or pixel-space generation. The table below reports the full comparison, where you can toggle between guidance settings and the metric.</p>
             <figure class="data-table">
                 <div class="metric-toggle">
                     <span class="metric-toggle-label">Guidance:</span>
@@ -459,7 +459,7 @@ uv run torchrun --nproc_per_node=8 src/offline_eval.py --config [STAGE2_CONFIG_P
                     <button type="button" data-toggle="data-cfg" data-value="nocfg" aria-pressed="false">without CFG</button>
                 </div>
                 <div class="metric-toggle">
-                    <span class="metric-toggle-label">Distributional metric:</span>
+                    <span class="metric-toggle-label">Metric:</span>
                     <button type="button" data-toggle="data-metric" data-value="fdr" aria-pressed="true">FDr</button>
                     <button type="button" data-toggle="data-metric" data-value="mind" aria-pressed="false">MIND</button>
                 </div>
@@ -470,7 +470,7 @@ uv run torchrun --nproc_per_node=8 src/offline_eval.py --config [STAGE2_CONFIG_P
                                 <th rowspan="2">Method</th>
                                 <th rowspan="2">FID&nbsp;&darr;<d-cite key="fid"></d-cite></th>
                                 <th rowspan="2">IS&nbsp;&uarr;<d-cite key="is"></d-cite></th>
-                                <th colspan="5"><span class="m-fdr">FDr&nbsp;&darr;</span><span class="m-mind">MIND&nbsp;&darr;</span></th>
+                                <th colspan="5"><span class="m-fdr">FDr&nbsp;&darr;<d-cite key="reprfrechet"></d-cite></span><span class="m-mind">MIND&nbsp;&darr;<d-cite key="mind"></d-cite></span></th>
                             </tr>
                             <tr>
                                 <th>Inception</th><th>ConvNeXt</th><th>DINOv2</th><th>MAE</th><th>SigLIP</th>
